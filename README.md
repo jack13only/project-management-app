@@ -19,7 +19,7 @@
 
 ## REPO: how to work
 
-### How to start to working locally:
+### How to start working locally:
 
 1. Clone the repo.
 2. Use command ***npm i*** to install all necessary dependencies.
