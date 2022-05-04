@@ -19,24 +19,36 @@
 
 ## REPO: how to work
 
-### How to work localy:
+### How to start to working locally:
 
 1. Clone the repo.
 2. Use command ***npm i*** to install all necessary dependencies.
 3. To start the project: ***npm run start***.
 4. Switch to a new branch using ***git checkout -b branch name*** 
-> Note! Before creating a new branch read section [Branches](#branches)
 
 ### Branches
+> Note! Before creating a new branch read the section below.
 
-1. Switch to the ***develop*** branch on your local version.
+**Name all branches** in accorging to the name of the task, for example: The task's name is 'KB', create a branch with kb name, and at the end there will be an origin branch 'kb' for opening a PR into develop branch.
+
+Create a branch and start to work: 
+
+1. Switch to the ***develop*** branch on your local version, use command ***git checkout develop***
 2. You have to pull all origin version changes, use command ***git pull origin develop***.
-3. Resolve all required conflicts.
-4. Create and switch to a new branch only from ***develop*** branch.
-5. **Name all branches** in accorging to the name of the task, for example: The task's name is 'KB', create a branch with kb name, and at the end there will be an origin branch 'kb' for opening a PR into develop branch.
+3. Then create a new branch, use command ***git checkout -b task-name***
+4. Work with task.
 
-Branch ***main*** is empty exept for README.md!
-There will be a finished version of the project in ***main*** branch at the end after all agreements and merges.
+> Before pushing results of your work you need to merge the last version of develop branch: 
+
+1. Commit changes ***git commit -m "commit message"***
+2. Switch to the branch 'develop', use command ***git checkout develop***.
+3. ***git pull***.
+4. ***git checkout task-name***.
+5. ***git pull origin develop***.
+3. Resolve all required merge conflicts.
+4. Push all your changes ***git push origin task-name***.
+
+There will be a merged version/part of the project after each weekly sprint inside ***main*** branch after all agreements. At the end the main branch will include results of each sprint.
 
 ### Pull Request
 
@@ -45,6 +57,8 @@ There will be a finished version of the project in ***main*** branch at the end 
 3. PR's name in according to the task's name, for example: backlog, header, backend.
 3. PR's description: 
 > 1. Task's name.
+
+*optionally:*
 > 2. If there is an UI, add a screenshot.
 > 3. Add a small description regarding your responsibilities for the task, for example: add a backlog section, add UI or just create project's readme.
 > 4. Date regarding task's start and finish.
@@ -55,7 +69,7 @@ All merges into ***develop*** only after getting 3 likes of all participants on 
 
 ### After origin version changes
 
-After all origin merges you have to pull changes into your local version. Read steps 1-3 in [branches section](#branches), then switch to your task's branch and merge develop branch to the current choosen branch (***git merge develop***) and resolve conflicts if it's required.
+After all origin merges you have to pull changes into your local version. Read steps 1-6 in section [Before pushing results of your work you need to merge the last version of develop branch](#branches).
 
 ### Commits
 
