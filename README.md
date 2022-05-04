@@ -42,6 +42,7 @@ There will be a finished version of the project in ***main*** branch at the end 
 
 1. After finishing, push all changes to the origin branch.
 2. Open a PR from ***your branch name*** to the ***develop*** branch.
+3. PR's name in according to the task's name, for example: backlog, header, backend.
 3. PR's description: 
 > 1. Task's name.
 > 2. If there is an UI, add a screenshot.
