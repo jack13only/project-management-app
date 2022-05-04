@@ -7,6 +7,7 @@
 3. [PR](#pull-request)
 4. [Agreement and merging](#agreement-and-merging)
 5. [After origin changes](#after-origin-version-changes)
+6. [Commits](#commits)
 
 ## Command work
 
@@ -33,7 +34,6 @@
 3. Resolve all required conflicts.
 4. Create and switch to a new branch only from ***develop*** branch.
 5. **Name all branches** in accorging to the name of the task, for example: The task's name is 'KB', create a branch with kb name, and at the end there will be an origin branch 'kb' for opening a PR into develop branch.
-6. Name all commits regarding current changes, read [commits convention](https://docs.rs.school/#/git-convention)
 
 Branch ***main*** is empty exept for README.md!
 There will be a finished version of the project in ***main*** branch at the end after all agreements and merges.
@@ -55,6 +55,10 @@ All merges into ***develop*** only after getting 3 likes of all participants on 
 ### After origin version changes
 
 After all origin merges you have to pull changes into your local version. Read steps 1-3 in [branches section](#branches), then switch to your task's branch and merge develop branch to the current choosen branch (***git merge develop***) and resolve conflicts if it's required.
+
+### Commits
+
+Name all commits regarding current changes, read [commits convention](https://docs.rs.school/#/git-convention)
 
 ## Command work
 
