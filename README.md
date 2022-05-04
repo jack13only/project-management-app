@@ -23,7 +23,7 @@
 1. Clone the repo.
 2. Use command ***npm i*** to install all necessary dependencies.
 3. To start the project: ***npm run start***.
-4. Switch to a new branch using ***git checkout -b new branch*** 
+4. Switch to a new branch using ***git checkout -b branch name*** 
 > Note! Before creating a new branch read section [Branches](#branches)
 
 ### Branches
@@ -45,7 +45,7 @@ There will be a finished version of the project in ***main*** branch at the end 
 3. PR's description: 
 > 1. Task's name.
 > 2. If there is an UI, add a screenshot.
-> 3. Add a small description regarding your responsibilities for the task, for example: add backlog section, add UI or just create project's readme.
+> 3. Add a small description regarding your responsibilities for the task, for example: add a backlog section, add UI or just create project's readme.
 > 4. Date regarding task's start and finish.
 
 ### Agreement and merging 
