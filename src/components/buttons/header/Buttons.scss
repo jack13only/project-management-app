@@ -1,0 +1,42 @@
+@import '../../../sass/Constants.scss';
+
+.btn {
+  width: 86px;
+  height: 35px;
+  border: 1px solid $btn-colored;
+  background-color: $btn-light;
+  color: $btn-light;
+  border-radius: 20px;
+  cursor: pointer;
+
+  &:hover {
+    border: 1px solid $btn-colored;
+  }
+
+  &:active {
+    border: 2px solid $btn-active;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 0.3rem rgba(235, 159, 19, 0.25);
+    background-color: $btn-colored;
+    color: $btn-light;
+  }
+}
+
+.btn-colored {
+  background-color: $btn-colored;
+
+  &:hover {
+    background-color: $btn-active;
+  }
+}
+
+.btn-bordered {
+  color: $btn-colored;
+
+  &:hover {
+    background-color: $btn-colored;
+    color: $btn-light
+  }
+}
