@@ -3,6 +3,7 @@
 
 .header {
   position: sticky;
+  align-items: center;
   padding: 20px 0;
   top: 0;
   width: 100%;
@@ -10,11 +11,11 @@
   backdrop-filter: blur(10px);
   background: rgba($color: #f3f3f3, $alpha: 0.7);
 
-  &__logo {
+  .header__logo {
     flex-basis: 30%;
     cursor: pointer;
 
-    &-img {
+    .header__logo-img {
       width: 100px;
       height: auto;
     }
@@ -27,16 +28,16 @@
     }
   }
 
-  &__navigation {
+  .header__navigation {
     display: flex;
     justify-content: flex-end;
     flex-basis: 70%;
   }
 
-  &__buttons {
-    width: 44%;
+  .header__buttons {
     display: flex;
     justify-content: flex-end;
     column-gap: 20px;
+    flex-wrap: wrap;
   }
 }
