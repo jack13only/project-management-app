@@ -2,12 +2,15 @@
 
 ## REPO: how to work
 
-1. [How to work localy](#how-to-work-localy)
+1. [How to start working locally](#how-to-start-working-locally)
 2. [Branches](#branches)
 3. [PR](#pull-request)
 4. [Agreement and merging](#agreement-and-merging)
 5. [After origin changes](#after-origin-version-changes)
 6. [Commits](#commits)
+
+## Folders and files names
+[How to name folders and files](#how-to-name-folders-and-files)
 
 ## Command work
 
@@ -74,6 +77,12 @@ After all origin merges you have to pull changes into your local version. Read s
 ### Commits
 
 Name all commits regarding current changes, read [commits convention](https://docs.rs.school/#/git-convention)
+
+## How to name folders and files
+
+Name folders and files in such way: 
+- Folders start with letter in Lower Case.
+- Files start with letter in Upper Case.
 
 ## Command work
 
