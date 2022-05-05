@@ -1,25 +1,33 @@
-import React from 'react';
-import logo from '../../images/logo.svg';
-import LogInBtn from '../buttons/header/LogInBtn';
+import { FC } from 'react';
 import SignUpBtn from '../buttons/header/SignUpBtn';
+import logo from '../../images/logo.svg';
 import './Header.scss';
 
-const Header = () => {
+const Header: FC = () => {
   return (
-    <div className="header">
+    <header data-testid="header" className="header">
       <div className="wrapper">
         <div className="header__logo">
           <img src={logo} alt="logo" className="header__logo-img" />
         </div>
-
         <div className="header__navigation">
           <div className="header__buttons">
-            <LogInBtn />
-            <SignUpBtn />
+            <SignUpBtn
+              dataTestId="signUpBtn"
+              type="button"
+              className="btn btn-log btn-bordered"
+              description="Log in"
+            />
+            <SignUpBtn
+              dataTestId="signUpBtn"
+              type="button"
+              className="btn btn-sign btn-colored"
+              description="Sign up"
+            />
           </div>
         </div>
       </div>
-    </div>
+    </header>
   );
 };
 
