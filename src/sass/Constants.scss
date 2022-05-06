@@ -1,3 +1,130 @@
-$btn-colored: rgb(233, 192, 10);
-$btn-light: white;
-$btn-active: rgb(211, 118, 12);
+// === MIXIN ===
+
+@mixin spartan {
+  font-family: "Spartan", sans-serif;
+}
+
+@mixin disableSelection {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+@mixin flexSpaceEvenly {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+@mixin flexSpaceAround {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+@mixin flexSpaceBetween {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flexCenter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flexEnd {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+// === / MIXIN ===
+
+// === FUNCTIONS ===
+
+@function strip-unit($num) {
+  @return $num / ($num * 0 + 1);
+}
+
+@function rem($num) {
+  @return (strip-unit($num) / 16) * 1rem;
+}
+
+// === / FUNCTIONS ===
+
+// === VARIABLES ===
+
+$base: rem(5px);
+
+$fw-regular: 400;
+$fw-medium: 500;
+$fw-semi-bold: 600;
+$fw-bold: 700;
+
+$fs-xxs: rem(11px);
+$fs-xs: rem(12px);
+$fs-s: rem(13px);
+$fs-m: rem(14px);
+$fs-l: rem(16px);
+$fs-xl: rem(22px);
+$fs-xxl: rem(26px);
+$fs-xxxl: rem(36px);
+
+$transition: 0.3s;
+
+$color-dark: rgba(18, 18, 18, 1);
+$color-dark-02: rgba(18, 18, 18, 0.2);
+$color-dark-03: rgba(18, 18, 18, 0.3);
+$color-dark-04: rgba(18, 18, 18, 0.4);
+$color-dark-05: rgba(18, 18, 18, 0.5);
+$color-dark-06: rgba(18, 18, 18, 0.6);
+$color-dark-07: rgba(18, 18, 18, 0.7);
+$color-dark-08: rgba(18, 18, 18, 0.8);
+$color-dark-09: rgba(18, 18, 18, 0.9);
+$color-grey: rgba(229, 229, 229, 1);
+$color-grey-white: rgba(248, 248, 248, 1);
+$color-grey-07: rgba(243, 243, 243, 0.7);
+$color-white: rgba(255, 255, 255, 1);
+$color-white-02: rgba(255, 255, 255, 0.2);
+$color-white-03: rgba(255, 255, 255, 0.3);
+$color-white-04: rgba(255, 255, 255, 0.4);
+$color-white-05: rgba(255, 255, 255, 0.5);
+$color-white-06: rgba(255, 255, 255, 0.6);
+$color-white-07: rgba(255, 255, 255, 0.7);
+$color-white-08: rgba(255, 255, 255, 0.8);
+$color-white-09: rgba(255, 255, 255, 0.9);
+$color-sale: rgba(233, 30, 99, 1);
+$color-yellow: rgba(240, 204, 132, 1);
+$color-error: rgba(214, 19, 19, 1);
+$color-ok: rgba(11, 177, 127, 1);
+$color-grey-dark: rgba(156, 156, 156, 1);
+$color-orange: rgba(211, 118, 12, 1);
+$color-green: rgba(0, 255, 119, 1);
+$color-blue: rgba(0, 3, 51, 1);
+$color-yellow: rgba(233, 192, 10, 1);
+$color-yellow-dark: rgba(235, 159, 19, 0.25);
+
+$breakpoint-xxs-min: 320px;
+$breakpoint-xs-min: 480px;
+$breakpoint-sm-min: 576px;
+$breakpoint-md-min: 768px;
+$breakpoint-lg-min: 992px;
+$breakpoint-xl-min: 1200px;
+$breakpoint-xxl-min: 1440px;
+
+$breakpoint-xxxs-max: $breakpoint-xxs-min - 1px;
+$breakpoint-xxs-max: $breakpoint-xs-min - 1px;
+$breakpoint-xs-max: $breakpoint-sm-min - 1px;
+$breakpoint-sm-max: $breakpoint-md-min - 1px;
+$breakpoint-md-max: $breakpoint-lg-min - 1px;
+$breakpoint-lg-max: $breakpoint-xl-min - 1px;
+$breakpoint-xl-max: $breakpoint-xxl-min - 1px;
+
+$calcWidth: 100%;
+
+// === / VARIABLES ===

@@ -1,42 +1,50 @@
-@import '../../../sass/Constants.scss';
+@import "../../../sass/Constants.scss";
 
 .btn {
-  width: 86px;
-  height: 35px;
-  border: 1px solid $btn-colored;
-  background-color: $btn-light;
-  color: $btn-light;
-  border-radius: 20px;
+  width: $base * 17;
+  height: $base * 7;
+  border: 1px solid $color-yellow;
+  background-color: $color-white;
+  color: $color-white;
+  border-radius: $base * 4;
   cursor: pointer;
+  transition: $transition;
 
   &:hover {
-    border: 1px solid $btn-colored;
+    border: 1px solid $color-yellow;
+    transition: $transition;
   }
 
   &:active {
-    border: 2px solid $btn-active;
+    border: 2px solid $color-orange;
+    transition: $transition;
   }
 
   &:focus {
-    box-shadow: 0 0 0 0.3rem rgba(235, 159, 19, 0.25);
-    background-color: $btn-colored;
-    color: $btn-light;
+    box-shadow: 0 0 0 0.3rem $color-yellow-dark;
+    background-color: $color-yellow;
+    color: $color-white;
+    transition: $transition;
   }
 }
 
 .btn-colored {
-  background-color: $btn-colored;
+  background-color: $color-yellow;
+  transition: $transition;
 
   &:hover {
-    background-color: $btn-active;
+    background-color: $color-orange;
+    transition: $transition;
   }
 }
 
 .btn-bordered {
-  color: $btn-colored;
+  color: $color-yellow;
+  transition: $transition;
 
   &:hover {
-    background-color: $btn-colored;
-    color: $btn-light
+    background-color: $color-yellow;
+    color: $color-white;
+    transition: $transition;
   }
 }
