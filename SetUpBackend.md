@@ -9,5 +9,21 @@ https://docs.docker.com/desktop/windows/install/
 6. Open Docker and wait few seconds for the daemon to start. (you always need to run docker daemon for backend)
 7. Write in gitbash\console in kanban-rest directory "docker-compose up" to start backend
 
-# Use deployed backend
+# Deploy backend
+1. Open cmd\gitbash:
+git clone https://github.com/vitaly-sazonov/kanban-rest
+git switch source
+heroku create --region eu
+heroku addons:create heroku-postgresql:hobby-dev
+heroku config:set NPM_CONFIG_PRODUCTION=false
+heroku config:set LOG_CONSOLE=false
+heroku config:set LOG_ERR_LEVEL=warn
+heroku config:set LOG_INFO_LEVEL=info
+heroku config:set JWT_SECRET_KEY=secret-key
+heroku config:set SALT_SIZE=10
+heroku config:set USE_FASTIFY=true
+heroku git:remote -a bublikbackend
+git push heroku source:master
+
+# Deployed backend url
 https://bublikbackend.herokuapp.com/
