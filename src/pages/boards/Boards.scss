@@ -14,7 +14,59 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  gap: $base * 2;
+  row-gap: $base;
   width: 50%;
   margin: 0 auto;
+}
+
+.search {
+  width: 100%;
+  margin: 0;
+  padding: $base 0;
+  font-size: $fs-l;
+  text-align: center;
+  color: $color-dark;
+  background-color: $color-white;
+  border-width: 2px;
+  border-style: solid;
+  border-color: $color-dark;
+  border-radius: $base * 4;
+  transition: $transition;
+
+  &::placeholder {
+    @include spartan;
+    color: $color-dark-08;
+  }
+
+  &:hover,
+  &:active,
+  &:focus {
+    border-color: $color-green;
+    transition: $transition;
+  }
+}
+
+.task {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $base * 2;
+  margin-top: $base;
+}
+
+.task-checkbox:checked + .task-text {
+  text-decoration: line-through;
+}
+
+.task-text {
+  font-size: $fs-xl;
+}
+
+.task-delete {
+  font-size: $fs-xl;
+  font-weight: $fw-bold;
+  background-color: $color-white;
+  color: $color-error;
+  border: none;
+  cursor: pointer;
 }

@@ -1,11 +1,13 @@
 import { ChangeEvent, FC, useState } from 'react';
 
+import { TodoList } from '../../components/todoList/TodoList';
+
 import './Boards.scss';
 
 type TodosState = {
   id: string;
   text: string;
-  completed: boolean;
+  complete: boolean;
 };
 
 const Boards: FC = () => {
@@ -24,28 +26,48 @@ const Boards: FC = () => {
         {
           id: new Date().toISOString(),
           text,
-          completed: false,
+          complete: false,
         },
       ]);
       setText('');
     }
   };
 
+  const removeTodo = (todoId: string) => {
+    setTodos(todos.filter((todo) => todo.id !== todoId));
+  };
+
+  const toggleTodoComplete = (todoId: string) => {
+    setTodos(
+      todos.map((todo) => {
+        if (todo.id !== todoId) {
+          return todo;
+        } else {
+          return {
+            ...todo,
+            complete: !todo.complete,
+          };
+        }
+      })
+    );
+  };
+
   return (
     <section className="boards">
       <h2 className="h2">Boards</h2>
-      <ul>
-        {todos.map((todo) => (
-          <li key={todo.id}>{todo.text}</li>
-        ))}
-      </ul>
       <label className="label">
-        Enter a title for this card...
-        <input type="text" value={text} onChange={handleText} />
-        <button type="button" className="btn btn-log btn-bordered" onClick={addTodo}>
+        <input
+          className="search"
+          type="text"
+          value={text}
+          placeholder="Enter a title for this card..."
+          onChange={handleText}
+        />
+        <button className="btn btn-log btn-bordered" type="button" onClick={addTodo}>
           Add a card
         </button>
       </label>
+      <TodoList todos={todos} removeTodo={removeTodo} toggleTodoComplete={toggleTodoComplete} />
     </section>
   );
 };
