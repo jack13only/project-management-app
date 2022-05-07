@@ -1,5 +1,11 @@
-@import "../buttons/header/Buttons.scss";
-@import "../Wrapper.scss";
+@import '../../../sass/Constants.scss';
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  width: 80%;
+  margin: 0 auto;
+}
 
 .header {
   position: sticky;

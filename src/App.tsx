@@ -1,13 +1,23 @@
-import React from 'react';
+import { FC } from 'react';
+import { Routes, Route } from 'react-router-dom';
+
+import { Layout } from './components/layout/Layout';
+import { WelcomePage } from './pages/welcomepage/WelcomePage';
+import { Boards } from './pages/boards/Boards';
+import { NotFound } from './pages/notfound/NotFound';
+
 import './App.scss';
-import Header from './components/header/Header';
 
-function App() {
+const App: FC = () => {
   return (
-    <div className="App">
-      <Header />
-    </div>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<WelcomePage />} />
+        <Route path="boards" element={<Boards />} />
+        <Route path="*" element={<NotFound />} />
+      </Route>
+    </Routes>
   );
-}
+};
 
-export default App;
+export { App };
