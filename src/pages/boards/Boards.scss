@@ -1,0 +1,20 @@
+@import '../../sass/Constants.scss';
+
+.boards {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.h2 {
+  text-align: center;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: $base * 2;
+  width: 50%;
+  margin: 0 auto;
+}

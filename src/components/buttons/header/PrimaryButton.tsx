@@ -3,7 +3,7 @@ import { FC } from 'react';
 import './PrimaryButton.scss';
 
 interface PrimaryButtonProps {
-  dataTestId: string;
+  dataTestId?: string;
   type: 'submit' | 'reset' | 'button';
   className: string;
   description: string;
