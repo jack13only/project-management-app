@@ -1,11 +1,15 @@
-type SignUpBtnTypes = {
+import { FC } from 'react';
+
+import './PrimaryButton.scss';
+
+interface PrimaryButtonProps {
   dataTestId: string;
   type: 'submit' | 'reset' | 'button';
   className: string;
   description: string;
-};
+}
 
-const SignUpBtn = ({ dataTestId, type, className, description }: SignUpBtnTypes) => {
+const PrimaryButton: FC<PrimaryButtonProps> = ({ dataTestId, type, className, description }) => {
   return (
     <button data-testid={dataTestId} type={type} className={className}>
       {description}
@@ -13,4 +17,4 @@ const SignUpBtn = ({ dataTestId, type, className, description }: SignUpBtnTypes)
   );
 };
 
-export default SignUpBtn;
+export { PrimaryButton };
