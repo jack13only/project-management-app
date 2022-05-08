@@ -9,9 +9,10 @@ import './Header.scss';
 const Header: FC = () => {
   const [scrolledPage, isScrolledPage] = useState(false);
   const body = window.document.body as HTMLBodyElement;
+  const heightScrollTop = 170;
 
   const listenScrollEvent = () => {
-    body.scrollTop > 170 ? isScrolledPage(true) : isScrolledPage(false);
+    body.scrollTop > heightScrollTop ? isScrolledPage(true) : isScrolledPage(false);
   };
 
   useEffect(() => {
@@ -20,7 +21,7 @@ const Header: FC = () => {
   }, [scrolledPage]);
 
   return (
-    <header data-testid="header" className={'header' + (scrolledPage ? ' header-sticky' : '')}>
+    <header data-testid="header" className={'header' + (scrolledPage ? ' header-scrolled' : '')}>
       <div className="wrapper">
         <Link to="/" className="header__logo">
           <img src={logo} alt="logo" className="header__logo-img" />
