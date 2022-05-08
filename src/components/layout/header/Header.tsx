@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { PrimaryButton } from '../../buttons/header/PrimaryButton';
@@ -7,8 +7,21 @@ import logo from '../../../images/logo.svg';
 import './Header.scss';
 
 const Header: FC = () => {
+  const [scrolledPage, isScrolledPage] = useState(false);
+  const body = window.document.body as HTMLBodyElement;
+  const heightScrollTop = 170;
+
+  const listenScrollEvent = () => {
+    body.scrollTop > heightScrollTop ? isScrolledPage(true) : isScrolledPage(false);
+  };
+
+  useEffect(() => {
+    body.addEventListener('scroll', listenScrollEvent);
+    return () => body.removeEventListener('scroll', listenScrollEvent);
+  }, [scrolledPage]);
+
   return (
-    <header data-testid="header" className="header">
+    <header data-testid="header" className={'header' + (scrolledPage ? ' header-scrolled' : '')}>
       <div className="wrapper">
         <Link to="/" className="header__logo">
           <img src={logo} alt="logo" className="header__logo-img" />

@@ -14,7 +14,14 @@
   width: 100%;
   height: auto;
   backdrop-filter: blur($base * 2);
+  background: $color-grey-white;
+  transition: $transition;
+}
+
+.header-scrolled {
+  padding: $base * 3 0;
   background: $color-grey-07;
+  box-shadow: 0 $base * 0.1 $base * 3 $color-dark-02;
 }
 
 .header__logo-img {
