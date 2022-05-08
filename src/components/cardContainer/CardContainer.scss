@@ -1,0 +1,18 @@
+@import '../../sass/Constants.scss';
+
+.card__container {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  row-gap: $base;
+  width: 30%;
+  padding: 0 1%;
+}
+
+.button__container {
+  display: flex;
+  align-items: center;
+  column-gap: $base;
+  width: 60%;
+  margin: 0 auto 0 0;
+}

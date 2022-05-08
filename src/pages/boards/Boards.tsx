@@ -1,73 +1,90 @@
 import { ChangeEvent, FC, useState } from 'react';
 
-import { TodoList } from '../../components/todoList/TodoList';
+import { CardList } from '../../components/cardList/CardList';
+import { CardContainer } from '../../components/cardContainer/CardContainer';
+import { TertiaryButton } from '../../components/buttons/tertiaryButton/TertiaryButton';
 
 import './Boards.scss';
 
-type TodosState = {
+type CardsState = {
   id: string;
-  text: string;
+  cardTitle: string;
   complete: boolean;
 };
 
 const Boards: FC = () => {
-  const [todos, setTodos] = useState<TodosState[]>([]);
-  const [text, setText] = useState<string>('');
+  const [cards, setCards] = useState<CardsState[]>([]);
+  const [cardTitle, setCardTitle] = useState<string>('');
+  const [isOpenCard, setIsOpenCard] = useState<boolean>(false);
 
-  const handleText = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleCardTitle = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const VALUE = event.target.value;
-    setText(VALUE);
+    setCardTitle(VALUE);
   };
 
-  const addTodo = () => {
-    if (text.trim().length) {
-      setTodos([
-        ...todos,
+  const addСard = () => {
+    if (cardTitle.trim().length) {
+      setCards([
+        ...cards,
         {
           id: new Date().toISOString(),
-          text,
+          cardTitle,
           complete: false,
         },
       ]);
-      setText('');
+      setCardTitle('');
+      setIsOpenCard(false);
     }
   };
 
-  const removeTodo = (todoId: string) => {
-    setTodos(todos.filter((todo) => todo.id !== todoId));
+  const removeCard = (cardId: string | undefined) => {
+    setCards(cards.filter((card) => card.id !== cardId));
   };
 
-  const toggleTodoComplete = (todoId: string) => {
-    setTodos(
-      todos.map((todo) => {
-        if (todo.id !== todoId) {
-          return todo;
+  const toggleCardComplete = (cardId: string | undefined) => {
+    setCards(
+      cards.map((card) => {
+        if (card.id !== cardId) {
+          return card;
         } else {
           return {
-            ...todo,
-            complete: !todo.complete,
+            ...card,
+            complete: !card.complete,
           };
         }
       })
     );
   };
 
+  const addCardVisibility = () => {
+    setIsOpenCard(true);
+  };
+
+  const removeCardVisibility = () => {
+    setIsOpenCard(false);
+    setCardTitle('');
+  };
+
   return (
     <section className="boards">
-      <h2 className="h2">Boards</h2>
-      <label className="label">
-        <input
-          className="search"
-          type="text"
-          value={text}
-          placeholder="Enter a title for this card..."
-          onChange={handleText}
+      <h2 className="h2">Boards Page</h2>
+      <CardList cards={cards} removeCard={removeCard} toggleCardComplete={toggleCardComplete} />
+      <div className="card__container">
+        <TertiaryButton
+          className="button__tertiary"
+          type="button"
+          description="+ Add a card"
+          isOpenCard={isOpenCard}
+          onClick={addCardVisibility}
         />
-        <button className="btn btn-log btn-bordered" type="button" onClick={addTodo}>
-          Add a card
-        </button>
-      </label>
-      <TodoList todos={todos} removeTodo={removeTodo} toggleTodoComplete={toggleTodoComplete} />
+      </div>
+      <CardContainer
+        isOpenCard={isOpenCard}
+        removeCardVisibility={removeCardVisibility}
+        cardTitle={cardTitle}
+        handleCardTitle={handleCardTitle}
+        addCard={addСard}
+      />
     </section>
   );
 };
