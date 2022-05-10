@@ -12,12 +12,11 @@
 ## Folders and files names
 [How to name folders and files](#how-to-name-folders-and-files)
 
-## Command work
+## Team work
 
 1. [SCRUM](#scrum)
 2. [Meetings](#meetings)
 3. [Technologies, additional methodologies](#technologies-and-methodologies)
-
 ---
 
 ## REPO: how to work
@@ -81,10 +80,10 @@ Name all commits regarding current changes, read [commits convention](https://do
 ## How to name folders and files
 
 Name folders and files in such way: 
-- Folders start with letter in Lower Case.
-- Files start with letter in Upper Case.
+- Folders: lowerCamelCase.
+- Files: UpperCamelCase.
 
-## Command work
+## Team work
 
 **Customer's task**: https://github.com/rolling-scopes-school/tasks/blob/master/tasks/react/final-task-project-management-app.md
 
