@@ -7,8 +7,8 @@ interface CardItemProps {
   id?: string | undefined;
   cardTitle: string;
   complete: boolean;
-  removeCard: (cardId: string | undefined) => void;
-  toggleCardComplete: (cardId: string | undefined) => void;
+  removeCard: (cardId: string) => void;
+  toggleCardComplete: (cardId: string) => void;
 }
 
 const CardItem: FC<CardItemProps> = ({

@@ -3,15 +3,15 @@ import { FC } from 'react';
 import { CardItem } from '../cardItem/CardItem';
 
 interface CardsState {
-  id?: string | undefined;
+  id?: string;
   cardTitle: string;
   complete: boolean;
 }
 
 interface CardListProps {
   cards: CardsState[];
-  removeCard: (cardId: string | undefined) => void;
-  toggleCardComplete: (cardId: string | undefined) => void;
+  removeCard: (cardId: string) => void;
+  toggleCardComplete: (cardId: string) => void;
 }
 
 const CardList: FC<CardListProps> = ({ cards, removeCard, toggleCardComplete }) => {

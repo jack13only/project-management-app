@@ -4,8 +4,8 @@ interface InputCheckboxProps {
   className: string;
   type: 'checkbox';
   complete: boolean;
-  id?: string | undefined;
-  toggleCardComplete: (cardId: string | undefined) => void;
+  id?: string;
+  toggleCardComplete: (cardId: string) => void;
 }
 
 const InputCheckbox: FC<InputCheckboxProps> = ({
@@ -20,7 +20,7 @@ const InputCheckbox: FC<InputCheckboxProps> = ({
       className={className}
       type={type}
       checked={complete}
-      onChange={() => toggleCardComplete(id)}
+      onChange={() => toggleCardComplete(id ?? '')}
     />
   );
 };

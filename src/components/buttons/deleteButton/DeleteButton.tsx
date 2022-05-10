@@ -4,8 +4,8 @@ interface DeleteButtonProps {
   className: string;
   type: 'button';
   description: string;
-  id?: string | undefined;
-  removeCard?: (cardId: string | undefined) => void;
+  id?: string;
+  removeCard?: (cardId: string) => void;
   removeCardVisibility?: () => void;
 }
 
@@ -21,7 +21,7 @@ const DeleteButton: FC<DeleteButtonProps> = ({
     <button
       className={className}
       type={type}
-      onClick={removeCard ? () => removeCard(id) : removeCardVisibility}
+      onClick={removeCard ? () => removeCard(id ?? '') : removeCardVisibility}
     >
       {description}
     </button>
