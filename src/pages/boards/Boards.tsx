@@ -2,7 +2,7 @@ import { ChangeEvent, FC, useState } from 'react';
 
 import { CardList } from '../../components/cardList/CardList';
 import { CardContainer } from '../../components/cardContainer/CardContainer';
-import { TertiaryButton } from '../../components/buttons/tertiaryButton/TertiaryButton';
+import { TertiaryButton } from '../../components/buttons';
 
 import './Boards.scss';
 

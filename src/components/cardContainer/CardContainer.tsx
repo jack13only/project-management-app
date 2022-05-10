@@ -1,8 +1,8 @@
 import { FC, ChangeEvent } from 'react';
 
 import { Textarea } from '../textarea/Textarea';
-import { SecondaryButton } from '../buttons/secondaryButton/SecondaryButton';
-import { DeleteButton } from '../buttons/deleteButton/DeleteButton';
+import { SecondaryButton } from '../buttons';
+import { DeleteButton } from '../buttons';
 
 import './CardContainer.scss';
 

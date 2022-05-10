@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 import { InputCheckbox } from '../inputCheckbox/InputCheckbox';
-import { DeleteButton } from '../buttons/deleteButton/DeleteButton';
+import { DeleteButton } from '../buttons';
 
 interface CardItemProps {
   id?: string | undefined;
