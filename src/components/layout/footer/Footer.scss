@@ -35,7 +35,7 @@
   background-position: left center;
   
   &:hover {
-    transform: scale(1.01);
+    transform: scale(1.02);
     transition: $transition;
   }
 }
@@ -69,7 +69,7 @@
   &:hover {
     box-shadow: 0 0 0 0.3rem $color-yellow-dark;
     background-color: $color-yellow;
-    transition: .4s ease-in-out;
+    transition: $transition;
     transform: scale(1.2);
   }
 
