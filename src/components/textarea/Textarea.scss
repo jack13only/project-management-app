@@ -1,0 +1,25 @@
+@import '../../sass/Constants.scss';
+
+.textarea {
+  width: 100%;
+  padding: $base $base * 2;
+  color: $color-dark-09;
+  background-color: $color-grey-07;
+  border-width: 1px;
+  border-style: solid;
+  border-color: $color-dark-09;
+  border-radius: $base;
+  resize: none;
+  transition: $transition;
+
+  &::placeholder {
+    color: $color-dark-08;
+  }
+
+  &:hover,
+  &:focus,
+  &:active {
+    border-color: $color-dark;
+    transition: $transition;
+  }
+}

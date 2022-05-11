@@ -9,12 +9,31 @@
   text-align: center;
 }
 
-.label {
+.task {
   display: flex;
   align-items: center;
-  justify-content: center;
-  flex-direction: column;
+  justify-content: flex-start;
   gap: $base * 2;
-  width: 50%;
-  margin: 0 auto;
+  margin-top: $base;
+}
+
+.task-checkbox:checked + .task-text {
+  text-decoration: line-through;
+}
+
+.task-text {
+  font-size: $fs-xl;
+}
+
+.task-delete {
+  font-size: $fs-xl;
+  font-weight: $fw-bold;
+  background-color: $color-white;
+  color: $color-error;
+  border: none;
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
 }

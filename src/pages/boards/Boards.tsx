@@ -1,51 +1,90 @@
 import { ChangeEvent, FC, useState } from 'react';
 
+import { CardList } from '../../components/cardList/CardList';
+import { CardContainer } from '../../components/cardContainer/CardContainer';
+import { TertiaryButton } from '../../components/buttons';
+
 import './Boards.scss';
 
-type TodosState = {
+type CardsState = {
   id: string;
-  text: string;
-  completed: boolean;
+  cardTitle: string;
+  complete: boolean;
 };
 
 const Boards: FC = () => {
-  const [todos, setTodos] = useState<TodosState[]>([]);
-  const [text, setText] = useState<string>('');
+  const [cards, setCards] = useState<CardsState[]>([]);
+  const [cardTitle, setCardTitle] = useState<string>('');
+  const [isOpenCard, setIsOpenCard] = useState<boolean>(false);
 
-  const handleText = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleCardTitle = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const VALUE = event.target.value;
-    setText(VALUE);
+    setCardTitle(VALUE);
   };
 
-  const addTodo = () => {
-    if (text.trim().length) {
-      setTodos([
-        ...todos,
+  const addСard = () => {
+    if (cardTitle.trim().length) {
+      setCards([
+        ...cards,
         {
           id: new Date().toISOString(),
-          text,
-          completed: false,
+          cardTitle,
+          complete: false,
         },
       ]);
-      setText('');
+      setCardTitle('');
+      setIsOpenCard(false);
     }
+  };
+
+  const removeCard = (cardId: string | undefined) => {
+    setCards(cards.filter((card) => card.id !== cardId));
+  };
+
+  const toggleCardComplete = (cardId: string | undefined) => {
+    setCards(
+      cards.map((card) => {
+        if (card.id !== cardId) {
+          return card;
+        } else {
+          return {
+            ...card,
+            complete: !card.complete,
+          };
+        }
+      })
+    );
+  };
+
+  const addCardVisibility = () => {
+    setIsOpenCard(true);
+  };
+
+  const removeCardVisibility = () => {
+    setIsOpenCard(false);
+    setCardTitle('');
   };
 
   return (
     <section className="boards">
-      <h2 className="h2">Boards</h2>
-      <ul>
-        {todos.map((todo) => (
-          <li key={todo.id}>{todo.text}</li>
-        ))}
-      </ul>
-      <label className="label">
-        Enter a title for this card...
-        <input type="text" value={text} onChange={handleText} />
-        <button type="button" className="btn btn-log btn-bordered" onClick={addTodo}>
-          Add a card
-        </button>
-      </label>
+      <h2 className="h2">Boards Page</h2>
+      <CardList cards={cards} removeCard={removeCard} toggleCardComplete={toggleCardComplete} />
+      <div className="card__container">
+        <TertiaryButton
+          className="button__tertiary"
+          type="button"
+          description="+ Add a card"
+          isOpenCard={isOpenCard}
+          onClick={addCardVisibility}
+        />
+      </div>
+      <CardContainer
+        isOpenCard={isOpenCard}
+        removeCardVisibility={removeCardVisibility}
+        cardTitle={cardTitle}
+        handleCardTitle={handleCardTitle}
+        addCard={addСard}
+      />
     </section>
   );
 };
