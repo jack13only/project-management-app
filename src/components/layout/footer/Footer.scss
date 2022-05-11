@@ -1,1 +1,102 @@
 @import '../../../sass/Constants.scss';
+
+.footer {
+  padding: $base * 4 0;
+  width: 100%;
+  height: auto;
+  background: $color-dark-02;
+}
+
+.footer__wrapper {
+  @include flexSpaceBetween;
+}
+
+.footer__info {
+  display: flex;
+  flex-direction: column;
+  row-gap: $base * 2;
+}
+
+.footer__link {
+  display: block;
+  width: 100%;
+  height: inherit;
+}
+
+.footer__logo {
+  flex-basis: 20%;
+  height: $base * 4;
+}
+
+.footer__logo-link {
+  background-image: url('../../../images/icons/rs_school_logo.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: left center;
+  
+  &:hover {
+    transform: scale(1.02);
+    transition: $transition;
+  }
+}
+
+.footer__team {
+  @include flexEnd;
+  flex-direction: column;
+  align-items: flex-end;
+  column-gap: $base * 3;
+  row-gap: 10px;
+}
+
+.footer__title {
+  @include spartan;
+  font-size: $fs-m;
+  font-weight: $fw-medium;
+}
+
+.footer__contacts {
+  @include flexCenter;
+  column-gap: $base * 3;
+}
+
+.footer__contact {
+  width: $base * 7;
+  height: $base * 7;
+  border-radius: 50%;
+  cursor: pointer;
+  overflow: hidden;
+
+  &:hover {
+    box-shadow: 0 0 0 0.3rem $color-yellow-dark;
+    background-color: $color-yellow;
+    transition: $transition;
+    transform: scale(1.2);
+  }
+
+  @media screen and (max-width: $breakpoint-xs-min) {
+    width: $base * 5;
+    height: $base * 5;
+  }
+}
+
+.contact-1 {
+  background-image: url('../../../images/avatar-1.jpg');
+  background-size: cover;
+}
+
+.contact-2 {
+  background-image: url('../../../images/avatar-2.jpg');
+  background-size: cover;
+}
+
+.contact-3 {
+  background-image: url('../../../images/avatar-3.jpg');
+  background-size: cover;
+}
+
+.footer__year {
+  flex-basis: 20%;
+  @include spartan;
+  font-size: $fs-m;
+  text-align: left;
+}

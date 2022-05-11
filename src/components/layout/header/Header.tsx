@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { PrimaryButton } from '../../buttons/header/PrimaryButton';
 
-import logo from '../../../images/logo.svg';
+import logo from '../../../images/icons/logo.svg';
 import './Header.scss';
 
 const Header: FC = () => {
