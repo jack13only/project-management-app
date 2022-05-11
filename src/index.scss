@@ -16,6 +16,17 @@ body {
   list-style-type: none;
 }
 
+main {
+  flex-grow: 1;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: space-between;
+}
+
 .wrapper {
   display: flex;
   align-items: center;

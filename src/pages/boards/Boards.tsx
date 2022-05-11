@@ -13,78 +13,17 @@ type CardsState = {
 };
 
 const Boards: FC = () => {
-  const [cards, setCards] = useState<CardsState[]>([]);
-  const [cardTitle, setCardTitle] = useState<string>('');
-  const [isOpenCard, setIsOpenCard] = useState<boolean>(false);
-
-  const handleCardTitle = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    const VALUE = event.target.value;
-    setCardTitle(VALUE);
-  };
-
-  const addСard = () => {
-    if (cardTitle.trim().length) {
-      setCards([
-        ...cards,
-        {
-          id: new Date().toISOString(),
-          cardTitle,
-          complete: false,
-        },
-      ]);
-      setCardTitle('');
-      setIsOpenCard(false);
-    }
-  };
-
-  const removeCard = (cardId: string | undefined) => {
-    setCards(cards.filter((card) => card.id !== cardId));
-  };
-
-  const toggleCardComplete = (cardId: string | undefined) => {
-    setCards(
-      cards.map((card) => {
-        if (card.id !== cardId) {
-          return card;
-        } else {
-          return {
-            ...card,
-            complete: !card.complete,
-          };
-        }
-      })
-    );
-  };
-
-  const addCardVisibility = () => {
-    setIsOpenCard(true);
-  };
-
-  const removeCardVisibility = () => {
-    setIsOpenCard(false);
-    setCardTitle('');
-  };
-
   return (
     <section className="boards">
-      <h2 className="h2">Boards Page</h2>
-      <CardList cards={cards} removeCard={removeCard} toggleCardComplete={toggleCardComplete} />
-      <div className="card__container">
+      <h2 className="boards__title">Your boards</h2>
+      <div className="boards__container">
         <TertiaryButton
-          className="button__tertiary"
+          className="button__tertiary board__new"
           type="button"
-          description="+ Add a card"
-          isOpenCard={isOpenCard}
-          onClick={addCardVisibility}
+          description="+ Create a new board"
+          isOpenCard={false}
         />
       </div>
-      <CardContainer
-        isOpenCard={isOpenCard}
-        removeCardVisibility={removeCardVisibility}
-        cardTitle={cardTitle}
-        handleCardTitle={handleCardTitle}
-        addCard={addСard}
-      />
     </section>
   );
 };

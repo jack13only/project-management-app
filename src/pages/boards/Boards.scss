@@ -1,12 +1,25 @@
 @import '../../sass/Constants.scss';
 
 .boards {
+  padding: $base * 5 0;
   width: 80%;
   margin: 0 auto;
 }
 
-.h2 {
+.boards__title {
   text-align: center;
+}
+
+.boards__container {
+  @include flexSpaceBetween;
+  flex-wrap: wrap;
+  row-gap: $base * 4;
+  padding: $base * 5 0;
+}
+
+.board__new {
+  flex-basis: 30%;
+  height: $base * 20;
 }
 
 .task {
