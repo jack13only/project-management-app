@@ -1,6 +1,7 @@
 @import '../../../sass/Constants.scss';
 
 .btn {
+  @include spartan;
   width: $base * 17;
   height: $base * 7;
   border: 1px solid $color-yellow;

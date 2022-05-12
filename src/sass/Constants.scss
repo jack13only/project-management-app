@@ -1,5 +1,23 @@
 // === MIXIN ===
 
+@mixin scroll {
+  &::-webkit-scrollbar {
+    width: $base;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $color-dark-02;
+    border-radius: $base;
+  }
+
+  &::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 $base grey;
+    border-radius: $base * 2;
+    height: $base * 2;
+    background-color: $color-grey-white;
+  }
+}
+
 @mixin spartan {
   font-family: 'Spartan', sans-serif;
 }
