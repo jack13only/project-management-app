@@ -1,18 +1,13 @@
-import { ChangeEvent, FC, useState } from 'react';
+import { FC } from 'react';
+import { Link } from 'react-router-dom';
 
-import { CardList } from '../../components/cardList/CardList';
-import { CardContainer } from '../../components/cardContainer/CardContainer';
 import { TertiaryButton } from '../../components/buttons';
 
 import './Boards.scss';
 
-type CardsState = {
-  id: string;
-  cardTitle: string;
-  complete: boolean;
-};
-
 const Boards: FC = () => {
+  const addNewBoard = () => console.log('new board');
+
   return (
     <section className="boards">
       <h2 className="boards__title">Your boards</h2>
@@ -21,8 +16,14 @@ const Boards: FC = () => {
           className="button__tertiary board__new"
           type="button"
           description="+ Create a new board"
-          isOpenCard={false}
+          onClick={addNewBoard}
         />
+
+        {/* todo: delete the next link after adding functionallity for created board: click on the newboard item - open a new board with columns */}
+
+        <Link to="/boards/board">
+          See a New Board Page (example. will be opened after clicking on the new board)
+        </Link>
       </div>
     </section>
   );

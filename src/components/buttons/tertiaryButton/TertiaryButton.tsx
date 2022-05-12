@@ -6,7 +6,7 @@ interface TertiaryButtonProps {
   className: string;
   type: 'button';
   description: string;
-  isOpenCard: boolean;
+  isOpenCard?: boolean;
   onClick: () => void;
 }
 
