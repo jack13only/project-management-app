@@ -2,9 +2,9 @@ import { ChangeEvent, FC, useState } from 'react';
 
 import { CardList } from '../../components/cardList/CardList';
 import { CardContainer } from '../../components/cardContainer/CardContainer';
+import { TertiaryButton } from '../buttons';
 
 import './BoardColumns.scss';
-import { TertiaryButton } from '../buttons';
 
 interface BoardColumnProps {
   column: string;
@@ -71,17 +71,15 @@ const BoardColumn: FC<BoardColumnProps> = ({ column }) => {
 
   return (
     <div className="board__column">
-      <h4 className="board__column-title">{column}</h4>
+      <h4 className="h4">{column}</h4>
       <CardList cards={cards} removeCard={removeCard} toggleCardComplete={toggleCardComplete} />
-      <div className="card__add">
-        <TertiaryButton
-          className="button__tertiary column__btn"
-          type="button"
-          description="+ Add a card"
-          isOpenCard={isOpenCard}
-          onClick={addCardVisibility}
-        />
-      </div>
+      <TertiaryButton
+        className="button__tertiary column__btn"
+        type="button"
+        description="+ Add a card"
+        isOpenCard={isOpenCard}
+        onClick={addCardVisibility}
+      />
       <CardContainer
         isOpenCard={isOpenCard}
         removeCardVisibility={removeCardVisibility}

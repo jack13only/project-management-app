@@ -20,11 +20,11 @@
 html,
 body {
   @include spartan;
-  height: 100%;
+  position: relative;
   width: 100%;
+  height: 100%;
   overflow-x: hidden;
   scroll-behavior: smooth;
-  position: relative;
 }
 
 body {
@@ -44,9 +44,9 @@ body {
 
 #root {
   display: flex;
+  justify-content: space-between;
   flex-direction: column;
   height: 100vh;
-  justify-content: space-between;
 }
 
 .wrapper {
@@ -57,4 +57,41 @@ body {
   @media screen and (max-width: $breakpoint-xs-min) {
     width: 95%;
   }
+}
+
+.h2 {
+  @include spartan;
+  margin: 0;
+  padding: 0;
+  font-size: $fs-xxl;
+  font-weight: $fw-semi-bold;
+  letter-spacing: 2px;
+  text-align: center;
+  text-transform: uppercase;
+  @include disableSelection;
+}
+
+.h3 {
+  @include spartan;
+  margin: 0;
+  padding: 0;
+  font-size: $fs-xs;
+  font-weight: $fw-semi-bold;
+  color: $color-white;
+  text-align: center;
+  text-transform: uppercase;
+  @include disableSelection;
+}
+
+.h4 {
+  @include spartan;
+  margin: 0;
+  padding: 0;
+  font-size: $fs-m;
+  font-weight: $fw-bold;
+  color: $color-dark;
+  line-height: $base * 4;
+  letter-spacing: 0.06em;
+  padding-bottom: $base * 2;
+  border-bottom: 1px solid $color-dark-02;
 }

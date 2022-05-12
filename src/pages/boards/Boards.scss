@@ -6,10 +6,6 @@
   margin: 0 auto;
 }
 
-.boards__title {
-  text-align: center;
-}
-
 .boards__container {
   @include flexSpaceBetween;
   flex-wrap: wrap;

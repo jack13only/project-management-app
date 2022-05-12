@@ -29,11 +29,6 @@
   overflow-y: auto;
 }
 
-.board__column-title {
-  padding-bottom: $base * 2;
-  border-bottom: 1px solid $color-dark-02;
-}
-
 .board__column {
   @include scroll;
 }
@@ -50,10 +45,10 @@
   align-items: center;
   justify-content: flex-start;
   gap: $base * 2;
+  width: 100%;
   padding: $base * 4 $base;
   border: 1px solid $color-dark-04;
   border-radius: $base;
-  width: 100%;
 }
 
 .task-checkbox:checked + .task-text {
