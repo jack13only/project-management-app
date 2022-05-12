@@ -21,8 +21,6 @@ const BoardColumn: FC<BoardColumnProps> = ({ column }) => {
   const [cardTitle, setCardTitle] = useState<string>('');
   const [isOpenCard, setIsOpenCard] = useState<boolean>(false);
 
-  console.log(cards.length);
-
   const handleCardTitle = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const VALUE = event.target.value;
     setCardTitle(VALUE);
