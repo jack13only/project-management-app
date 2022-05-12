@@ -1,90 +1,30 @@
-import { ChangeEvent, FC, useState } from 'react';
+import { FC } from 'react';
+import { Link } from 'react-router-dom';
 
-import { CardList } from '../../components/cardList/CardList';
-import { CardContainer } from '../../components/cardContainer/CardContainer';
 import { TertiaryButton } from '../../components/buttons';
 
 import './Boards.scss';
 
-type CardsState = {
-  id: string;
-  cardTitle: string;
-  complete: boolean;
-};
-
 const Boards: FC = () => {
-  const [cards, setCards] = useState<CardsState[]>([]);
-  const [cardTitle, setCardTitle] = useState<string>('');
-  const [isOpenCard, setIsOpenCard] = useState<boolean>(false);
-
-  const handleCardTitle = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    const VALUE = event.target.value;
-    setCardTitle(VALUE);
-  };
-
-  const addСard = () => {
-    if (cardTitle.trim().length) {
-      setCards([
-        ...cards,
-        {
-          id: new Date().toISOString(),
-          cardTitle,
-          complete: false,
-        },
-      ]);
-      setCardTitle('');
-      setIsOpenCard(false);
-    }
-  };
-
-  const removeCard = (cardId: string | undefined) => {
-    setCards(cards.filter((card) => card.id !== cardId));
-  };
-
-  const toggleCardComplete = (cardId: string | undefined) => {
-    setCards(
-      cards.map((card) => {
-        if (card.id !== cardId) {
-          return card;
-        } else {
-          return {
-            ...card,
-            complete: !card.complete,
-          };
-        }
-      })
-    );
-  };
-
-  const addCardVisibility = () => {
-    setIsOpenCard(true);
-  };
-
-  const removeCardVisibility = () => {
-    setIsOpenCard(false);
-    setCardTitle('');
-  };
+  const addNewBoard = () => console.log('new board');
 
   return (
     <section className="boards">
-      <h2 className="h2">Boards Page</h2>
-      <CardList cards={cards} removeCard={removeCard} toggleCardComplete={toggleCardComplete} />
-      <div className="card__container">
+      <h2 className="boards__title">Your boards</h2>
+      <div className="boards__container">
         <TertiaryButton
-          className="button__tertiary"
+          className="button__tertiary board__new"
           type="button"
-          description="+ Add a card"
-          isOpenCard={isOpenCard}
-          onClick={addCardVisibility}
+          description="+ Create a new board"
+          onClick={addNewBoard}
         />
+
+        {/* todo: delete the next link after adding functionallity for created board: click on the newboard item - open a new board with columns */}
+
+        <Link to="/boards/board">
+          See a New Board Page (example. will be opened after clicking on the new board)
+        </Link>
       </div>
-      <CardContainer
-        isOpenCard={isOpenCard}
-        removeCardVisibility={removeCardVisibility}
-        cardTitle={cardTitle}
-        handleCardTitle={handleCardTitle}
-        addCard={addСard}
-      />
     </section>
   );
 };

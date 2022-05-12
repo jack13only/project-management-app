@@ -16,7 +16,7 @@ interface CardListProps {
 
 const CardList: FC<CardListProps> = ({ cards, removeCard, toggleCardComplete }) => {
   return (
-    <ul className="card__container">
+    <ul className="cards__list">
       {cards.map((card) => {
         return (
           <CardItem

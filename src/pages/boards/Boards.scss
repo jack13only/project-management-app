@@ -1,39 +1,23 @@
 @import '../../sass/Constants.scss';
 
 .boards {
+  padding: $base * 5 0;
   width: 80%;
   margin: 0 auto;
 }
 
-.h2 {
+.boards__title {
   text-align: center;
 }
 
-.task {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: $base * 2;
-  margin-top: $base;
+.boards__container {
+  @include flexSpaceBetween;
+  flex-wrap: wrap;
+  row-gap: $base * 4;
+  padding: $base * 5 0;
 }
 
-.task-checkbox:checked + .task-text {
-  text-decoration: line-through;
-}
-
-.task-text {
-  font-size: $fs-xl;
-}
-
-.task-delete {
-  font-size: $fs-xl;
-  font-weight: $fw-bold;
-  background-color: $color-white;
-  color: $color-error;
-  border: none;
-  cursor: pointer;
-}
-
-.hidden {
-  display: none;
+.board__new {
+  flex-basis: 30%;
+  height: $base * 20;
 }
