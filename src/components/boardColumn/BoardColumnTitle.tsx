@@ -32,6 +32,10 @@ const BoardColumnTitle: FC<BoardColumnTitleTypes> = ({ columnId, columnTitle, bo
     }
   };
 
+  const cancelColumnTitle = () => {
+    setIsOpenColumnTitle(false);
+  };
+
   const handleColumnTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
     const currentInput = event.target as HTMLInputElement;
     setColumnTitle(currentInput.value);
@@ -46,7 +50,9 @@ const BoardColumnTitle: FC<BoardColumnTitleTypes> = ({ columnId, columnTitle, bo
             <button type="button" onClick={saveColumnTitle}>
               Submit
             </button>
-            <button type="button">Cancel</button>
+            <button type="button" onClick={cancelColumnTitle}>
+              Cancel
+            </button>
           </div>
         </div>
       ) : (
