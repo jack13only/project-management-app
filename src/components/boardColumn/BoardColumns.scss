@@ -1,18 +1,5 @@
 @import '../../sass/Constants.scss';
 
-.board__columns {
-  height: 100%;
-  background-color: $color-purple-06;
-}
-
-.board__wrapper {
-  align-items: flex-start;
-  column-gap: $base * 3;
-  padding-top: $base * 7;
-  height: inherit;
-  overflow-y: auto;
-}
-
 .board__column {
   display: flex;
   flex-direction: column;

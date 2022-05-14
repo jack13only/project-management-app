@@ -1,9 +1,15 @@
 import { FC } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { useGetColumnsQuery, usePostColumnMutation } from '../../app/RtkQuery';
+import {
+  useGetBoardsByIdQuery,
+  useGetColumnsQuery,
+  usePostColumnMutation,
+} from '../../app/RtkQuery';
 import { BoardColumn } from '../../components/boardColumn/BoardColumn';
 import { TertiaryButton } from '../../components/buttons';
+
+import './Board.scss';
 
 export interface ColumnType {
   title: string;
@@ -14,8 +20,11 @@ export interface ColumnType {
 const Board: FC = () => {
   const { id } = useParams();
   const boardId = id ?? '';
+
   const { data = [], error } = useGetColumnsQuery({ boardId });
   const [postColumn] = usePostColumnMutation();
+  const getBoardsById = useGetBoardsByIdQuery(boardId);
+  const currentBoardTitle = getBoardsById.data?.title;
 
   if (error && 'status' in error) {
     console.log('error.data', error.status);
@@ -32,8 +41,9 @@ const Board: FC = () => {
   };
 
   return (
-    <div className="board__columns">
+    <div className="board">
       <div className="wrapper board__wrapper">
+        <h2 className="board__title">Board {currentBoardTitle}</h2>
         {data?.map(({ title, id, order }: ColumnType) => {
           return (
             <BoardColumn
