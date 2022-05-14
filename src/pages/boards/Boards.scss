@@ -11,8 +11,9 @@
 }
 
 .boards__container {
-  @include flexSpaceBetween;
+  @include flexStart;
   flex-wrap: wrap;
+  column-gap: $base * 2;
   row-gap: $base * 4;
   padding: $base * 5 0;
 }
