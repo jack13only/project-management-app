@@ -17,6 +17,10 @@ const Board: FC = () => {
   const { data = [], error } = useGetColumnsQuery({ boardId });
   const [postColumn] = usePostColumnMutation();
 
+  if (error && 'status' in error) {
+    console.log('error.data', error.status);
+  }
+
   const addNewColumn = async () => {
     await postColumn({
       boardId: boardId,
