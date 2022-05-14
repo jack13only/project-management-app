@@ -1,18 +1,5 @@
 @import '../../sass/Constants.scss';
 
-.board__columns {
-  height: 100%;
-  background-color: $color-purple-06;
-}
-
-.board__wrapper {
-  align-items: flex-start;
-  column-gap: $base * 3;
-  padding-top: $base * 7;
-  height: inherit;
-  overflow-y: auto;
-}
-
 .board__column {
   display: flex;
   flex-direction: column;
@@ -30,7 +17,6 @@
 
 .board__column-title {
   padding-bottom: $base * 2;
-  border-bottom: 1px solid $color-dark-02;
 }
 
 .board__column::-webkit-scrollbar {
@@ -93,4 +79,10 @@
 
 .column__new-btn {
   flex-basis: 10%;
+}
+
+.board__column-head {
+  @include flexSpaceBetween;
+  align-items: baseline;
+  border-bottom: 1px solid $color-dark-02;
 }

@@ -120,7 +120,12 @@ export const apiUser = createApi({
 
     //COLUMNS
     getColumns: build.query({
-      query: () => `columns`,
+      query: (data: { boardId?: string }) => {
+        const { boardId } = data;
+        return {
+          url: `boards/${boardId}/columns`,
+        };
+      },
       providesTags: ['Column'],
     }),
     getColumnById: build.query({
@@ -137,7 +142,7 @@ export const apiUser = createApi({
       query(data: { boardId: string; body: ColumnType }) {
         const { boardId, body } = data;
         return {
-          url: `boards/${boardId}/columns/`,
+          url: `boards/${boardId}/columns`,
           method: 'POST',
           body,
         };
