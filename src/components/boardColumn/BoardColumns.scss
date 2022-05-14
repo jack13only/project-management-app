@@ -94,3 +94,7 @@
 .column__new-btn {
   flex-basis: 10%;
 }
+
+.board__column-head {
+  @include flexSpaceBetween;
+}

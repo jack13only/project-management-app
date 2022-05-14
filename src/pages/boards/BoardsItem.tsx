@@ -1,19 +1,17 @@
 import { useDeleteBoardMutation } from '../../app/RtkQuery';
+import { BoardsTypes } from './typesBoards/TypesBoards';
 
-import { BoardTypes } from './types/BoardsTypes';
-import './BoardsItem.scss';
-
-const BoardsItem = ({ title, id }: BoardTypes) => {
+const BoardsItem = ({ title, id }: BoardsTypes) => {
   const [deleteBoard] = useDeleteBoardMutation();
 
   const deleteBoardItem = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.stopPropagation();
+    event.preventDefault();
     deleteBoard(id.toString());
   };
 
   return (
-    <div className="board__new boards-item">
-      <h2 className="boards-item__title">{title}</h2>
+    <div className="boards__item">
+      <h2 className="boards__item-title">{title}</h2>
       <button type="button" onClick={deleteBoardItem}>
         Delete
       </button>

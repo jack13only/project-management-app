@@ -1,14 +1,18 @@
-import { ChangeEvent, FC, useState } from 'react';
+import React, { ChangeEvent, FC, useState } from 'react';
 
 import { CardList } from '../../components/cardList/CardList';
 import { CardContainer } from '../../components/cardContainer/CardContainer';
+import { DeleteButton, TertiaryButton } from '../buttons';
+import { useDeleteColumnMutation, useUpdateColumnMutation } from '../../app/RtkQuery';
 
 import './BoardColumns.scss';
-import { TertiaryButton } from '../buttons';
 
-interface BoardColumnProps {
-  column: string;
-}
+type BoardColumnProps = {
+  columnTitle: string;
+  boardId: string;
+  columnId: string;
+  order: number;
+};
 
 type CardsState = {
   id: string;
@@ -16,10 +20,38 @@ type CardsState = {
   complete: boolean;
 };
 
-const BoardColumn: FC<BoardColumnProps> = ({ column }) => {
+const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, order }) => {
   const [cards, setCards] = useState<CardsState[]>([]);
   const [cardTitle, setCardTitle] = useState<string>('');
   const [isOpenCard, setIsOpenCard] = useState<boolean>(false);
+  const [currentColumnTitle, setColumnTitle] = useState<string>('');
+  const [isOpenColumnTitle, setIsOpenColumnTitle] = useState<boolean>(false);
+
+  const [deleteColumn] = useDeleteColumnMutation();
+  const [updateColumn] = useUpdateColumnMutation();
+
+  const removeColumn = async () => {
+    await deleteColumn({ boardId, columnId });
+  };
+
+  const changeTitle = () => {
+    setIsOpenColumnTitle(true);
+  };
+
+  const saveColumnTitle = async () => {
+    setIsOpenColumnTitle(false);
+
+    await updateColumn({
+      columnId,
+      boardId,
+      body: { title: currentColumnTitle, order },
+    });
+  };
+
+  const handleColumnTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const currentInput = event.target as HTMLInputElement;
+    setColumnTitle(currentInput.value);
+  };
 
   const handleCardTitle = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const VALUE = event.target.value;
@@ -71,7 +103,28 @@ const BoardColumn: FC<BoardColumnProps> = ({ column }) => {
 
   return (
     <div className="board__column">
-      <h4 className="board__column-title">{column}</h4>
+      <div className="board__column-head">
+        {isOpenColumnTitle ? (
+          <>
+            <input type="text" placeholder="change title" onChange={handleColumnTitle} />
+            <button type="button" onClick={saveColumnTitle}>
+              Save
+            </button>
+          </>
+        ) : (
+          <h4 className="board__column-title" onClick={changeTitle}>
+            {columnTitle}
+          </h4>
+        )}
+
+        <DeleteButton
+          className="task-delete"
+          type="button"
+          description="&times;"
+          removeCard={removeColumn}
+        />
+      </div>
+
       <CardList cards={cards} removeCard={removeCard} toggleCardComplete={toggleCardComplete} />
       <div className="card__add">
         <TertiaryButton

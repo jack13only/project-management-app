@@ -1,11 +1,11 @@
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import { useGetBoardsQuery, usePostBoardMutation } from '../../app/RtkQuery';
 
 import { TertiaryButton } from '../../components/buttons';
 import { BoardsItem } from './BoardsItem';
 
-import { BoardTypes } from './types/BoardsTypes';
+import { BoardsTypes } from './typesBoards/TypesBoards';
 
 import './Boards.scss';
 
@@ -21,30 +21,26 @@ const Boards: FC = () => {
     console.log('error.data', error.status);
   }
 
-  const addNewBoard = async () => {
-    await postBoard({ title: getRandomTitleBoard() });
-  };
+  const addNewBoard = async () => await postBoard({ title: getRandomTitleBoard() });
 
   return (
     <section className="boards">
       <h2 className="boards__title">Your boards</h2>
       <div className="boards__container">
         <TertiaryButton
-          className="button__tertiary board__new"
+          className="button__tertiary board__new-btn"
           type="button"
           description="+ Create a new board"
           onClick={addNewBoard}
         />
 
-        {data?.map((board: BoardTypes) => {
-          return <BoardsItem key={board.id} title={board.title} id={board.id} />;
+        {data?.map(({ id, title }: BoardsTypes) => {
+          return (
+            <Link to={`/boards/${id}`} key={id} className="boards-item__link">
+              <BoardsItem title={title} id={id} />
+            </Link>
+          );
         })}
-
-        {/* todo: delete the next link after adding functionality for created board: click on the new board item - open a new board with columns */}
-
-        <Link to="/boards/board">
-          See a New Board Page (example. will be opened after clicking on the new board)
-        </Link>
       </div>
     </section>
   );

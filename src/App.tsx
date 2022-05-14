@@ -15,10 +15,7 @@ const App: FC = () => {
       <Route path="/" element={<Layout />}>
         <Route index element={<WelcomePage />} />
         <Route path="boards" element={<Boards />} />
-
-        {/* todo: delete the next one path after fixing routes and functionallity for a new board and columns */}
-
-        <Route path="/boards/board" element={<Board />} />
+        <Route path="/boards/:id" element={<Board />} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>

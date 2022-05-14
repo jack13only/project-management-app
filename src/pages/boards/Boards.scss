@@ -17,7 +17,14 @@
   padding: $base * 5 0;
 }
 
-.board__new {
+.board__new-btn {
   flex-basis: 30%;
   height: $base * 20;
+}
+
+.boards-item__link {
+  flex-basis: 30%;
+  height: $base * 20;
+  border: 1px solid $color-dark-03;
+  cursor: pointer;
 }

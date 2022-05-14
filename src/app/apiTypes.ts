@@ -15,5 +15,5 @@ export type BoardType = {
 
 export type ColumnType = {
   title: string;
-  order: number;
+  order?: number;
 };
