@@ -1,6 +1,6 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 
-import { useUpdateColumnMutation } from '../../app/RtkQuery';
+import { useGetColumnByIdQuery, useUpdateColumnMutation } from '../../app/RtkQuery';
 
 import './BoardColumnTitle.scss';
 
@@ -12,9 +12,15 @@ interface BoardColumnTitleTypes {
 }
 
 const BoardColumnTitle: FC<BoardColumnTitleTypes> = ({ columnId, columnTitle, boardId, order }) => {
+  const { data = [], error } = useGetColumnByIdQuery({ columnId, boardId });
+  const [updateColumn] = useUpdateColumnMutation();
+
   const [currentColumnTitle, setColumnTitle] = useState<string>('');
   const [isOpenColumnTitle, setIsOpenColumnTitle] = useState<boolean>(false);
-  const [updateColumn] = useUpdateColumnMutation();
+
+  if (error && 'status' in error) {
+    console.log('error.data', error.status);
+  }
 
   const changeTitle = () => {
     setIsOpenColumnTitle(true);
@@ -41,13 +47,22 @@ const BoardColumnTitle: FC<BoardColumnTitleTypes> = ({ columnId, columnTitle, bo
     setColumnTitle(currentInput.value);
   };
 
+  useEffect(() => {
+    setColumnTitle(data.title);
+  }, [data.title]);
+
   return (
     <>
       {isOpenColumnTitle ? (
         <div className="board__column-input">
-          <input type="text" placeholder="change title" onChange={handleColumnTitleValue} />
+          <input
+            type="text"
+            placeholder="change title"
+            onChange={handleColumnTitleValue}
+            value={currentColumnTitle}
+          />
           <div className="board__column-btns">
-            <button type="button" onClick={saveColumnTitle}>
+            <button type="submit" onClick={saveColumnTitle}>
               Submit
             </button>
             <button type="button" onClick={cancelColumnTitle}>
