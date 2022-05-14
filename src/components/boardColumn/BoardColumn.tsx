@@ -2,8 +2,10 @@ import React, { ChangeEvent, FC, useState } from 'react';
 
 import { CardList } from '../../components/cardList/CardList';
 import { CardContainer } from '../../components/cardContainer/CardContainer';
+import { BoardColumnTitle } from './BoardColumnTitle';
 import { DeleteButton, TertiaryButton } from '../buttons';
-import { useDeleteColumnMutation, useUpdateColumnMutation } from '../../app/RtkQuery';
+
+import { useDeleteColumnMutation } from '../../app/RtkQuery';
 
 import './BoardColumns.scss';
 
@@ -24,38 +26,11 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
   const [cards, setCards] = useState<CardsState[]>([]);
   const [cardTitle, setCardTitle] = useState<string>('');
   const [isOpenCard, setIsOpenCard] = useState<boolean>(false);
-  const [currentColumnTitle, setColumnTitle] = useState<string>('');
-  const [isOpenColumnTitle, setIsOpenColumnTitle] = useState<boolean>(false);
 
   const [deleteColumn] = useDeleteColumnMutation();
-  const [updateColumn] = useUpdateColumnMutation();
 
   const removeColumn = async () => {
     await deleteColumn({ boardId, columnId });
-  };
-
-  const changeTitle = () => {
-    setIsOpenColumnTitle(true);
-  };
-
-  const saveColumnTitle = async () => {
-    setIsOpenColumnTitle(false);
-
-    await updateColumn({
-      columnId,
-      boardId,
-      body: { title: currentColumnTitle, order },
-    });
-  };
-
-  const handleColumnTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const currentInput = event.target as HTMLInputElement;
-    setColumnTitle(currentInput.value);
-  };
-
-  const handleCardTitle = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    const VALUE = event.target.value;
-    setCardTitle(VALUE);
   };
 
   const addСard = () => {
@@ -71,6 +46,11 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
       setCardTitle('');
       setIsOpenCard(false);
     }
+  };
+
+  const handleCardTitle = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    const VALUE = event.target.value;
+    setCardTitle(VALUE);
   };
 
   const removeCard = (cardId: string | undefined) => {
@@ -104,18 +84,12 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
   return (
     <div className="board__column">
       <div className="board__column-head">
-        {isOpenColumnTitle ? (
-          <>
-            <input type="text" placeholder="change title" onChange={handleColumnTitle} />
-            <button type="button" onClick={saveColumnTitle}>
-              Save
-            </button>
-          </>
-        ) : (
-          <h4 className="board__column-title" onClick={changeTitle}>
-            {columnTitle}
-          </h4>
-        )}
+        <BoardColumnTitle
+          columnTitle={columnTitle}
+          columnId={columnId}
+          boardId={boardId}
+          order={order}
+        />
 
         <DeleteButton
           className="task-delete"
@@ -126,6 +100,7 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
       </div>
 
       <CardList cards={cards} removeCard={removeCard} toggleCardComplete={toggleCardComplete} />
+
       <div className="card__add">
         <TertiaryButton
           className="button__tertiary column__btn"
@@ -135,6 +110,7 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
           onClick={addCardVisibility}
         />
       </div>
+
       <CardContainer
         isOpenCard={isOpenCard}
         removeCardVisibility={removeCardVisibility}

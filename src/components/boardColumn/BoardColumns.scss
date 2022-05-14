@@ -17,7 +17,6 @@
 
 .board__column-title {
   padding-bottom: $base * 2;
-  border-bottom: 1px solid $color-dark-02;
 }
 
 .board__column::-webkit-scrollbar {
@@ -84,4 +83,6 @@
 
 .board__column-head {
   @include flexSpaceBetween;
+  align-items: baseline;
+  border-bottom: 1px solid $color-dark-02;
 }
