@@ -36,7 +36,7 @@ const BoardColumnTitle: FC<BoardColumnTitleTypes> = ({ columnId, columnTitle, bo
     setIsOpenColumnTitle(false);
   };
 
-  const handleColumnTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleColumnTitleValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     const currentInput = event.target as HTMLInputElement;
     setColumnTitle(currentInput.value);
   };
@@ -45,7 +45,7 @@ const BoardColumnTitle: FC<BoardColumnTitleTypes> = ({ columnId, columnTitle, bo
     <>
       {isOpenColumnTitle ? (
         <div className="board__column-input">
-          <input type="text" placeholder="change title" onChange={handleColumnTitle} />
+          <input type="text" placeholder="change title" onChange={handleColumnTitleValue} />
           <div className="board__column-btns">
             <button type="button" onClick={saveColumnTitle}>
               Submit

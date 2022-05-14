@@ -6,7 +6,7 @@ const BoardsItem = ({ title, id }: BoardsTypes) => {
 
   const deleteBoardItem = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    deleteBoard(id.toString());
+    deleteBoard(id);
   };
 
   return (
