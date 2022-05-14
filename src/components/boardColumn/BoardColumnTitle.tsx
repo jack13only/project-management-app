@@ -1,6 +1,6 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 
-import { useGetColumnByIdQuery, useUpdateColumnMutation } from '../../app/RtkQuery';
+import { useUpdateColumnMutation } from '../../app/RtkQuery';
 
 import './BoardColumnTitle.scss';
 
@@ -12,15 +12,10 @@ interface BoardColumnTitleTypes {
 }
 
 const BoardColumnTitle: FC<BoardColumnTitleTypes> = ({ columnId, columnTitle, boardId, order }) => {
-  const { data = [], error } = useGetColumnByIdQuery({ columnId, boardId });
-  const [updateColumn] = useUpdateColumnMutation();
-
   const [currentColumnTitle, setColumnTitle] = useState<string>('');
   const [isOpenColumnTitle, setIsOpenColumnTitle] = useState<boolean>(false);
 
-  if (error && 'status' in error) {
-    console.log('error.data', error.status);
-  }
+  const [updateColumn] = useUpdateColumnMutation();
 
   const changeTitle = () => {
     setIsOpenColumnTitle(true);
@@ -46,10 +41,6 @@ const BoardColumnTitle: FC<BoardColumnTitleTypes> = ({ columnId, columnTitle, bo
     const currentInput = event.target as HTMLInputElement;
     setColumnTitle(currentInput.value);
   };
-
-  useEffect(() => {
-    setColumnTitle(data.title);
-  }, [data.title]);
 
   return (
     <>
