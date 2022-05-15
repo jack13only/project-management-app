@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { BoardType, SigninType, SignupType, ColumnType } from './apiTypes';
+import { RootState } from './store';
 
 export const apiUser = createApi({
   reducerPath: 'apiUser',
@@ -7,8 +8,7 @@ export const apiUser = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://bublikbackend.herokuapp.com/',
     prepareHeaders: (headers, { getState }) => {
-      const token =
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxZmZiNzJkMy03MTk2LTRmYWYtYjcyYS0xOTA3YzVlNDhhNDkiLCJsb2dpbiI6Im9sb2xvcXEiLCJpYXQiOjE2NTIzMDI1NTJ9.khrwJJfhxywMWrP-IytL3cKrcWDIVemHZbPx8zfa-BU';
+      const token = (getState() as RootState).authStorage.userToken;
 
       if (token) {
         headers.set('authorization', `Bearer ${token}`);
