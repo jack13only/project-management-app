@@ -10,6 +10,8 @@ import { PATHS } from './shared/constants/routes';
 
 import './App.scss';
 import RequireAuth from './components/requireAuth/RequireAuth';
+import Signin from './pages/signin/Signin';
+import Signup from './pages/signup/Signup';
 
 const App: FC = () => {
   return (
@@ -32,6 +34,8 @@ const App: FC = () => {
             </RequireAuth>
           }
         />
+        <Route path={PATHS.signIn} element={<Signin />} />
+        <Route path={PATHS.signUp} element={<Signup />} />
         <Route path={PATHS.notFound} element={<NotFound />} />
       </Route>
     </Routes>

@@ -65,6 +65,7 @@ export const apiUser = createApi({
     }),
     signin: build.mutation({
       query(body: SigninType) {
+        console.log('body', body);
         return {
           url: `signin`,
           method: 'POST',

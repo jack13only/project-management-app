@@ -4,10 +4,10 @@ import { useAppSelector } from '../../app/hooks';
 import { PATHS } from '../../shared/constants/routes';
 
 const RequireAuth = ({ children }: { children: JSX.Element }) => {
-  const { isAuthenticated } = useAppSelector((state) => state.authStorage);
+  const { userToken } = useAppSelector((state) => state.authStorage);
   const location = useLocation();
 
-  if (!isAuthenticated) {
+  if (!userToken) {
     return <Navigate to={PATHS.main} state={{ from: location }} replace />;
   }
 
