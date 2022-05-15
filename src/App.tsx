@@ -6,17 +6,18 @@ import { WelcomePage } from './pages/welcomepage/WelcomePage';
 import { Boards } from './pages/boards/Boards';
 import { Board } from './pages/board/Board';
 import { NotFound } from './pages/notfound/NotFound';
+import { PATHS } from './shared/constants/routes';
 
 import './App.scss';
 
 const App: FC = () => {
   return (
     <Routes>
-      <Route path="/" element={<Layout />}>
+      <Route path={PATHS.main} element={<Layout />}>
         <Route index element={<WelcomePage />} />
-        <Route path="boards" element={<Boards />} />
-        <Route path="/boards/:id" element={<Board />} />
-        <Route path="*" element={<NotFound />} />
+        <Route path={PATHS.boards} element={<Boards />} />
+        <Route path={PATHS.boadrsId} element={<Board />} />
+        <Route path={PATHS.notFound} element={<NotFound />} />
       </Route>
     </Routes>
   );

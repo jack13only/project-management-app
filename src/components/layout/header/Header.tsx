@@ -5,6 +5,7 @@ import { PrimaryButton } from '../../buttons/header/PrimaryButton';
 
 import logo from '../../../images/icons/logo.svg';
 import './Header.scss';
+import { PATHS } from '../../../shared/constants/routes';
 
 const Header: FC = () => {
   const [scrolledPage, isScrolledPage] = useState(false);
@@ -23,7 +24,7 @@ const Header: FC = () => {
   return (
     <header data-testid="header" className={'header' + (scrolledPage ? ' header-scrolled' : '')}>
       <div className="wrapper">
-        <Link to="/" className="header__logo">
+        <Link to={PATHS.main} className="header__logo">
           <img src={logo} alt="logo" className="header__logo-img" />
         </Link>
         <div className="header__navigation">
