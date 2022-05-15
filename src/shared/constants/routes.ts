@@ -1,7 +1,7 @@
 interface IPATH {
   main: string;
   boards: string;
-  boadrsId: string;
+  board: string;
   signIn: string;
   signUp: string;
   notFound: string;
@@ -10,7 +10,7 @@ interface IPATH {
 export const PATHS: IPATH = {
   main: '/',
   boards: '/boards',
-  boadrsId: '/boards/:id',
+  board: '/boards/:id',
   signIn: '/signin',
   signUp: '/signup',
   notFound: '*',

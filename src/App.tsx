@@ -27,7 +27,7 @@ const App: FC = () => {
           }
         />
         <Route
-          path={PATHS.boadrsId}
+          path={PATHS.board}
           element={
             <RequireAuth>
               <Board />
