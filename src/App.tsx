@@ -9,14 +9,29 @@ import { NotFound } from './pages/notfound/NotFound';
 import { PATHS } from './shared/constants/routes';
 
 import './App.scss';
+import RequireAuth from './components/requireAuth/RequireAuth';
 
 const App: FC = () => {
   return (
     <Routes>
       <Route path={PATHS.main} element={<Layout />}>
         <Route index element={<WelcomePage />} />
-        <Route path={PATHS.boards} element={<Boards />} />
-        <Route path={PATHS.boadrsId} element={<Board />} />
+        <Route
+          path={PATHS.boards}
+          element={
+            <RequireAuth>
+              <Boards />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path={PATHS.boadrsId}
+          element={
+            <RequireAuth>
+              <Board />
+            </RequireAuth>
+          }
+        />
         <Route path={PATHS.notFound} element={<NotFound />} />
       </Route>
     </Routes>
