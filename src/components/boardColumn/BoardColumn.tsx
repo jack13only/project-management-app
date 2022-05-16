@@ -22,12 +22,6 @@ type CardsState = {
   complete: boolean;
 };
 
-export interface ColumnType {
-  title: string;
-  id: string;
-  order: number;
-}
-
 const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, order }) => {
   const [cards, setCards] = useState<CardsState[]>([]);
   const [cardTitle, setCardTitle] = useState<string>('');
