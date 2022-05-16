@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import { Layout } from './components/layout/Layout';
-import { WelcomePage } from './pages/welcomePage1/WelcomePage';
+import { WelcomePage } from './pages/welcomePage/WelcomePage';
 import { Boards } from './pages/boards/Boards';
 import { Board } from './pages/board/Board';
 import { NotFound } from './pages/notfound/NotFound';
@@ -10,8 +10,8 @@ import { PATHS } from './shared/constants/routes';
 
 import './App.scss';
 import RequireAuth from './components/requireAuth/RequireAuth';
-import SignIn from './pages/signIn1/SignIn1';
-import SignUp from './pages/signUp1/SignUp1';
+import SignIn from './pages/signIn/SignIn';
+import SignUp from './pages/signUp/SignUp';
 
 const App: FC = () => {
   return (
