@@ -5,11 +5,7 @@ import { CardContainer } from '../../components/cardContainer/CardContainer';
 import { BoardColumnTitle } from './BoardColumnTitle';
 import { DeleteButton, TertiaryButton } from '../buttons';
 
-import {
-  useDeleteColumnMutation,
-  useGetColumnsQuery,
-  useUpdateColumnMutation,
-} from '../../app/RtkQuery';
+import { useDeleteColumnMutation } from '../../app/RtkQuery';
 
 import './BoardColumns.scss';
 
