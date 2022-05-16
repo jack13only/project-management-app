@@ -36,28 +36,10 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
   const [cards, setCards] = useState<CardsState[]>([]);
   const [cardTitle, setCardTitle] = useState<string>('');
   const [isOpenCard, setIsOpenCard] = useState<boolean>(false);
-
-  const { data = [], error } = useGetColumnsQuery({ boardId });
   const [deleteColumn] = useDeleteColumnMutation();
-  const [updateColumn] = useUpdateColumnMutation();
-
-  if (error && 'status' in error) {
-    console.log('error.data', error.status);
-  }
 
   const removeColumn = async () => {
-    const deletedColumnId = data.findIndex((column: ColumnType) => column.id === columnId);
-    const restData = data.slice(deletedColumnId + 1);
-
     await deleteColumn({ boardId, columnId });
-
-    await restData.forEach((column: ColumnType) => {
-      updateColumn({
-        columnId: column.id,
-        boardId: boardId,
-        body: { title: column.title, order: order >= 0 ? column.order - 1 : order },
-      });
-    });
   };
 
   const addСard = () => {
