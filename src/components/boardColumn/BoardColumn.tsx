@@ -38,9 +38,12 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
   const [isOpenCard, setIsOpenCard] = useState<boolean>(false);
 
   const { data = [], error } = useGetColumnsQuery({ boardId });
-
   const [deleteColumn] = useDeleteColumnMutation();
   const [updateColumn] = useUpdateColumnMutation();
+
+  if (error && 'status' in error) {
+    console.log('error.data', error.status);
+  }
 
   const removeColumn = async () => {
     const deletedColumnId = data.findIndex((column: ColumnType) => column.id === columnId);
