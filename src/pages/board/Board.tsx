@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import {
   useGetBoardsByIdQuery,
@@ -44,6 +44,9 @@ const Board: FC = () => {
     <div className="board">
       <div className="wrapper board__wrapper">
         <h2 className="board__title">Board {currentBoardTitle}</h2>
+        <Link to="/boards">
+          <button type="button">Back</button>
+        </Link>
 
         <div className="board__columns">
           {data?.map(({ title, id, order }: ColumnType) => {
