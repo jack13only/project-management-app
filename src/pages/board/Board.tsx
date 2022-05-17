@@ -60,14 +60,14 @@ const Board: FC = () => {
               />
             );
           })}
-
-          <TertiaryButton
-            className="button__tertiary column__new-btn"
-            type="button"
-            description="+ Add a new column"
-            onClick={addNewColumn}
-          />
         </div>
+
+        <TertiaryButton
+          className="button__tertiary column__new-btn"
+          type="button"
+          description="+ Add a new column"
+          onClick={addNewColumn}
+        />
       </div>
     </div>
   );

@@ -7,6 +7,7 @@
 }
 
 .board__wrapper {
+  column-gap: $base * 2;
   padding: $base * 7 0;
   height: inherit;
   overflow-x: auto;

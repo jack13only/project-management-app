@@ -87,7 +87,7 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
   }, [cards.length, isOpenCard]);
 
   return (
-    <div className="board__column" ref={columnRef}>
+    <div className="board__column" ref={columnRef} style={{ order: order }}>
       <div className="board__column-head">
         <BoardColumnTitle
           columnTitle={columnTitle}
