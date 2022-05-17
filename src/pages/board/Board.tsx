@@ -44,24 +44,27 @@ const Board: FC = () => {
     <div className="board">
       <div className="wrapper board__wrapper">
         <h2 className="board__title">Board {currentBoardTitle}</h2>
-        {data?.map(({ title, id, order }: ColumnType) => {
-          return (
-            <BoardColumn
-              columnTitle={title}
-              key={id}
-              boardId={boardId}
-              columnId={id}
-              order={order}
-            />
-          );
-        })}
 
-        <TertiaryButton
-          className="button__tertiary column__new-btn"
-          type="button"
-          description="+ Add a new column"
-          onClick={addNewColumn}
-        />
+        <div className="board__columns">
+          {data?.map(({ title, id, order }: ColumnType) => {
+            return (
+              <BoardColumn
+                columnTitle={title}
+                key={id}
+                boardId={boardId}
+                columnId={id}
+                order={order}
+              />
+            );
+          })}
+
+          <TertiaryButton
+            className="button__tertiary column__new-btn"
+            type="button"
+            description="+ Add a new column"
+            onClick={addNewColumn}
+          />
+        </div>
       </div>
     </div>
   );
