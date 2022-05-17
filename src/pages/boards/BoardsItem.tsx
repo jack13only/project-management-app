@@ -19,4 +19,4 @@ const BoardsItem = ({ title, id }: BoardsTypes) => {
   );
 };
 
-export { BoardsItem };
+export default BoardsItem;

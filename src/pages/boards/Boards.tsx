@@ -1,9 +1,9 @@
-import { FC } from 'react';
+import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
 import { useGetBoardsQuery, usePostBoardMutation } from '../../app/RtkQuery';
 
 import { TertiaryButton } from '../../components/buttons';
-import { BoardsItem } from './BoardsItem';
+import { PreloaderSuspense } from '../../components/cardContainer/preloader/index';
 
 import { BoardsTypes } from './typesBoards/TypesBoards';
 
@@ -12,6 +12,7 @@ import './Boards.scss';
 // a mock title creator for created board,
 // will be deleted later, when we add a form for creating a new board;
 const getRandomTitleBoard = () => Math.floor(Math.random() * 100).toString();
+const BoardsItem = React.lazy(() => import('./BoardsItem'));
 
 const Boards: FC = () => {
   const { data = [], error } = useGetBoardsQuery('');
@@ -34,13 +35,15 @@ const Boards: FC = () => {
           onClick={addNewBoard}
         />
 
-        {data?.map(({ id, title }: BoardsTypes) => {
-          return (
-            <Link to={`/boards/${id}`} key={id} className="boards-item__link">
-              <BoardsItem title={title} id={id} />
-            </Link>
-          );
-        })}
+        <PreloaderSuspense>
+          {data?.map(({ id, title }: BoardsTypes) => {
+            return (
+              <Link to={`/boards/${id}`} key={id} className="boards-item__link">
+                <BoardsItem title={title} id={id} />
+              </Link>
+            );
+          })}
+        </PreloaderSuspense>
       </div>
     </section>
   );
