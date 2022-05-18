@@ -33,6 +33,18 @@
   @include scroll;
 }
 
+.board__column-title {
+  @include spartan;
+  margin: 0;
+  padding-bottom: $base * 2;
+  font-size: $fs-m;
+  font-weight: $fw-bold;
+  line-height: $base * 4;
+  letter-spacing: 0.06em;
+  color: $color-dark;
+  border-bottom: 1px solid $color-dark-02;
+}
+
 .cards__list {
   display: flex;
   flex-direction: column;

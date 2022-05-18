@@ -71,7 +71,7 @@ const BoardColumn: FC<BoardColumnProps> = ({ column }) => {
 
   return (
     <div className="board__column">
-      <h4 className="h4">{column}</h4>
+      <h4 className="board__column-title">{column}</h4>
       <CardList cards={cards} removeCard={removeCard} toggleCardComplete={toggleCardComplete} />
       <TertiaryButton
         className="button__tertiary column__btn"

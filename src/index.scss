@@ -68,7 +68,6 @@ body {
   letter-spacing: 2px;
   text-align: center;
   text-transform: uppercase;
-  @include disableSelection;
 }
 
 .h3 {
@@ -80,7 +79,6 @@ body {
   color: $color-white;
   text-align: center;
   text-transform: uppercase;
-  @include disableSelection;
 }
 
 .h4 {
@@ -92,6 +90,4 @@ body {
   color: $color-dark;
   line-height: $base * 4;
   letter-spacing: 0.06em;
-  padding-bottom: $base * 2;
-  border-bottom: 1px solid $color-dark-02;
 }
