@@ -10,6 +10,8 @@ export const apiUser = createApi({
     prepareHeaders: (headers, { getState }) => {
       const token = (getState() as RootState).authStorage.userToken;
 
+      console.log('token', token);
+
       if (token) {
         headers.set('authorization', `Bearer ${token}`);
       }
@@ -21,7 +23,7 @@ export const apiUser = createApi({
     //USERS
     getUsers: build.query({
       query: () => `users`,
-      providesTags: ['User'],
+      // providesTags: ['User'],
     }),
     getUserById: build.query({
       query: (userId: string) => {
