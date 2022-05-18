@@ -35,7 +35,7 @@ const Board: FC = () => {
       boardId: boardId,
       body: {
         title: 'new column',
-        order: Math.floor(Math.random() * 100),
+        order: data.length ? data[data.length - 1].order + 1 : 0,
       },
     });
   };
