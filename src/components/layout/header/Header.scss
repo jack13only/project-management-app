@@ -9,6 +9,7 @@
   backdrop-filter: blur($base * 2);
   background: $color-grey-white;
   transition: $transition;
+  z-index: 3;
 }
 
 .header-scrolled {
