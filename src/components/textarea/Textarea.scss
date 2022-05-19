@@ -1,6 +1,7 @@
 @import '../../sass/Constants.scss';
 
 .textarea {
+  @include spartan;
   width: 100%;
   padding: $base $base * 2;
   color: $color-dark-09;

@@ -1,6 +1,8 @@
 @import '../../../sass/Constants.scss';
 
 .button__tertiary {
+  @include spartan;
+  width: 100%;
   padding: $base $base * 2;
   color: $color-dark-09;
   background-color: $color-grey-07;

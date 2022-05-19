@@ -1,1 +1,23 @@
 @import '../../sass/Constants.scss';
+
+.main {
+  background-color: $color-grey-white;
+}
+
+.welcome__page {
+  display: flex;
+  flex-direction: column;
+  gap: $base * 3;
+
+  .h2 {
+    margin-top: $base * 2;
+  }
+}
+
+.welcome__container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
+  height: 60vh;
+}

@@ -1,12 +1,34 @@
 @import './sass/Constants.scss';
 
+// === FONTS ===
+
+@mixin font($font_name, $file_name, $weight, $style) {
+  @font-face {
+    font-family: $font_name;
+    font-display: swap;
+    src: url('./fonts/#{$file_name}.woff') format('woff'),
+      url('./fonts/#{$file_name}.woff2') format('woff2');
+    font-weight: #{$weight};
+    font-style: #{$style};
+  }
+}
+
+@import './sass/Fonts.scss';
+
+// === / FONTS ===
+
 html,
 body {
-  height: 100%;
+  @include spartan;
+  position: relative;
   width: 100%;
+  height: 100%;
   overflow-x: hidden;
   scroll-behavior: smooth;
-  position: relative;
+}
+
+body {
+  @include scroll;
 }
 
 * {
@@ -16,15 +38,15 @@ body {
   list-style-type: none;
 }
 
-main {
+.main {
   flex-grow: 1;
 }
 
 #root {
   display: flex;
+  justify-content: space-between;
   flex-direction: column;
   height: 100vh;
-  justify-content: space-between;
 }
 
 .wrapper {
@@ -35,4 +57,37 @@ main {
   @media screen and (max-width: $breakpoint-xs-min) {
     width: 95%;
   }
+}
+
+.h2 {
+  @include spartan;
+  margin: 0;
+  padding: 0;
+  font-size: $fs-xxl;
+  font-weight: $fw-semi-bold;
+  letter-spacing: 2px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.h3 {
+  @include spartan;
+  margin: 0;
+  padding: 0;
+  font-size: $fs-xs;
+  font-weight: $fw-semi-bold;
+  color: $color-white;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.h4 {
+  @include spartan;
+  margin: 0;
+  padding: 0;
+  font-size: $fs-m;
+  font-weight: $fw-bold;
+  color: $color-dark;
+  line-height: $base * 4;
+  letter-spacing: 0.06em;
 }

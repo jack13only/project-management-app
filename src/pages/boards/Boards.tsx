@@ -26,7 +26,7 @@ const Boards: FC = () => {
 
   return (
     <section className="boards">
-      <h2 className="boards__title">Your boards</h2>
+      <h2 className="h2">Your boards</h2>
       <div className="boards__container">
         <TertiaryButton
           className="button__tertiary board__new-btn"

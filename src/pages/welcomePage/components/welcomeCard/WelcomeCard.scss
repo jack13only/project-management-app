@@ -1,0 +1,106 @@
+@import '../../../../sass/Constants.scss';
+
+.welcome__card {
+  position: relative;
+  width: 30%;
+  text-align: center;
+
+  @media (max-width: $breakpoint-sm-min) {
+    width: 45%;
+  }
+
+  @media (max-width: $breakpoint-xxs-min) {
+    width: 80%;
+  }
+}
+
+.card-img {
+  @include disableSelection;
+  position: relative;
+  width: 90%;
+  height: auto;
+  border-radius: 50%;
+  border: 1px solid $color-dark-03;
+  box-shadow: rgba(136, 165, 191, 0.6) $base 2px $base * 3 0px,
+    rgba(255, 255, 255, 0.8) -5px -2px $base * 3 0px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.card__container {
+  position: absolute;
+  top: 60%;
+  left: 0;
+  right: 0;
+  width: 90%;
+  margin: 0 auto;
+  padding: 40% 0 0 0;
+  background-color: $color-white;
+  border-top-right-radius: $base * 4;
+  border-top-left-radius: $base * 4;
+  border-bottom-right-radius: $base * 2;
+  border-bottom-left-radius: $base * 2;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px $base $base * 3;
+
+  .h3 {
+    letter-spacing: 0.06em;
+    color: $color-dark;
+    font-weight: $fw-bold;
+  }
+
+  .h4 {
+    font-weight: $fw-semi-bold;
+  }
+}
+
+.card-info {
+  text-align: center;
+}
+
+.card__list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $base * 3;
+  padding: $base 0;
+  background-color: $color-green;
+  border-bottom-right-radius: $base * 2;
+  border-bottom-left-radius: $base * 2;
+}
+
+.card__list-item {
+  width: $base * 8;
+  height: $base * 8;
+  border-radius: 50%;
+  background-color: $color-white;
+  transition: $transition;
+
+  &:hover {
+    background-color: $color-green;
+    transition: $transition;
+  }
+}
+
+.card-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: $base * 8;
+  height: $base * 8;
+  background-size: 60%;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 50%;
+}
+
+.github {
+  background-image: url('../../../../images/icons/github.svg');
+}
+
+.linkedin {
+  background-image: url('../../../../images/icons/linkedin.svg');
+}
+
+.instagram {
+  background-image: url('../../../../images/icons/instagram.svg');
+}
