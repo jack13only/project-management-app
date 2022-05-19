@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useState } from 'react';
+import React, { ChangeEvent, FC, RefObject, useEffect, useRef, useState } from 'react';
 
 import { CardList } from '../../components/cardList/CardList';
 import { CardContainer } from '../../components/cardContainer/CardContainer';
@@ -23,10 +23,10 @@ type CardsState = {
 };
 
 const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, order }) => {
+  const columnRef = useRef() as RefObject<HTMLDivElement>;
   const [cards, setCards] = useState<CardsState[]>([]);
   const [cardTitle, setCardTitle] = useState<string>('');
   const [isOpenCard, setIsOpenCard] = useState<boolean>(false);
-
   const [deleteColumn] = useDeleteColumnMutation();
 
   const removeColumn = async () => {
@@ -81,8 +81,12 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
     setCardTitle('');
   };
 
+  useEffect(() => {
+    columnRef.current ? (columnRef.current.scrollTop = columnRef.current.scrollHeight) : null;
+  }, [cards.length, isOpenCard]);
+
   return (
-    <div className="board__column">
+    <div className="board__column" ref={columnRef} style={{ order: order }}>
       <div className="board__column-head">
         <BoardColumnTitle
           columnTitle={columnTitle}
@@ -99,25 +103,25 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
         />
       </div>
 
-      <CardList cards={cards} removeCard={removeCard} toggleCardComplete={toggleCardComplete} />
-
-      <div className="card__add">
-        <TertiaryButton
-          className="button__tertiary column__btn"
-          type="button"
-          description="+ Add a card"
+      <div>
+        <CardList cards={cards} removeCard={removeCard} toggleCardComplete={toggleCardComplete} />
+        <div className="card__add">
+          <TertiaryButton
+            className="button__tertiary column__btn"
+            type="button"
+            description="+ Add a card"
+            isOpenCard={isOpenCard}
+            onClick={addCardVisibility}
+          />
+        </div>
+        <CardContainer
           isOpenCard={isOpenCard}
-          onClick={addCardVisibility}
+          removeCardVisibility={removeCardVisibility}
+          cardTitle={cardTitle}
+          handleCardTitle={handleCardTitle}
+          addCard={addСard}
         />
       </div>
-
-      <CardContainer
-        isOpenCard={isOpenCard}
-        removeCardVisibility={removeCardVisibility}
-        cardTitle={cardTitle}
-        handleCardTitle={handleCardTitle}
-        addCard={addСard}
-      />
     </div>
   );
 };

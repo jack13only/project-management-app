@@ -2,13 +2,39 @@
 
 .board {
   height: 100%;
+  max-height: max-content;
   background-color: $color-purple-06;
 }
 
 .board__wrapper {
+  column-gap: $base * 2;
+  padding: $base * 7 0;
+  height: inherit;
+  overflow-x: auto;
+}
+
+.board__columns {
+  display: flex;
   align-items: flex-start;
   column-gap: $base * 3;
-  padding-top: $base * 7;
-  height: inherit;
-  overflow-y: auto;
+  height: 80%;
+}
+
+.board__column::-webkit-scrollbar,
+.board__wrapper::-webkit-scrollbar {
+  width: $base;
+}
+
+.board__column::-webkit-scrollbar-thumb,
+.board__wrapper::-webkit-scrollbar-thumb {
+  background-color: $color-dark-02;
+  border-radius: $base;
+}
+
+.board__column::-webkit-scrollbar-track,
+.board__wrapper::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: $base * 2;
+  height: $base * 2;
+  background-color: $color-grey-white;
 }

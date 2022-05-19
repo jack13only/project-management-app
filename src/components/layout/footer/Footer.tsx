@@ -14,7 +14,7 @@ const Footer: FC = () => {
               className="footer__link footer__logo-link"
             />
           </div>
-          <span className="footer__year">Belarus, 2022</span>
+          <span className="footer__year">2022</span>
         </div>
 
         <div className="footer__team">
