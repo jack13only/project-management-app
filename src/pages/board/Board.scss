@@ -38,3 +38,8 @@
   height: $base * 2;
   background-color: $color-grey-white;
 }
+
+.column__new-btn {
+  flex-basis: 10%;
+  height: fit-content;
+}
