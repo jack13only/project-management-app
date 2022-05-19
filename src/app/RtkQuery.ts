@@ -1,27 +1,51 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { BoardType, SigninType, SignupType, ColumnType } from './apiTypes';
+import {
+  BaseQueryFn,
+  FetchArgs,
+  createApi,
+  fetchBaseQuery,
+  FetchBaseQueryError,
+} from '@reduxjs/toolkit/query/react';
+import { saveTokenToLS } from '../features/ls-load-save';
+import { logoutUser } from '../reducers/auth';
+import { BoardType, SigninType, SignupType, ColumnType, TaskType, FileType } from './apiTypes';
+import { RootState } from './store';
+
+const baseQuery = fetchBaseQuery({
+  baseUrl: 'https://bublikbackend.herokuapp.com/',
+  prepareHeaders: (headers, { getState }) => {
+    const token = (getState() as RootState).authStorage.userToken;
+
+    if (token) {
+      headers.set('authorization', `Bearer ${token}`);
+    }
+
+    return headers;
+  },
+});
+
+const baseQueryAuth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> = async (
+  args,
+  api,
+  extraOptions
+) => {
+  const result = await baseQuery(args, api, extraOptions);
+  if (result.error && result.error.status === 401) {
+    console.log('401 error, token expired, auto logout');
+    api.dispatch(logoutUser());
+    saveTokenToLS('');
+  }
+  return result;
+};
 
 export const apiUser = createApi({
   reducerPath: 'apiUser',
-  tagTypes: ['User', 'Board', 'Column'],
-  baseQuery: fetchBaseQuery({
-    baseUrl: 'https://bublikbackend.herokuapp.com/',
-    prepareHeaders: (headers, { getState }) => {
-      const token =
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxZmZiNzJkMy03MTk2LTRmYWYtYjcyYS0xOTA3YzVlNDhhNDkiLCJsb2dpbiI6Im9sb2xvcXEiLCJpYXQiOjE2NTIzMDI1NTJ9.khrwJJfhxywMWrP-IytL3cKrcWDIVemHZbPx8zfa-BU';
-
-      if (token) {
-        headers.set('authorization', `Bearer ${token}`);
-      }
-
-      return headers;
-    },
-  }),
+  tagTypes: ['User', 'Board', 'Column', 'Task'],
+  baseQuery: baseQueryAuth,
   endpoints: (build) => ({
     //USERS
     getUsers: build.query({
       query: () => `users`,
-      providesTags: ['User'],
+      // providesTags: ['User'],
     }),
     getUserById: build.query({
       query: (userId: string) => {
@@ -65,6 +89,7 @@ export const apiUser = createApi({
     }),
     signin: build.mutation({
       query(body: SigninType) {
+        console.log('body', body);
         return {
           url: `signin`,
           method: 'POST',
@@ -120,7 +145,12 @@ export const apiUser = createApi({
 
     //COLUMNS
     getColumns: build.query({
-      query: () => `columns`,
+      query: (data: { boardId?: string }) => {
+        const { boardId } = data;
+        return {
+          url: `boards/${boardId}/columns`,
+        };
+      },
       providesTags: ['Column'],
     }),
     getColumnById: build.query({
@@ -133,11 +163,10 @@ export const apiUser = createApi({
       providesTags: ['Column'],
     }),
     postColumn: build.mutation({
-      // query(body: ColumnType) {
       query(data: { boardId: string; body: ColumnType }) {
         const { boardId, body } = data;
         return {
-          url: `boards/${boardId}/columns/`,
+          url: `boards/${boardId}/columns`,
           method: 'POST',
           body,
         };
@@ -165,6 +194,80 @@ export const apiUser = createApi({
       },
       invalidatesTags: ['Column'],
     }),
+
+    //TASKS
+    getTasks: build.query({
+      query(data: { columnId: string; boardId: string }) {
+        const { columnId, boardId } = data;
+        return {
+          url: `boards/${boardId}/columns/${columnId}/tasks`,
+        };
+      },
+      providesTags: ['Task'],
+    }),
+    getTaskById: build.query({
+      query: (data: { columnId: string; boardId: string; taskId: string }) => {
+        const { columnId, boardId, taskId } = data;
+        return {
+          url: `boards/${boardId}/columns/${columnId}/tasks/${taskId}`,
+        };
+      },
+      providesTags: ['Task'],
+    }),
+    postTask: build.mutation({
+      query(data: { boardId: string; columnId: string; body: TaskType }) {
+        const { boardId, columnId, body } = data;
+        return {
+          url: `boards/${boardId}/columns/${columnId}/tasks`,
+          method: 'POST',
+          body,
+        };
+      },
+      invalidatesTags: ['Task'],
+    }),
+    updateTask: build.mutation({
+      query: (data: { columnId: string; boardId: string; taskId: string; task: TaskType }) => {
+        const { columnId, boardId, taskId, task } = data;
+        const body = { ...task, columnId, boardId };
+        return {
+          url: `boards/${boardId}/columns/${columnId}/tasks/${taskId}`,
+          method: 'PUT',
+          body,
+        };
+      },
+      invalidatesTags: ['Task'],
+    }),
+    deleteTask: build.mutation({
+      query(data: { columnId: string; boardId: string; taskId: string }) {
+        const { columnId, boardId, taskId } = data;
+        return {
+          url: `boards/${boardId}/columns/${columnId}/tasks/${taskId}`,
+          method: 'DELETE',
+        };
+      },
+      invalidatesTags: ['Task'],
+    }),
+
+    //FILE
+    postFile: build.mutation({
+      query(body: FileType) {
+        return {
+          url: `file`,
+          method: 'POST',
+          body,
+        };
+      },
+      // invalidatesTags: ['File'],
+    }),
+    getFile: build.query({
+      query: (data: { taskId: string }) => {
+        const { taskId } = data;
+        return {
+          url: `file/${taskId}`,
+        };
+      },
+      // providesTags: ['File'],
+    }),
   }),
 });
 
@@ -185,4 +288,11 @@ export const {
   useGetColumnsQuery,
   usePostColumnMutation,
   useUpdateColumnMutation,
+  useGetTasksQuery,
+  useGetTaskByIdQuery,
+  useDeleteTaskMutation,
+  usePostTaskMutation,
+  useUpdateTaskMutation,
+  useGetFileQuery,
+  usePostFileMutation,
 } = apiUser;

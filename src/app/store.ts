@@ -1,8 +1,10 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import { apiUser } from './RtkQuery';
+import authSlice from '../reducers/auth';
 
 export const store = configureStore({
   reducer: {
+    authStorage: authSlice,
     [apiUser.reducerPath]: apiUser.reducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(apiUser.middleware),

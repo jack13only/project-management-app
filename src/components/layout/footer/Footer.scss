@@ -13,8 +13,9 @@
 
 .footer__info {
   display: flex;
-  flex-direction: column;
   row-gap: $base * 2;
+  column-gap: $base * 2;
+  align-items: center;
 }
 
 .footer__link {
@@ -25,8 +26,8 @@
 }
 
 .footer__logo {
-  flex-basis: 20%;
-  height: $base * 4;
+  width: $base * 15;
+  height: $base * 5;
 }
 
 .footer__logo-link {

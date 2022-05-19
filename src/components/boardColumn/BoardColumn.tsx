@@ -1,14 +1,20 @@
-import { ChangeEvent, FC, useState } from 'react';
+import React, { ChangeEvent, FC, RefObject, useEffect, useRef, useState } from 'react';
 
 import { CardList } from '../../components/cardList/CardList';
 import { CardContainer } from '../../components/cardContainer/CardContainer';
-import { TertiaryButton } from '../buttons';
+import { BoardColumnTitle } from './BoardColumnTitle';
+import { DeleteButton, TertiaryButton } from '../buttons';
+
+import { useDeleteColumnMutation } from '../../app/RtkQuery';
 
 import './BoardColumns.scss';
 
-interface BoardColumnProps {
-  column: string;
-}
+type BoardColumnProps = {
+  columnTitle: string;
+  boardId: string;
+  columnId: string;
+  order: number;
+};
 
 type CardsState = {
   id: string;
@@ -16,14 +22,15 @@ type CardsState = {
   complete: boolean;
 };
 
-const BoardColumn: FC<BoardColumnProps> = ({ column }) => {
+const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, order }) => {
+  const columnRef = useRef() as RefObject<HTMLDivElement>;
   const [cards, setCards] = useState<CardsState[]>([]);
   const [cardTitle, setCardTitle] = useState<string>('');
   const [isOpenCard, setIsOpenCard] = useState<boolean>(false);
+  const [deleteColumn] = useDeleteColumnMutation();
 
-  const handleCardTitle = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    const VALUE = event.target.value;
-    setCardTitle(VALUE);
+  const removeColumn = async () => {
+    await deleteColumn({ boardId, columnId });
   };
 
   const addСard = () => {
@@ -39,6 +46,11 @@ const BoardColumn: FC<BoardColumnProps> = ({ column }) => {
       setCardTitle('');
       setIsOpenCard(false);
     }
+  };
+
+  const handleCardTitle = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    const VALUE = event.target.value;
+    setCardTitle(VALUE);
   };
 
   const removeCard = (cardId: string | undefined) => {
@@ -69,26 +81,49 @@ const BoardColumn: FC<BoardColumnProps> = ({ column }) => {
     setCardTitle('');
   };
 
+  useEffect(() => {
+    columnRef.current ? (columnRef.current.scrollTop = columnRef.current.scrollHeight) : null;
+  }, [cards.length, isOpenCard]);
+
   return (
-    <div className="board__column">
-      <h4 className="board__column-title">{column}</h4>
-      <CardList cards={cards} removeCard={removeCard} toggleCardComplete={toggleCardComplete} />
-      <TertiaryButton
-        className="button__tertiary column__btn"
-        type="button"
-        description="+ Add a card"
-        isOpenCard={isOpenCard}
-        onClick={addCardVisibility}
-      />
-      <CardContainer
-        isOpenCard={isOpenCard}
-        removeCardVisibility={removeCardVisibility}
-        cardTitle={cardTitle}
-        handleCardTitle={handleCardTitle}
-        addCard={addСard}
-      />
+    <div className="board__column" ref={columnRef} style={{ order: order }}>
+      <div className="board__column-head">
+        <BoardColumnTitle
+          columnTitle={columnTitle}
+          columnId={columnId}
+          boardId={boardId}
+          order={order}
+        />
+
+        <DeleteButton
+          className="task-delete"
+          type="button"
+          description="&times;"
+          removeCard={removeColumn}
+        />
+      </div>
+
+      <div>
+        <CardList cards={cards} removeCard={removeCard} toggleCardComplete={toggleCardComplete} />
+        <div className="card__add">
+          <TertiaryButton
+            className="button__tertiary column__btn"
+            type="button"
+            description="+ Add a card"
+            isOpenCard={isOpenCard}
+            onClick={addCardVisibility}
+          />
+        </div>
+        <CardContainer
+          isOpenCard={isOpenCard}
+          removeCardVisibility={removeCardVisibility}
+          cardTitle={cardTitle}
+          handleCardTitle={handleCardTitle}
+          addCard={addСard}
+        />
+      </div>
     </div>
   );
 };
 
-export { BoardColumn };
+export default BoardColumn;

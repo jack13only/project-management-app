@@ -7,13 +7,21 @@
 }
 
 .boards__container {
-  @include flexSpaceBetween;
+  @include flexStart;
   flex-wrap: wrap;
+  column-gap: $base * 2;
   row-gap: $base * 4;
   padding: $base * 5 0;
 }
 
-.board__new {
+.board__new-btn {
   flex-basis: 30%;
   height: $base * 20;
+}
+
+.boards-item__link {
+  flex-basis: 30%;
+  height: $base * 20;
+  border: 1px solid $color-dark-03;
+  cursor: pointer;
 }

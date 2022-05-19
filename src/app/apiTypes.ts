@@ -15,5 +15,17 @@ export type BoardType = {
 
 export type ColumnType = {
   title: string;
+  order?: number;
+};
+
+export type TaskType = {
+  title: string;
   order: number;
+  description: string;
+  userId: string;
+};
+
+export type FileType = {
+  taskId: string;
+  file: string;
 };
