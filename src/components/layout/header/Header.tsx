@@ -1,16 +1,22 @@
 import { FC, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { PrimaryButton } from '../../buttons/header/PrimaryButton';
 
 import logo from '../../../images/icons/logo.svg';
 import './Header.scss';
 import { PATHS } from '../../../shared/constants/routes';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks';
+import { saveTokenToLS } from '../../../features/ls-load-save';
+import { loginUser } from '../../../reducers/auth';
 
 const Header: FC = () => {
   const [scrolledPage, isScrolledPage] = useState(false);
   const body = window.document.body as HTMLBodyElement;
   const heightScrollTop = 170;
+  const navigate = useNavigate();
+  const { userToken } = useAppSelector((state) => state.authStorage);
+  const dispatch = useAppDispatch();
 
   const listenScrollEvent = () => {
     body.scrollTop > heightScrollTop ? isScrolledPage(true) : isScrolledPage(false);
@@ -29,18 +35,39 @@ const Header: FC = () => {
         </Link>
         <div className="header__navigation">
           <div className="header__buttons">
-            <PrimaryButton
-              dataTestId="PrimaryButton"
-              type="button"
-              className="btn btn-log btn-bordered"
-              description="Log in"
-            />
-            <PrimaryButton
-              dataTestId="PrimaryButton"
-              type="button"
-              className="btn btn-sign btn-colored"
-              description="Sign up"
-            />
+            {!userToken && (
+              <>
+                <PrimaryButton
+                  dataTestId="PrimaryButton"
+                  type="button"
+                  className="btn btn-log btn-bordered"
+                  description="Sign In"
+                  onClick={() => navigate(PATHS.signIn, { replace: true })}
+                />
+                <PrimaryButton
+                  dataTestId="PrimaryButton"
+                  type="button"
+                  className="btn btn-sign btn-colored"
+                  description="Sign up"
+                  onClick={() => navigate(PATHS.signUp, { replace: true })}
+                />
+              </>
+            )}
+            {userToken && (
+              <>
+                <PrimaryButton
+                  dataTestId="PrimaryButton"
+                  type="button"
+                  className="btn btn-sign btn-colored"
+                  description="Sign out"
+                  onClick={() => {
+                    dispatch(loginUser(''));
+                    saveTokenToLS('');
+                    console.log('logout');
+                  }}
+                />
+              </>
+            )}
           </div>
         </div>
       </div>

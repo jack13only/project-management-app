@@ -1,6 +1,6 @@
 import { FC } from 'react';
+import { InputCheckbox } from '..';
 
-import { InputCheckbox } from '../inputCheckbox/InputCheckbox';
 import { DeleteButton } from '../buttons';
 
 interface CardItemProps {

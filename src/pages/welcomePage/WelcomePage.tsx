@@ -1,18 +1,13 @@
-import { FC } from 'react';
-import { Link } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { saveTokenToLS } from '../../features/ls-load-save';
-import { loginUser } from '../../reducers/auth';
-import { PATHS } from '../../shared/constants/routes';
+import { FC, useState } from 'react';
 import { WelcomeCard } from './components/welcomeCard/WelcomeCard';
 import avatar1 from '../../images/avatar-1.jpg';
 import avatar2 from '../../images/avatar-2.jpg';
 import avatar3 from '../../images/avatar-3.jpg';
 import './WelcomePage.scss';
+import { Modal } from '../../components';
 
 const WelcomePage: FC = () => {
-  const { userToken } = useAppSelector((state) => state.authStorage);
-  const dispatch = useAppDispatch();
+  const [activeModal, setActiveModal] = useState<boolean>(false);
   return (
     <div data-testid="welcomepage" className="welcome__page">
       <h2 className="h2">Meet Our Team</h2>
@@ -42,32 +37,11 @@ const WelcomePage: FC = () => {
           instagram="https://www.instagram.com/mitrofanzxc/"
         />
       </div>
-      {userToken && (
-        <>
-          <p>
-            <Link to={PATHS.boards}>Link to Boards</Link>
-          </p>
-          <button
-            onClick={() => {
-              dispatch(loginUser(''));
-              saveTokenToLS('');
-              console.log('logout');
-            }}
-          >
-            Sign out
-          </button>
-        </>
-      )}
-      {!userToken && (
-        <>
-          <p>
-            <Link to={PATHS.signIn}>Link to Signin</Link>
-          </p>
-          <p>
-            <Link to={PATHS.signUp}>Link to Signun</Link>
-          </p>
-        </>
-      )}
+
+      <button onClick={() => setActiveModal(true)}>Modal</button>
+      <Modal activeModal={activeModal} setActiveModal={setActiveModal}>
+        <div>Hello world!</div>
+      </Modal>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import { FC, useState } from 'react';
 
-import { useUpdateColumnMutation } from '../../app/RtkQuery';
+import { useUpdateColumnMutation } from '../../../../app/RtkQuery';
 
 import './BoardColumnTitle.scss';
 

@@ -7,11 +7,18 @@ interface PrimaryButtonProps {
   type: 'submit' | 'reset' | 'button';
   className: string;
   description: string;
+  onClick?: () => void;
 }
 
-const PrimaryButton: FC<PrimaryButtonProps> = ({ dataTestId, type, className, description }) => {
+const PrimaryButton: FC<PrimaryButtonProps> = ({
+  dataTestId,
+  type,
+  className,
+  description,
+  onClick,
+}) => {
   return (
-    <button data-testid={dataTestId} type={type} className={className}>
+    <button data-testid={dataTestId} type={type} className={className} onClick={onClick}>
       {description}
     </button>
   );
