@@ -1,14 +1,16 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { BoardType, SigninType, SignupType, ColumnType } from './apiTypes';
+import { BoardType, SigninType, SignupType, ColumnType, TaskType, FileType } from './apiTypes';
 import { RootState } from './store';
 
 export const apiUser = createApi({
   reducerPath: 'apiUser',
-  tagTypes: ['User', 'Board', 'Column'],
+  tagTypes: ['User', 'Board', 'Column', 'Task'],
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://bublikbackend.herokuapp.com/',
     prepareHeaders: (headers, { getState }) => {
       const token = (getState() as RootState).authStorage.userToken;
+
+      console.log('token', token);
 
       if (token) {
         headers.set('authorization', `Bearer ${token}`);
@@ -21,7 +23,7 @@ export const apiUser = createApi({
     //USERS
     getUsers: build.query({
       query: () => `users`,
-      providesTags: ['User'],
+      // providesTags: ['User'],
     }),
     getUserById: build.query({
       query: (userId: string) => {
@@ -139,7 +141,6 @@ export const apiUser = createApi({
       providesTags: ['Column'],
     }),
     postColumn: build.mutation({
-      // query(body: ColumnType) {
       query(data: { boardId: string; body: ColumnType }) {
         const { boardId, body } = data;
         return {
@@ -171,6 +172,80 @@ export const apiUser = createApi({
       },
       invalidatesTags: ['Column'],
     }),
+
+    //TASKS
+    getTasks: build.query({
+      query(data: { columnId: string; boardId: string }) {
+        const { columnId, boardId } = data;
+        return {
+          url: `boards/${boardId}/columns/${columnId}/tasks`,
+        };
+      },
+      providesTags: ['Task'],
+    }),
+    getTaskById: build.query({
+      query: (data: { columnId: string; boardId: string; taskId: string }) => {
+        const { columnId, boardId, taskId } = data;
+        return {
+          url: `boards/${boardId}/columns/${columnId}/tasks/${taskId}`,
+        };
+      },
+      providesTags: ['Task'],
+    }),
+    postTask: build.mutation({
+      query(data: { boardId: string; columnId: string; body: TaskType }) {
+        const { boardId, columnId, body } = data;
+        return {
+          url: `boards/${boardId}/columns/${columnId}/tasks`,
+          method: 'POST',
+          body,
+        };
+      },
+      invalidatesTags: ['Task'],
+    }),
+    updateTask: build.mutation({
+      query: (data: { columnId: string; boardId: string; taskId: string; task: TaskType }) => {
+        const { columnId, boardId, taskId, task } = data;
+        const body = { ...task, columnId, boardId };
+        return {
+          url: `boards/${boardId}/columns/${columnId}/tasks/${taskId}`,
+          method: 'PUT',
+          body,
+        };
+      },
+      invalidatesTags: ['Task'],
+    }),
+    deleteTask: build.mutation({
+      query(data: { columnId: string; boardId: string; taskId: string }) {
+        const { columnId, boardId, taskId } = data;
+        return {
+          url: `boards/${boardId}/columns/${columnId}/tasks/${taskId}`,
+          method: 'DELETE',
+        };
+      },
+      invalidatesTags: ['Task'],
+    }),
+
+    //FILE
+    postFile: build.mutation({
+      query(body: FileType) {
+        return {
+          url: `file`,
+          method: 'POST',
+          body,
+        };
+      },
+      // invalidatesTags: ['File'],
+    }),
+    getFile: build.query({
+      query: (data: { taskId: string }) => {
+        const { taskId } = data;
+        return {
+          url: `file/${taskId}`,
+        };
+      },
+      // providesTags: ['File'],
+    }),
   }),
 });
 
@@ -191,4 +266,11 @@ export const {
   useGetColumnsQuery,
   usePostColumnMutation,
   useUpdateColumnMutation,
+  useGetTasksQuery,
+  useGetTaskByIdQuery,
+  useDeleteTaskMutation,
+  usePostTaskMutation,
+  useUpdateTaskMutation,
+  useGetFileQuery,
+  usePostFileMutation,
 } = apiUser;

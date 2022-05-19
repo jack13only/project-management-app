@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import { Layout } from './components/layout/Layout';
@@ -12,8 +12,22 @@ import './App.scss';
 import RequireAuth from './components/requireAuth/RequireAuth';
 import SignIn from './pages/signIn/SignIn';
 import SignUp from './pages/signUp/SignUp';
+import { useGetUsersQuery } from './app/RtkQuery';
+import { useAppDispatch } from './app/hooks';
+import { loginUser } from './reducers/auth';
+import { saveTokenToLS } from './features/ls-load-save';
 
 const App: FC = () => {
+  const dispatch = useAppDispatch();
+  const { error } = useGetUsersQuery('');
+
+  useEffect(() => {
+    if (error && 'status' in error && error.status === 401) {
+      dispatch(loginUser(''));
+      saveTokenToLS('');
+    }
+  }, [error]);
+
   return (
     <Routes>
       <Route path={PATHS.main} element={<Layout />}>
