@@ -22,7 +22,7 @@ const WelcomeCard: FC<WelcomeCardProps> = ({
   return (
     <div className="welcome__card">
       <img className="card-img" src={src} alt="Avatar" />
-      <div className="card__container">
+      <div className="welcome-card__container">
         <h3 className="h3 card-info">{name}</h3>
         <h4 className="h4 card-info">{specialization}</h4>
         <ul className="card__list">
