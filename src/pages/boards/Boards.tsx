@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useGetBoardsQuery, usePostBoardMutation } from '../../app/RtkQuery';
 
 import { TertiaryButton } from '../../components/buttons';
-import { PreloaderSuspense } from '../../components/cardContainer/preloader/index';
+import { PreloaderSuspense } from '../../components/preloader/index';
 
 import { BoardsTypes } from './typesBoards/TypesBoards';
 

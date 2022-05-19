@@ -8,7 +8,7 @@ import {
   usePostColumnMutation,
 } from '../../app/RtkQuery';
 import { TertiaryButton } from '../../components/buttons';
-import { PreloaderSuspense } from '../../components/cardContainer/preloader/index';
+import { PreloaderSuspense } from '../../components/preloader/index';
 
 import './Board.scss';
 
