@@ -1,24 +1,46 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import {
+  BaseQueryFn,
+  FetchArgs,
+  createApi,
+  fetchBaseQuery,
+  FetchBaseQueryError,
+} from '@reduxjs/toolkit/query/react';
+import { saveTokenToLS } from '../features/ls-load-save';
+import { logoutUser } from '../reducers/auth';
 import { BoardType, SigninType, SignupType, ColumnType, TaskType, FileType } from './apiTypes';
 import { RootState } from './store';
+
+const baseQuery = fetchBaseQuery({
+  baseUrl: 'https://bublikbackend.herokuapp.com/',
+  prepareHeaders: (headers, { getState }) => {
+    const token = (getState() as RootState).authStorage.userToken;
+
+    if (token) {
+      headers.set('authorization', `Bearer ${token}`);
+    }
+
+    return headers;
+  },
+});
+
+const baseQueryAuth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> = async (
+  args,
+  api,
+  extraOptions
+) => {
+  const result = await baseQuery(args, api, extraOptions);
+  if (result.error && result.error.status === 401) {
+    console.log('401 error, token expired, auto logout');
+    api.dispatch(logoutUser());
+    saveTokenToLS('');
+  }
+  return result;
+};
 
 export const apiUser = createApi({
   reducerPath: 'apiUser',
   tagTypes: ['User', 'Board', 'Column', 'Task'],
-  baseQuery: fetchBaseQuery({
-    baseUrl: 'https://bublikbackend.herokuapp.com/',
-    prepareHeaders: (headers, { getState }) => {
-      const token = (getState() as RootState).authStorage.userToken;
-
-      console.log('token', token);
-
-      if (token) {
-        headers.set('authorization', `Bearer ${token}`);
-      }
-
-      return headers;
-    },
-  }),
+  baseQuery: baseQueryAuth,
   endpoints: (build) => ({
     //USERS
     getUsers: build.query({
