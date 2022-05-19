@@ -5,9 +5,13 @@ import avatar2 from '../../images/avatar-2.jpg';
 import avatar3 from '../../images/avatar-3.jpg';
 import './WelcomePage.scss';
 import { Modal } from '../../components';
+import { Link } from 'react-router-dom';
+import { useAppSelector } from '../../app/hooks';
+import { PATHS } from '../../shared/constants/routes';
 
 const WelcomePage: FC = () => {
   const [activeModal, setActiveModal] = useState<boolean>(false);
+  const { userToken } = useAppSelector((state) => state.authStorage);
   return (
     <div data-testid="welcomepage" className="welcome__page">
       <h2 className="h2">Meet Our Team</h2>
@@ -37,6 +41,14 @@ const WelcomePage: FC = () => {
           instagram="https://www.instagram.com/mitrofanzxc/"
         />
       </div>
+
+      {userToken && (
+        <>
+          <Link to={PATHS.boards}>
+            <button>Link to Boards</button>
+          </Link>
+        </>
+      )}
 
       <button onClick={() => setActiveModal(true)}>Modal</button>
       <Modal activeModal={activeModal} setActiveModal={setActiveModal}>

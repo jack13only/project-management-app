@@ -1,14 +1,14 @@
 import { FC, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-
 import { PrimaryButton } from '../../buttons/header/PrimaryButton';
-
 import logo from '../../../images/icons/logo.svg';
 import './Header.scss';
 import { PATHS } from '../../../shared/constants/routes';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { saveTokenToLS } from '../../../features/ls-load-save';
 import { loginUser } from '../../../reducers/auth';
+import decodeUserId from '../../../features/decodeUserId';
+import { useGetUserByIdQuery } from '../../../app/RtkQuery';
 
 const Header: FC = () => {
   const [scrolledPage, isScrolledPage] = useState(false);
@@ -21,6 +21,13 @@ const Header: FC = () => {
   const listenScrollEvent = () => {
     body.scrollTop > heightScrollTop ? isScrolledPage(true) : isScrolledPage(false);
   };
+
+  let userName = '';
+  const userId = decodeUserId(userToken);
+  const { data } = useGetUserByIdQuery(userId);
+  if (data && 'name' in data) {
+    userName = data.name;
+  }
 
   useEffect(() => {
     body.addEventListener('scroll', listenScrollEvent);
@@ -55,6 +62,7 @@ const Header: FC = () => {
             )}
             {userToken && (
               <>
+                <div>{userName}</div>
                 <PrimaryButton
                   dataTestId="PrimaryButton"
                   type="button"
