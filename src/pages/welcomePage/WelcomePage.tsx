@@ -14,34 +14,36 @@ const WelcomePage: FC = () => {
   const { userToken } = useAppSelector((state) => state.authStorage);
   return (
     <div data-testid="welcomepage" className="welcome__page">
-      <h2 className="h2">Meet Our Team</h2>
       {!userToken && (
-        <div className="welcome__container">
-          <WelcomeCard
-            src={avatar2}
-            name="Yauheni Shatau"
-            specialization="Front-end Developer"
-            github="https://github.com/jack13only"
-            linkedin="https://www.linkedin.com/in/jack13only/"
-            instagram="https://www.instagram.com/"
-          />
-          <WelcomeCard
-            src={avatar3}
-            name="Victoria Kochieva"
-            specialization="Front-end Developer"
-            github="https://github.com/VictoriaKochieva"
-            linkedin="https://www.linkedin.com/in/victoria-kochieva/"
-            instagram="https://www.instagram.com/"
-          />
-          <WelcomeCard
-            src={avatar1}
-            name="Dzmitry Karakulka"
-            specialization="Front-end Developer"
-            github="https://github.com/mitrofanzxc"
-            linkedin="https://www.linkedin.com/in/dzmitry-karakulka/"
-            instagram="https://www.instagram.com/mitrofanzxc/"
-          />
-        </div>
+        <>
+          <h2 className="h2">Meet Our Team</h2>
+          <div className="welcome__container">
+            <WelcomeCard
+              src={avatar2}
+              name="Yauheni Shatau"
+              specialization="Front-end Developer"
+              github="https://github.com/jack13only"
+              linkedin="https://www.linkedin.com/in/jack13only/"
+              instagram="https://www.instagram.com/"
+            />
+            <WelcomeCard
+              src={avatar3}
+              name="Victoria Kochieva"
+              specialization="Front-end Developer"
+              github="https://github.com/VictoriaKochieva"
+              linkedin="https://www.linkedin.com/in/victoria-kochieva/"
+              instagram="https://www.instagram.com/"
+            />
+            <WelcomeCard
+              src={avatar1}
+              name="Dzmitry Karakulka"
+              specialization="Front-end Developer"
+              github="https://github.com/mitrofanzxc"
+              linkedin="https://www.linkedin.com/in/dzmitry-karakulka/"
+              instagram="https://www.instagram.com/mitrofanzxc/"
+            />
+          </div>
+        </>
       )}
 
       {userToken && (
