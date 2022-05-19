@@ -62,11 +62,6 @@
   border: 1px dotted $color-dark-03;
 }
 
-.column__new-btn {
-  flex-basis: 10%;
-  height: fit-content;
-}
-
 .board__column-head {
   @include flexSpaceBetween;
   align-items: baseline;

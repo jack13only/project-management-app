@@ -1,3 +1,4 @@
+import React from 'react';
 import { FC } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
@@ -6,10 +7,12 @@ import {
   useGetColumnsQuery,
   usePostColumnMutation,
 } from '../../app/RtkQuery';
-import { BoardColumn } from '../../components/boardColumn/BoardColumn';
 import { TertiaryButton } from '../../components/buttons';
+import { PreloaderSuspense } from '../../components/cardContainer/preloader/index';
 
 import './Board.scss';
+
+const BoardColumn = React.lazy(() => import('../../components/boardColumn/BoardColumn'));
 
 export interface ColumnType {
   title: string;
@@ -49,17 +52,19 @@ const Board: FC = () => {
         </Link>
 
         <div className="board__columns">
-          {data?.map(({ title, id, order }: ColumnType) => {
-            return (
-              <BoardColumn
-                columnTitle={title}
-                key={id}
-                boardId={boardId}
-                columnId={id}
-                order={order}
-              />
-            );
-          })}
+          <PreloaderSuspense>
+            {data?.map(({ title, id, order }: ColumnType) => {
+              return (
+                <BoardColumn
+                  columnTitle={title}
+                  key={id}
+                  boardId={boardId}
+                  columnId={id}
+                  order={order}
+                />
+              );
+            })}
+          </PreloaderSuspense>
         </div>
 
         <TertiaryButton

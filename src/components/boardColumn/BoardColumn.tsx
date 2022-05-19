@@ -126,4 +126,4 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
   );
 };
 
-export { BoardColumn };
+export default BoardColumn;
