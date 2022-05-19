@@ -21,7 +21,7 @@ const App: FC = () => {
         <Route
           path={PATHS.boards}
           element={
-            <RequireAuth>
+            <RequireAuth needAuth={true}>
               <Boards />
             </RequireAuth>
           }
@@ -29,13 +29,27 @@ const App: FC = () => {
         <Route
           path={PATHS.board}
           element={
-            <RequireAuth>
+            <RequireAuth needAuth={true}>
               <Board />
             </RequireAuth>
           }
         />
-        <Route path={PATHS.signIn} element={<SignIn />} />
-        <Route path={PATHS.signUp} element={<SignUp />} />
+        <Route
+          path={PATHS.signIn}
+          element={
+            <RequireAuth needAuth={false}>
+              <SignIn />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path={PATHS.signUp}
+          element={
+            <RequireAuth needAuth={false}>
+              <SignUp />
+            </RequireAuth>
+          }
+        />
         <Route path={PATHS.notFound} element={<NotFound />} />
       </Route>
     </Routes>

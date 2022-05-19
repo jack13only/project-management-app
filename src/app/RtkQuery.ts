@@ -45,7 +45,6 @@ export const apiUser = createApi({
     //USERS
     getUsers: build.query({
       query: () => `users`,
-      // providesTags: ['User'],
     }),
     getUserById: build.query({
       query: (userId: string) => {
@@ -53,7 +52,6 @@ export const apiUser = createApi({
           url: `users/${userId}`,
         };
       },
-      providesTags: ['User'],
     }),
     updateUser: build.mutation({
       query(data: { userId: string; body: SignupType }) {

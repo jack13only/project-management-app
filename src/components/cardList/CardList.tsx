@@ -1,6 +1,5 @@
 import { FC } from 'react';
-
-import { CardItem } from '../cardItem/CardItem';
+import { CardItem } from '..';
 
 interface CardsState {
   id?: string;

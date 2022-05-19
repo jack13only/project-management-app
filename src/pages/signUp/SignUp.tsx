@@ -59,7 +59,7 @@ const SignUp = (): JSX.Element => {
       })
       .then(() => {
         reset();
-        navigate(PATHS.main);
+        navigate(PATHS.main, { replace: true });
       })
       .catch((error) => console.error('error', error.data.message));
   };
