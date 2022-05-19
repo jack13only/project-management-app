@@ -5,7 +5,7 @@ import { CardContainer } from '../../components/cardContainer/CardContainer';
 import { BoardColumnTitle } from './BoardColumnTitle';
 import { DeleteButton, TertiaryButton } from '../buttons';
 
-import { useDeleteColumnMutation } from '../../app/RtkQuery';
+import { useDeleteColumnMutation, useGetTasksQuery, usePostTaskMutation } from '../../app/RtkQuery';
 
 import './BoardColumns.scss';
 
@@ -27,25 +27,33 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
   const [cards, setCards] = useState<CardsState[]>([]);
   const [cardTitle, setCardTitle] = useState<string>('');
   const [isOpenCard, setIsOpenCard] = useState<boolean>(false);
+
+  const { data = [], error } = useGetTasksQuery({ columnId, boardId });
   const [deleteColumn] = useDeleteColumnMutation();
+  const [postTask] = usePostTaskMutation();
+
+  if (error && 'status' in error) {
+    console.log('error.data', error.status);
+  }
 
   const removeColumn = async () => {
     await deleteColumn({ boardId, columnId });
   };
 
-  const addСard = () => {
-    if (cardTitle.trim().length) {
-      setCards([
-        ...cards,
-        {
-          id: new Date().toISOString(),
-          cardTitle,
-          complete: false,
-        },
-      ]);
-      setCardTitle('');
-      setIsOpenCard(false);
-    }
+  const addCard = async () => {
+    await postTask({
+      boardId,
+      columnId,
+      body: {
+        title: cardTitle,
+        order: Math.random() * 10,
+        description: 'fff',
+        userId: 'dddd',
+      },
+    });
+
+    setCardTitle('');
+    setIsOpenCard(false);
   };
 
   const handleCardTitle = (event: ChangeEvent<HTMLTextAreaElement>) => {
@@ -104,7 +112,7 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
       </div>
 
       <div>
-        <CardList cards={cards} removeCard={removeCard} toggleCardComplete={toggleCardComplete} />
+        <CardList tasks={data} removeCard={removeCard} toggleCardComplete={toggleCardComplete} />
         <div className="card__add">
           <TertiaryButton
             className="button__tertiary column__btn"
@@ -119,7 +127,7 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
           removeCardVisibility={removeCardVisibility}
           cardTitle={cardTitle}
           handleCardTitle={handleCardTitle}
-          addCard={addСard}
+          addCard={addCard}
         />
       </div>
     </div>

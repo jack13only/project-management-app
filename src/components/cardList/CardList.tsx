@@ -3,27 +3,27 @@ import { FC } from 'react';
 import { CardItem } from '../cardItem/CardItem';
 
 interface CardsState {
-  id?: string;
+  order: string;
   cardTitle: string;
   complete: boolean;
 }
 
 interface CardListProps {
-  cards: CardsState[];
+  tasks: CardsState[];
   removeCard: (cardId: string) => void;
   toggleCardComplete: (cardId: string) => void;
 }
 
-const CardList: FC<CardListProps> = ({ cards, removeCard, toggleCardComplete }) => {
+const CardList: FC<CardListProps> = ({ tasks, removeCard, toggleCardComplete }) => {
   return (
     <ul className="cards__list">
-      {cards.map((card) => {
+      {tasks.map((task) => {
         return (
           <CardItem
-            key={card.id}
+            key={task.order}
             removeCard={removeCard}
             toggleCardComplete={toggleCardComplete}
-            {...card}
+            {...task}
           />
         );
       })}
