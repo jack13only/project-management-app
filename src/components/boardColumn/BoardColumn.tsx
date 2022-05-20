@@ -1,9 +1,7 @@
 import React, { ChangeEvent, FC, RefObject, useEffect, useRef, useState } from 'react';
 
-import { CardList } from '../../components/cardList/CardList';
-import { CardContainer } from '../../components/cardContainer/CardContainer';
-import { BoardColumnTitle } from './BoardColumnTitle';
 import { DeleteButton, TertiaryButton } from '../buttons';
+import { BoardColumnTitle, CardContainer, CardList } from '..';
 
 import {
   useDeleteColumnMutation,
@@ -12,7 +10,7 @@ import {
   usePostTaskMutation,
 } from '../../app/RtkQuery';
 
-import './BoardColumns.scss';
+import './BoardColumn.scss';
 
 type BoardColumnProps = {
   columnTitle: string;

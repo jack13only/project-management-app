@@ -1,6 +1,5 @@
 import React, { FC, useState } from 'react';
-
-import { InputCheckbox } from '../inputCheckbox/InputCheckbox';
+import { InputCheckbox } from '..';
 import { DeleteButton } from '../buttons';
 import { useUpdateTaskMutation } from '../../app/RtkQuery';
 

@@ -28,12 +28,7 @@
 }
 
 .welcome-card__container {
-  position: absolute;
-  top: 60%;
-  left: 0;
-  right: 0;
-  width: 90%;
-  margin: 0 auto;
+  margin: -40% auto 0 auto;
   padding: 40% 0 0 0;
   background-color: $color-white;
   border-top-right-radius: $base * 4;
@@ -79,6 +74,11 @@
     background-color: $color-green;
     transition: $transition;
   }
+
+  @media (max-width: $breakpoint-xs-min) {
+    width: $base * 6;
+    height: $base * 6;
+  }
 }
 
 .card-link {
@@ -91,6 +91,11 @@
   background-position: center;
   background-repeat: no-repeat;
   border-radius: 50%;
+
+  @media (max-width: $breakpoint-xs-min) {
+    width: $base * 6;
+    height: $base * 6;
+  }
 }
 
 .github {
