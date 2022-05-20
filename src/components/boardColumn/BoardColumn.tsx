@@ -79,13 +79,13 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
 
   const toggleCardComplete = (cardId: string | undefined) => {
     setCards(
-      cards.map((card) => {
-        if (card.id !== cardId) {
-          return card;
+      data.map((task: CardsState) => {
+        if (task.id !== cardId) {
+          return task;
         } else {
           return {
-            ...card,
-            complete: !card.complete,
+            ...task,
+            complete: !task.complete,
           };
         }
       })

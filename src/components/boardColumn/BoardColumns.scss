@@ -27,6 +27,12 @@
   padding: $base 0;
 }
 
+.board__task {
+  display: flex;
+  flex-direction: column;
+  row-gap: $base * 2;
+}
+
 .task {
   display: flex;
   align-items: center;
@@ -43,6 +49,7 @@
 }
 
 .task-text {
+  max-width: $base * 70;
   font-size: $fs-xl;
   overflow: hidden;
   overflow-wrap: break-word;

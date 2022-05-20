@@ -4,6 +4,8 @@ import { InputCheckbox } from '../inputCheckbox/InputCheckbox';
 import { DeleteButton } from '../buttons';
 import { useUpdateTaskMutation } from '../../app/RtkQuery';
 
+import './CardItem.scss';
+
 interface CardItemProps {
   id: string;
   cardTitle: string;
@@ -35,7 +37,7 @@ const CardItem: FC<CardItemProps> = ({
     setIsTitleOpenToChange(true);
   };
 
-  const handleTaskTitleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleTaskTitleInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTaskTitle(event.target.value);
   };
 
@@ -62,17 +64,26 @@ const CardItem: FC<CardItemProps> = ({
   };
 
   return (
-    <div style={{ order: order }}>
+    <div className="board__task" style={{ order: order }}>
       {isTitleOpenToChange ? (
-        <div className="board__column-input">
-          <input type="text" placeholder="your task" onChange={handleTaskTitleInput} />
-          <button className="board__column-btns" onClick={submitTaskTitle}>
-            Submit
-          </button>
-          <button type="button" onClick={cancelTaskTitle}>
-            Cancel
-          </button>
-        </div>
+        <>
+          <li className="board__task-input">
+            <textarea
+              className="textarea"
+              cols={3}
+              rows={3}
+              placeholder="Your task"
+              value={taskTitle}
+              onChange={handleTaskTitleInput}
+            />
+          </li>
+          <div className="board__task-btns">
+            <button onClick={submitTaskTitle}>Save</button>
+            <button type="button" onClick={cancelTaskTitle}>
+              Cancel
+            </button>
+          </div>
+        </>
       ) : (
         <li key={id} className="task" style={{ order: order }}>
           <InputCheckbox
