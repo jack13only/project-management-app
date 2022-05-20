@@ -135,6 +135,7 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
         cardTitle={cardTitle}
         handleCardTitle={handleCardTitle}
         addCard={addCard}
+        removeCardVisibility={() => setIsOpenCard(false)}
       />
     </div>
   );
