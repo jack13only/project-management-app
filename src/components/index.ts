@@ -8,6 +8,7 @@ import { Layout } from './layout/Layout';
 import Modal from './modal/Modal';
 import RequireAuth from './requireAuth/RequireAuth';
 import { Textarea } from './textarea/Textarea';
+import { PreloaderSuspense } from './preloader';
 
 export {
   BoardColumn,
@@ -20,4 +21,5 @@ export {
   RequireAuth,
   Textarea,
   BoardColumnTitle,
+  PreloaderSuspense,
 };

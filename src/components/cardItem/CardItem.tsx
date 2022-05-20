@@ -1,8 +1,8 @@
 import React, { FC, useState } from 'react';
-import { InputCheckbox } from '..';
+import { InputCheckbox, Textarea } from '..';
 import { DeleteButton } from '../buttons';
+
 import { useUpdateTaskMutation } from '../../app/RtkQuery';
-import { Textarea } from '../textarea/Textarea';
 
 import './CardItem.scss';
 
