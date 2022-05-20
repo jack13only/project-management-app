@@ -1,10 +1,11 @@
 import React, { ChangeEvent, FC, RefObject, useEffect, useRef, useState } from 'react';
 
 import { DeleteButton, TertiaryButton } from '../buttons';
-import { BoardColumnTitle, CardContainer, CardList } from '..';
+import { BoardColumnTitle, CardContainer, CardList, Modal } from '..';
 import { useDeleteColumnMutation } from '../../app/RtkQuery';
 
 import './BoardColumn.scss';
+import { title } from 'process';
 
 type BoardColumnProps = {
   columnTitle: string;
@@ -25,6 +26,7 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
   const [cardTitle, setCardTitle] = useState<string>('');
   const [isOpenCard, setIsOpenCard] = useState<boolean>(false);
   const [deleteColumn] = useDeleteColumnMutation();
+  const [activeModal, setActiveModal] = useState<boolean>(false);
 
   const removeColumn = async () => {
     await deleteColumn({ boardId, columnId });
@@ -83,43 +85,55 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
   }, [cards.length, isOpenCard]);
 
   return (
-    <div className="board__column" ref={columnRef} style={{ order: order }}>
-      <div className="board__column-head">
-        <BoardColumnTitle
-          columnTitle={columnTitle}
-          columnId={columnId}
-          boardId={boardId}
-          order={order}
-        />
+    <>
+      <div className="board__column" ref={columnRef} style={{ order: order }}>
+        <div className="board__column-head">
+          <BoardColumnTitle
+            columnTitle={columnTitle}
+            columnId={columnId}
+            boardId={boardId}
+            order={order}
+          />
 
-        <DeleteButton
-          className="task-delete"
-          type="button"
-          description="&times;"
-          removeCard={removeColumn}
-        />
-      </div>
-
-      <div>
-        <CardList cards={cards} removeCard={removeCard} toggleCardComplete={toggleCardComplete} />
-        <div className="card__add">
-          <TertiaryButton
-            className="button__tertiary column__btn"
+          <DeleteButton
+            className="task-delete"
             type="button"
-            description="+ Add a card"
-            isOpenCard={isOpenCard}
-            onClick={addCardVisibility}
+            description="&times;"
+            removeCard={() => setActiveModal(true)}
           />
         </div>
-        <CardContainer
-          isOpenCard={isOpenCard}
-          removeCardVisibility={removeCardVisibility}
-          cardTitle={cardTitle}
-          handleCardTitle={handleCardTitle}
-          addCard={addСard}
-        />
+
+        <div>
+          <CardList cards={cards} removeCard={removeCard} toggleCardComplete={toggleCardComplete} />
+          <div className="card__add">
+            <TertiaryButton
+              className="button__tertiary column__btn"
+              type="button"
+              description="+ Add a card"
+              isOpenCard={isOpenCard}
+              onClick={addCardVisibility}
+            />
+          </div>
+          <CardContainer
+            isOpenCard={isOpenCard}
+            removeCardVisibility={removeCardVisibility}
+            cardTitle={cardTitle}
+            handleCardTitle={handleCardTitle}
+            addCard={addСard}
+          />
+        </div>
       </div>
-    </div>
+
+      <Modal activeModal={activeModal} setActiveModal={setActiveModal}>
+        <h2>Do you want to delete column {columnTitle} ?</h2>
+        <button type="button" onClick={removeColumn}>
+          Yes
+        </button>
+        <button type="button" onClick={() => setActiveModal(false)}>
+          Cancel
+        </button>
+      </Modal>
+    </>
   );
 };
 
