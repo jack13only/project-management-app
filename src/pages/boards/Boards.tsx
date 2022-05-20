@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useGetBoardsQuery, usePostBoardMutation } from '../../app/RtkQuery';
 
@@ -15,6 +15,7 @@ const getRandomTitleBoard = () => Math.floor(Math.random() * 100).toString();
 const BoardsItem = React.lazy(() => import('./BoardsItem'));
 
 const Boards: FC = () => {
+  const [activeModal, setActiveModal] = useState<boolean>(false);
   const { data = [], error } = useGetBoardsQuery('');
   const [postBoard] = usePostBoardMutation();
 
@@ -23,6 +24,10 @@ const Boards: FC = () => {
   }
 
   const addNewBoard = async () => await postBoard({ title: getRandomTitleBoard() });
+
+  const handlerModal = (isActiveModal: boolean) => {
+    setActiveModal(isActiveModal);
+  };
 
   return (
     <section className="boards">
@@ -38,8 +43,17 @@ const Boards: FC = () => {
         <PreloaderSuspense>
           {data?.map(({ id, title }: BoardsTypes) => {
             return (
-              <Link to={`/boards/${id}`} key={id} className="boards-item__link">
-                <BoardsItem title={title} id={id} />
+              <Link
+                to={`/boards/${id}`}
+                key={id}
+                className="boards-item__link"
+                onClick={
+                  activeModal
+                    ? (e: React.MouseEvent<HTMLAnchorElement>) => e.preventDefault()
+                    : undefined
+                }
+              >
+                <BoardsItem title={title} id={id} isActiveModal={handlerModal} />
               </Link>
             );
           })}

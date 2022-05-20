@@ -3,24 +3,27 @@ import { useDeleteBoardMutation } from '../../app/RtkQuery';
 import { Modal } from '../../components';
 import { BoardsTypes } from './typesBoards/TypesBoards';
 
-const BoardsItem = ({ title, id }: BoardsTypes) => {
+const BoardsItem = ({ title, id, isActiveModal }: BoardsTypes) => {
   const [activeModal, setActiveModal] = useState<boolean>(false);
   const [deleteBoard] = useDeleteBoardMutation();
 
   const handlerActiveModal = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     setActiveModal(true);
+    isActiveModal(true);
   };
 
   const cancelDeleteBoard = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     setActiveModal(false);
+    isActiveModal(false);
   };
 
   const deleteBoardItem = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     setActiveModal(false);
     deleteBoard(id);
+    isActiveModal(false);
   };
 
   return (
