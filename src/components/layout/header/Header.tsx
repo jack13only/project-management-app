@@ -9,7 +9,7 @@ import { saveTokenToLS } from '../../../features/ls-load-save';
 import { logoutUser } from '../../../reducers/auth';
 import decodeUserId from '../../../features/decodeUserId';
 import { useGetUserByIdQuery } from '../../../app/RtkQuery';
-import { setUserData } from '../../../reducers/userReducer';
+import { setEmptyUser, setUserData } from '../../../reducers/userReducer';
 
 const Header: FC = () => {
   const [scrolledPage, isScrolledPage] = useState(false);
@@ -78,6 +78,7 @@ const Header: FC = () => {
                   description="Sign out"
                   onClick={() => {
                     dispatch(logoutUser());
+                    dispatch(setEmptyUser());
                     saveTokenToLS('');
                     console.log('logout');
                   }}
