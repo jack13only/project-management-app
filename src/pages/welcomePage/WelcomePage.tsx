@@ -1,16 +1,13 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { WelcomeCard } from './components/welcomeCard/WelcomeCard';
 import avatar1 from '../../images/avatar-1.jpg';
 import avatar2 from '../../images/avatar-2.jpg';
 import avatar3 from '../../images/avatar-3.jpg';
 import './WelcomePage.scss';
-import { Modal } from '../../components';
-import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../app/hooks';
-import { PATHS } from '../../shared/constants/routes';
+import { Boards } from '../boards/Boards';
 
 const WelcomePage: FC = () => {
-  const [activeModal, setActiveModal] = useState<boolean>(false);
   const { userToken } = useAppSelector((state) => state.authStorage);
   return (
     <div data-testid="welcomepage" className="welcome__page">
@@ -46,22 +43,7 @@ const WelcomePage: FC = () => {
         </>
       )}
 
-      {userToken && (
-        <>
-          <Link to={PATHS.boards}>
-            <button>Link to Boards</button>
-          </Link>
-        </>
-      )}
-
-      {userToken && (
-        <>
-          <button onClick={() => setActiveModal(true)}>Modal</button>
-          <Modal activeModal={activeModal} setActiveModal={setActiveModal}>
-            <div>Hello world!</div>
-          </Modal>
-        </>
-      )}
+      {userToken && <Boards />}
     </div>
   );
 };
