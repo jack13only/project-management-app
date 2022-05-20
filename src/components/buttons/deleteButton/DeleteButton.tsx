@@ -1,30 +1,21 @@
 import { FC } from 'react';
 
+import './DeleteButton.scss';
+
 interface DeleteButtonProps {
-  className: string;
   type: 'button';
-  description: string;
   id?: string;
   removeCard?: (cardId: string) => void;
   removeCardVisibility?: () => void;
 }
 
-const DeleteButton: FC<DeleteButtonProps> = ({
-  className,
-  type,
-  description,
-  id,
-  removeCard,
-  removeCardVisibility,
-}) => {
+const DeleteButton: FC<DeleteButtonProps> = ({ type, id, removeCard, removeCardVisibility }) => {
   return (
     <button
-      className={className}
+      className="btn-delete"
       type={type}
       onClick={removeCard ? () => removeCard(id ?? '') : removeCardVisibility}
-    >
-      {description}
-    </button>
+    />
   );
 };
 

@@ -96,13 +96,7 @@ const CardItem: FC<CardItemProps> = ({
           <span className="task-text" onClick={handleTaskTitle}>
             {cardTitle}
           </span>
-          <DeleteButton
-            className="task-delete"
-            type="button"
-            description="&times;"
-            id={id}
-            removeCard={removeCard}
-          />
+          <DeleteButton type="button" id={id} removeCard={removeCard} />
         </li>
       )}
     </div>

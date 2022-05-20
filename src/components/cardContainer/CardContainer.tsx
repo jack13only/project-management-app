@@ -37,12 +37,7 @@ const CardContainer: FC<CardContainerProps> = ({
           description="Add card"
           onClick={addCard}
         />
-        <DeleteButton
-          className="task-delete"
-          type="button"
-          description="&times;"
-          removeCardVisibility={removeCardVisibility}
-        />
+        <DeleteButton type="button" removeCardVisibility={removeCardVisibility} />
       </div>
     </section>
   );

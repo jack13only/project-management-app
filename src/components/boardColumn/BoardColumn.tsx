@@ -111,15 +111,8 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
           boardId={boardId}
           order={order}
         />
-
-        <DeleteButton
-          className="task-delete"
-          type="button"
-          description="&times;"
-          removeCard={removeColumn}
-        />
+        <DeleteButton type="button" removeCard={removeColumn} />
       </div>
-
       <CardList tasks={data} removeCard={removeCard} toggleCardComplete={toggleCardComplete} />
       <div className="card__add">
         <TertiaryButton

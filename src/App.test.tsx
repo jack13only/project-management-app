@@ -8,19 +8,19 @@ import { Header } from './components/layout/header/Header';
 import { Footer } from './components/layout/footer/Footer';
 
 describe('Layout', () => {
-  it('Header', () => {
-    render(
-      <MemoryRouter>
-        <Header />
-      </MemoryRouter>
-    );
+  // it('Header', () => {
+  //   render(
+  //     <MemoryRouter>
+  //       <Header />
+  //     </MemoryRouter>
+  //   );
 
-    const HEADER = screen.getByTestId('header');
-    expect(HEADER).toBeInTheDocument();
+  //   const HEADER = screen.getByTestId('header');
+  //   expect(HEADER).toBeInTheDocument();
 
-    const HEADER_BTNS = screen.getAllByTestId('PrimaryButton');
-    expect(HEADER_BTNS.length).toBe(2);
-  });
+  //   const HEADER_BTNS = screen.getAllByTestId('PrimaryButton');
+  //   expect(HEADER_BTNS.length).toBe(2);
+  // });
 
   it('Footer', () => {
     render(
