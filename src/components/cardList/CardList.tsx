@@ -3,9 +3,12 @@ import { FC } from 'react';
 import { CardItem } from '../cardItem/CardItem';
 
 interface CardsState {
-  order: string;
-  cardTitle: string;
+  order: number;
   complete: boolean;
+  title: string;
+  id: string;
+  boardId: string;
+  columnId: string;
 }
 
 interface CardListProps {
@@ -20,10 +23,12 @@ const CardList: FC<CardListProps> = ({ tasks, removeCard, toggleCardComplete }) 
       {tasks.map((task) => {
         return (
           <CardItem
-            key={task.order}
+            {...task}
+            key={task.id}
             removeCard={removeCard}
             toggleCardComplete={toggleCardComplete}
-            {...task}
+            cardTitle={task.title}
+            order={task.order}
           />
         );
       })}

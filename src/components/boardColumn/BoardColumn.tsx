@@ -5,7 +5,12 @@ import { CardContainer } from '../../components/cardContainer/CardContainer';
 import { BoardColumnTitle } from './BoardColumnTitle';
 import { DeleteButton, TertiaryButton } from '../buttons';
 
-import { useDeleteColumnMutation, useGetTasksQuery, usePostTaskMutation } from '../../app/RtkQuery';
+import {
+  useDeleteColumnMutation,
+  useDeleteTaskMutation,
+  useGetTasksQuery,
+  usePostTaskMutation,
+} from '../../app/RtkQuery';
 
 import './BoardColumns.scss';
 
@@ -22,6 +27,8 @@ type CardsState = {
   complete: boolean;
 };
 
+const userId = '37e596ea-e3b8-4515-9eb2-48f1e6ed6204';
+
 const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, order }) => {
   const columnRef = useRef() as RefObject<HTMLDivElement>;
   const [cards, setCards] = useState<CardsState[]>([]);
@@ -31,6 +38,7 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
   const { data = [], error } = useGetTasksQuery({ columnId, boardId });
   const [deleteColumn] = useDeleteColumnMutation();
   const [postTask] = usePostTaskMutation();
+  const [deleteTask] = useDeleteTaskMutation();
 
   if (error && 'status' in error) {
     console.log('error.data', error.status);
@@ -46,9 +54,9 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
       columnId,
       body: {
         title: cardTitle,
-        order: Math.random() * 10,
-        description: 'fff',
-        userId: 'dddd',
+        order: data.length ? data[data.length - 1].order + 1 : 0,
+        description: cardTitle,
+        userId: userId,
       },
     });
 
@@ -61,8 +69,12 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
     setCardTitle(VALUE);
   };
 
-  const removeCard = (cardId: string | undefined) => {
-    setCards(cards.filter((card) => card.id !== cardId));
+  const removeCard = async (cardId: string) => {
+    await deleteTask({
+      boardId,
+      columnId,
+      taskId: cardId,
+    });
   };
 
   const toggleCardComplete = (cardId: string | undefined) => {
@@ -91,7 +103,7 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
 
   useEffect(() => {
     columnRef.current ? (columnRef.current.scrollTop = columnRef.current.scrollHeight) : null;
-  }, [cards.length, isOpenCard]);
+  }, [data.length, isOpenCard]);
 
   return (
     <div className="board__column" ref={columnRef} style={{ order: order }}>
