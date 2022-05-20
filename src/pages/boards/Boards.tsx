@@ -16,7 +16,7 @@ const BoardsItem = React.lazy(() => import('./BoardsItem'));
 
 const Boards: FC = () => {
   const [activeModal, setActiveModal] = useState<boolean>(false);
-  const { data = [], error } = useGetBoardsQuery('');
+  const { data = [], error, isLoading } = useGetBoardsQuery('');
   const [postBoard] = usePostBoardMutation();
 
   if (error && 'status' in error) {
@@ -40,24 +40,28 @@ const Boards: FC = () => {
           onClick={addNewBoard}
         />
 
-        <PreloaderSuspense>
-          {data?.map(({ id, title }: BoardsTypes) => {
-            return (
-              <Link
-                to={`/boards/${id}`}
-                key={id}
-                className="boards-item__link"
-                onClick={
-                  activeModal
-                    ? (e: React.MouseEvent<HTMLAnchorElement>) => e.preventDefault()
-                    : undefined
-                }
-              >
-                <BoardsItem title={title} id={id} isActiveModal={handlerModal} />
-              </Link>
-            );
-          })}
-        </PreloaderSuspense>
+        {!isLoading ? (
+          <PreloaderSuspense>
+            {data?.map(({ id, title }: BoardsTypes) => {
+              return (
+                <Link
+                  to={`/boards/${id}`}
+                  key={id}
+                  className="boards-item__link"
+                  onClick={
+                    activeModal
+                      ? (e: React.MouseEvent<HTMLAnchorElement>) => e.preventDefault()
+                      : undefined
+                  }
+                >
+                  <BoardsItem title={title} id={id} isActiveModal={handlerModal} />
+                </Link>
+              );
+            })}
+          </PreloaderSuspense>
+        ) : (
+          <div>Loading...</div>
+        )}
       </div>
     </section>
   );
