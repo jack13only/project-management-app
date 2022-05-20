@@ -2,6 +2,7 @@ import React, { FC, useState } from 'react';
 import { InputCheckbox } from '..';
 import { DeleteButton } from '../buttons';
 import { useUpdateTaskMutation } from '../../app/RtkQuery';
+import { Textarea } from '../textarea/Textarea';
 
 import './CardItem.scss';
 
@@ -67,7 +68,7 @@ const CardItem: FC<CardItemProps> = ({
       {isTitleOpenToChange ? (
         <>
           <li className="board__task-input">
-            <textarea
+            <Textarea
               className="textarea"
               cols={3}
               rows={3}
