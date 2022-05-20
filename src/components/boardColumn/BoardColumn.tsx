@@ -2,10 +2,19 @@ import React, { ChangeEvent, FC, RefObject, useEffect, useRef, useState } from '
 
 import { DeleteButton, TertiaryButton } from '../buttons';
 import { BoardColumnTitle, CardContainer, CardList, Modal } from '..';
-import { useDeleteColumnMutation } from '../../app/RtkQuery';
 
 import './BoardColumn.scss';
 import { title } from 'process';
+
+import {
+  useDeleteColumnMutation,
+  useDeleteTaskMutation,
+  useGetTasksQuery,
+  usePostTaskMutation,
+} from '../../app/RtkQuery';
+
+import './BoardColumn.scss';
+import { useAppSelector } from '../../app/hooks';
 
 type BoardColumnProps = {
   columnTitle: string;
@@ -25,25 +34,34 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
   const [cards, setCards] = useState<CardsState[]>([]);
   const [cardTitle, setCardTitle] = useState<string>('');
   const [isOpenCard, setIsOpenCard] = useState<boolean>(false);
+  const { userId } = useAppSelector((state) => state.userStorage);
+
+  const { data = [], error } = useGetTasksQuery({ columnId, boardId });
   const [deleteColumn] = useDeleteColumnMutation();
   const [activeModal, setActiveModal] = useState<boolean>(false);
+  const [postTask] = usePostTaskMutation();
+  const [deleteTask] = useDeleteTaskMutation();
+
+  if (error && 'status' in error) {
+    console.log('error.data', error.status);
+  }
 
   const removeColumn = async () => {
     await deleteColumn({ boardId, columnId });
   };
 
-  const addСard = () => {
+  const addCard = async () => {
     if (cardTitle.trim().length) {
-      setCards([
-        ...cards,
-        {
-          id: new Date().toISOString(),
-          cardTitle,
-          complete: false,
+      await postTask({
+        boardId,
+        columnId,
+        body: {
+          title: cardTitle,
+          order: data.length ? data[data.length - 1].order + 1 : 0,
+          description: cardTitle,
+          userId: userId,
         },
-      ]);
-      setCardTitle('');
-      setIsOpenCard(false);
+      });
     }
   };
 
@@ -52,19 +70,23 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
     setCardTitle(VALUE);
   };
 
-  const removeCard = (cardId: string | undefined) => {
-    setCards(cards.filter((card) => card.id !== cardId));
+  const removeCard = async (cardId: string) => {
+    await deleteTask({
+      boardId,
+      columnId,
+      taskId: cardId,
+    });
   };
 
   const toggleCardComplete = (cardId: string | undefined) => {
     setCards(
-      cards.map((card) => {
-        if (card.id !== cardId) {
-          return card;
+      data.map((task: CardsState) => {
+        if (task.id !== cardId) {
+          return task;
         } else {
           return {
-            ...card,
-            complete: !card.complete,
+            ...task,
+            complete: !task.complete,
           };
         }
       })
@@ -75,14 +97,14 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
     setIsOpenCard(true);
   };
 
-  const removeCardVisibility = () => {
-    setIsOpenCard(false);
-    setCardTitle('');
-  };
-
   useEffect(() => {
     columnRef.current ? (columnRef.current.scrollTop = columnRef.current.scrollHeight) : null;
-  }, [cards.length, isOpenCard]);
+  }, [data.length, isOpenCard]);
+
+  useEffect(() => {
+    setCardTitle('');
+    setIsOpenCard(false);
+  }, [data.length]);
 
   return (
     <>
@@ -104,7 +126,7 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
         </div>
 
         <div>
-          <CardList cards={cards} removeCard={removeCard} toggleCardComplete={toggleCardComplete} />
+          <CardList tasks={data} removeCard={removeCard} toggleCardComplete={toggleCardComplete} />
           <div className="card__add">
             <TertiaryButton
               className="button__tertiary column__btn"
@@ -116,10 +138,10 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
           </div>
           <CardContainer
             isOpenCard={isOpenCard}
-            removeCardVisibility={removeCardVisibility}
+            removeCardVisibility={() => setIsOpenCard(false)}
             cardTitle={cardTitle}
             handleCardTitle={handleCardTitle}
-            addCard={addСard}
+            addCard={addCard}
           />
         </div>
       </div>

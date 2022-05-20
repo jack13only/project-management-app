@@ -43,6 +43,7 @@
 }
 
 .task-text {
+  max-width: $base * 70;
   font-size: $fs-xl;
   overflow: hidden;
   overflow-wrap: break-word;

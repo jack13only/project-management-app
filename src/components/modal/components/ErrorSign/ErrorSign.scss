@@ -1,0 +1,12 @@
+.error-modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 30px;
+  
+  .error-modal__title {
+    color: rgb(204, 0, 0);
+    font-size: 2rem;
+  }
+}

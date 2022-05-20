@@ -7,6 +7,7 @@ import {
 } from '@reduxjs/toolkit/query/react';
 import { saveTokenToLS } from '../features/ls-load-save';
 import { logoutUser } from '../reducers/auth';
+import { setEmptyUser } from '../reducers/userReducer';
 import { BoardType, SigninType, SignupType, ColumnType, TaskType, FileType } from './apiTypes';
 import { RootState } from './store';
 
@@ -32,6 +33,7 @@ const baseQueryAuth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryErro
   if (result.error && result.error.status === 401) {
     console.log('401 error, token expired, auto logout');
     api.dispatch(logoutUser());
+    api.dispatch(setEmptyUser());
     saveTokenToLS('');
   }
   return result;

@@ -1,5 +1,4 @@
-import React from 'react';
-import { FC } from 'react';
+import React, { FC } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 import {
@@ -8,7 +7,7 @@ import {
   usePostColumnMutation,
 } from '../../app/RtkQuery';
 import { TertiaryButton } from '../../components/buttons';
-import { PreloaderSuspense } from '../../components/cardContainer/preloader/index';
+import { PreloaderSuspense } from '../../components/preloader/index';
 
 import './Board.scss';
 

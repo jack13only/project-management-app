@@ -21,7 +21,7 @@ const BoardColumnTitle: FC<BoardColumnTitleTypes> = ({ columnId, columnTitle, bo
     setIsOpenColumnTitle(true);
   };
 
-  const saveColumnTitle = async () => {
+  const submitColumnTitle = async () => {
     if (currentColumnTitle.trim().length) {
       setIsOpenColumnTitle(false);
 
@@ -53,7 +53,7 @@ const BoardColumnTitle: FC<BoardColumnTitleTypes> = ({ columnId, columnTitle, bo
             value={currentColumnTitle}
           />
           <div className="board__column-btns">
-            <button type="submit" onClick={saveColumnTitle}>
+            <button type="submit" onClick={submitColumnTitle}>
               Submit
             </button>
             <button type="button" onClick={cancelColumnTitle}>
