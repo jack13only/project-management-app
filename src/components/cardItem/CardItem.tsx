@@ -1,5 +1,5 @@
 import React, { FC, useState } from 'react';
-import { InputCheckbox, Textarea } from '..';
+import { InputCheckbox, Modal, Textarea } from '..';
 import { DeleteButton } from '../buttons';
 
 import { useDeleteTaskMutation, useUpdateTaskMutation } from '../../app/RtkQuery';
@@ -31,6 +31,7 @@ const CardItem: FC<CardItemProps> = ({
   const [taskTitle, setTaskTitle] = useState('');
   const [updateTask] = useUpdateTaskMutation();
   const [deleteTask] = useDeleteTaskMutation();
+  const [activeModal, setActiveModal] = useState<boolean>(false);
 
   const handleTaskTitle = () => {
     setIsTitleOpenToChange(true);
@@ -62,7 +63,11 @@ const CardItem: FC<CardItemProps> = ({
     }
   };
 
-  const removeCard = async () => {
+  const handlerModal = () => {
+    setActiveModal(true);
+  };
+
+  const removeTask = async () => {
     await deleteTask({
       boardId,
       columnId,
@@ -92,25 +97,37 @@ const CardItem: FC<CardItemProps> = ({
           </div>
         </>
       ) : (
-        <li key={id} className="task" style={{ order: order }}>
-          <InputCheckbox
-            className="task-checkbox"
-            type="checkbox"
-            complete={complete}
-            id={id}
-            toggleCardComplete={toggleCardComplete}
-          />
-          <span className="task-text" onClick={handleTaskTitle}>
-            {cardTitle}
-          </span>
-          <DeleteButton
-            className="task-delete"
-            type="button"
-            description="&times;"
-            id={id}
-            removeCard={removeCard}
-          />
-        </li>
+        <>
+          <li key={id} className="task" style={{ order: order }}>
+            <InputCheckbox
+              className="task-checkbox"
+              type="checkbox"
+              complete={complete}
+              id={id}
+              toggleCardComplete={toggleCardComplete}
+            />
+            <span className="task-text" onClick={handleTaskTitle}>
+              {cardTitle}
+            </span>
+            <DeleteButton
+              className="task-delete"
+              type="button"
+              description="&times;"
+              id={id}
+              removeCard={handlerModal}
+            />
+          </li>
+
+          <Modal activeModal={activeModal} setActiveModal={setActiveModal}>
+            <h2>{`Do you want to delete task '${cardTitle}'`} ?</h2>
+            <button type="button" onClick={removeTask}>
+              Yes
+            </button>
+            <button type="button" onClick={() => setActiveModal(false)}>
+              Cancel
+            </button>
+          </Modal>
+        </>
       )}
     </div>
   );
