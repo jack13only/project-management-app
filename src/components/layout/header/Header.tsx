@@ -35,7 +35,7 @@ const Header: FC = () => {
         })
       );
     }
-  }, [data]);
+  }, [userId, data]);
 
   useEffect(() => {
     body.addEventListener('scroll', listenScrollEvent);
@@ -71,6 +71,13 @@ const Header: FC = () => {
             {userToken && (
               <>
                 <div>{userName}</div>
+                <PrimaryButton
+                  dataTestId="PrimaryButton"
+                  type="button"
+                  className="btn btn-log btn-bordered"
+                  description="Boards"
+                  onClick={() => navigate(PATHS.boards)}
+                />
                 <PrimaryButton
                   dataTestId="PrimaryButton"
                   type="button"
