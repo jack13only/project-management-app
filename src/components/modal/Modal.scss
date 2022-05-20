@@ -24,6 +24,8 @@
     background-color: rgb(255, 255, 255);
     transform: scale(0.5);
     transition: 0.4s all;
+    width: 60%;
+    height: 50vh;
 
     @media (max-width: 1200px) {
       width: 70vw;
@@ -34,9 +36,25 @@
     }
 
     &.active {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
       opacity: 1;
       pointer-events: all;
       transform: scale(1);
+      background: url('../../images/confirmation.jpg');
+      background-repeat: no-repeat;
+      background-position: 0%;
+      background-size: auto 100%;
+      background-color: rgb(255, 255, 255);
+    }
+  }
+
+  .modal__text {
+    max-width: 40%;
+    
+    @media (max-width: 1200px) {
+      max-width: 33%;
     }
   }
 

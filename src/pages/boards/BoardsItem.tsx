@@ -35,13 +35,18 @@ const BoardsItem = ({ title, id, isActiveModal }: BoardsTypes) => {
         </button>
       </div>
       <Modal activeModal={activeModal} setActiveModal={setActiveModal}>
-        <h2>{`Do you want to delete board '${title}'`} ?</h2>
-        <button type="button" onClick={deleteBoardItem}>
-          Yes
-        </button>
-        <button type="button" onClick={cancelDeleteBoard}>
-          Cancel
-        </button>
+        <div className="modal__text">
+          <h2>Are you sure?</h2>
+          <h3>{`Do you want to delete board '${title}'`} ?</h3>
+          <p>If you press `Yes`, the board will be deleted</p>
+          <p>If you would like to cancel, press `Cancel`</p>
+          <button type="button" onClick={deleteBoardItem}>
+            Yes
+          </button>
+          <button type="button" onClick={cancelDeleteBoard}>
+            Cancel
+          </button>
+        </div>
       </Modal>
     </>
   );
