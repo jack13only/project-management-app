@@ -6,9 +6,10 @@ import './Header.scss';
 import { PATHS } from '../../../shared/constants/routes';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { saveTokenToLS } from '../../../features/ls-load-save';
-import { loginUser } from '../../../reducers/auth';
+import { logoutUser } from '../../../reducers/auth';
 import decodeUserId from '../../../features/decodeUserId';
 import { useGetUserByIdQuery } from '../../../app/RtkQuery';
+import { setUserData } from '../../../reducers/userReducer';
 
 const Header: FC = () => {
   const [scrolledPage, isScrolledPage] = useState(false);
@@ -16,18 +17,25 @@ const Header: FC = () => {
   const heightScrollTop = 170;
   const navigate = useNavigate();
   const { userToken } = useAppSelector((state) => state.authStorage);
+  const { userName } = useAppSelector((state) => state.userStorage);
   const dispatch = useAppDispatch();
 
   const listenScrollEvent = () => {
     body.scrollTop > heightScrollTop ? isScrolledPage(true) : isScrolledPage(false);
   };
 
-  let userName = '';
-  const userId = decodeUserId(userToken);
+  const userId = decodeUserId(userToken); // receive userId
   const { data } = useGetUserByIdQuery(userId);
-  if (data && 'name' in data) {
-    userName = data.name;
-  }
+  useEffect(() => {
+    if (data && 'name' in data && 'id' in data) {
+      dispatch(
+        setUserData({
+          userName: data.name,
+          userId: data.id,
+        })
+      );
+    }
+  }, [data]);
 
   useEffect(() => {
     body.addEventListener('scroll', listenScrollEvent);
@@ -69,7 +77,7 @@ const Header: FC = () => {
                   className="btn btn-sign btn-colored"
                   description="Sign out"
                   onClick={() => {
-                    dispatch(loginUser(''));
+                    dispatch(logoutUser());
                     saveTokenToLS('');
                     console.log('logout');
                   }}

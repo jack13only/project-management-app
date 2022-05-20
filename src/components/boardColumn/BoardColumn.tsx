@@ -11,6 +11,7 @@ import {
 } from '../../app/RtkQuery';
 
 import './BoardColumn.scss';
+import { useAppSelector } from '../../app/hooks';
 
 type BoardColumnProps = {
   columnTitle: string;
@@ -25,13 +26,12 @@ type CardsState = {
   complete: boolean;
 };
 
-const userId = '37e596ea-e3b8-4515-9eb2-48f1e6ed6204';
-
 const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, order }) => {
   const columnRef = useRef() as RefObject<HTMLDivElement>;
   const [cards, setCards] = useState<CardsState[]>([]);
   const [cardTitle, setCardTitle] = useState<string>('');
   const [isOpenCard, setIsOpenCard] = useState<boolean>(false);
+  const { userId } = useAppSelector((state) => state.userStorage);
 
   const { data = [], error } = useGetTasksQuery({ columnId, boardId });
   const [deleteColumn] = useDeleteColumnMutation();
