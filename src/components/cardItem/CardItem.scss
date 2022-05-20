@@ -1,0 +1,21 @@
+@import '../../sass/Constants.scss';
+
+.board__task {
+  display: flex;
+  flex-direction: column;
+  row-gap: $base * 2;
+}
+
+.board__task-input {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  row-gap: $base * 2;
+  border: 1px solid $color-dark-04;
+  border-radius: $base;
+}
+
+.board__task-btns {
+  display: flex;
+  column-gap: $base * 2;
+}

@@ -2,7 +2,13 @@ import React, { ChangeEvent, FC, RefObject, useEffect, useRef, useState } from '
 
 import { DeleteButton, TertiaryButton } from '../buttons';
 import { BoardColumnTitle, CardContainer, CardList } from '..';
-import { useDeleteColumnMutation } from '../../app/RtkQuery';
+
+import {
+  useDeleteColumnMutation,
+  useDeleteTaskMutation,
+  useGetTasksQuery,
+  usePostTaskMutation,
+} from '../../app/RtkQuery';
 
 import './BoardColumn.scss';
 
@@ -19,29 +25,39 @@ type CardsState = {
   complete: boolean;
 };
 
+const userId = '37e596ea-e3b8-4515-9eb2-48f1e6ed6204';
+
 const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, order }) => {
   const columnRef = useRef() as RefObject<HTMLDivElement>;
   const [cards, setCards] = useState<CardsState[]>([]);
   const [cardTitle, setCardTitle] = useState<string>('');
   const [isOpenCard, setIsOpenCard] = useState<boolean>(false);
+
+  const { data = [], error } = useGetTasksQuery({ columnId, boardId });
   const [deleteColumn] = useDeleteColumnMutation();
+  const [postTask] = usePostTaskMutation();
+  const [deleteTask] = useDeleteTaskMutation();
+
+  if (error && 'status' in error) {
+    console.log('error.data', error.status);
+  }
 
   const removeColumn = async () => {
     await deleteColumn({ boardId, columnId });
   };
 
-  const addСard = () => {
+  const addCard = async () => {
     if (cardTitle.trim().length) {
-      setCards([
-        ...cards,
-        {
-          id: new Date().toISOString(),
-          cardTitle,
-          complete: false,
+      await postTask({
+        boardId,
+        columnId,
+        body: {
+          title: cardTitle,
+          order: data.length ? data[data.length - 1].order + 1 : 0,
+          description: cardTitle,
+          userId: userId,
         },
-      ]);
-      setCardTitle('');
-      setIsOpenCard(false);
+      });
     }
   };
 
@@ -50,19 +66,23 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
     setCardTitle(VALUE);
   };
 
-  const removeCard = (cardId: string | undefined) => {
-    setCards(cards.filter((card) => card.id !== cardId));
+  const removeCard = async (cardId: string) => {
+    await deleteTask({
+      boardId,
+      columnId,
+      taskId: cardId,
+    });
   };
 
   const toggleCardComplete = (cardId: string | undefined) => {
     setCards(
-      cards.map((card) => {
-        if (card.id !== cardId) {
-          return card;
+      data.map((task: CardsState) => {
+        if (task.id !== cardId) {
+          return task;
         } else {
           return {
-            ...card,
-            complete: !card.complete,
+            ...task,
+            complete: !task.complete,
           };
         }
       })
@@ -73,14 +93,14 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
     setIsOpenCard(true);
   };
 
-  const removeCardVisibility = () => {
-    setIsOpenCard(false);
-    setCardTitle('');
-  };
-
   useEffect(() => {
     columnRef.current ? (columnRef.current.scrollTop = columnRef.current.scrollHeight) : null;
-  }, [cards.length, isOpenCard]);
+  }, [data.length, isOpenCard]);
+
+  useEffect(() => {
+    setCardTitle('');
+    setIsOpenCard(false);
+  }, [data.length]);
 
   return (
     <div className="board__column" ref={columnRef} style={{ order: order }}>
@@ -100,25 +120,23 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
         />
       </div>
 
-      <div>
-        <CardList cards={cards} removeCard={removeCard} toggleCardComplete={toggleCardComplete} />
-        <div className="card__add">
-          <TertiaryButton
-            className="button__tertiary column__btn"
-            type="button"
-            description="+ Add a card"
-            isOpenCard={isOpenCard}
-            onClick={addCardVisibility}
-          />
-        </div>
-        <CardContainer
+      <CardList tasks={data} removeCard={removeCard} toggleCardComplete={toggleCardComplete} />
+      <div className="card__add">
+        <TertiaryButton
+          className="button__tertiary column__btn"
+          type="button"
+          description="+ Add a card"
           isOpenCard={isOpenCard}
-          removeCardVisibility={removeCardVisibility}
-          cardTitle={cardTitle}
-          handleCardTitle={handleCardTitle}
-          addCard={addСard}
+          onClick={addCardVisibility}
         />
       </div>
+      <CardContainer
+        isOpenCard={isOpenCard}
+        cardTitle={cardTitle}
+        handleCardTitle={handleCardTitle}
+        addCard={addCard}
+        removeCardVisibility={() => setIsOpenCard(false)}
+      />
     </div>
   );
 };
