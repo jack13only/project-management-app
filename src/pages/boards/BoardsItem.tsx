@@ -35,7 +35,7 @@ const BoardsItem = ({ title, id, isActiveModal }: BoardsTypes) => {
         </button>
       </div>
       <Modal activeModal={activeModal} setActiveModal={setActiveModal}>
-        <h2>Do you want to delete board {title} ?</h2>
+        <h2>{`Do you want to delete board '${title}'`} ?</h2>
         <button type="button" onClick={deleteBoardItem}>
           Yes
         </button>
