@@ -8,7 +8,6 @@ import './CardContainer.scss';
 
 interface CardContainerProps {
   isOpenCard: boolean;
-  removeCardVisibility: () => void;
   cardTitle: string;
   handleCardTitle: (event: ChangeEvent<HTMLTextAreaElement>) => void;
   addCard: () => void;
@@ -16,7 +15,6 @@ interface CardContainerProps {
 
 const CardContainer: FC<CardContainerProps> = ({
   isOpenCard,
-  removeCardVisibility,
   cardTitle,
   handleCardTitle,
   addCard,
@@ -42,7 +40,7 @@ const CardContainer: FC<CardContainerProps> = ({
           className="task-delete"
           type="button"
           description="&times;"
-          removeCardVisibility={removeCardVisibility}
+          // removeCardVisibility={removeCardVisibility}
         />
       </div>
     </section>

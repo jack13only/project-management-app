@@ -49,19 +49,18 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
   };
 
   const addCard = async () => {
-    await postTask({
-      boardId,
-      columnId,
-      body: {
-        title: cardTitle,
-        order: data.length ? data[data.length - 1].order + 1 : 0,
-        description: cardTitle,
-        userId: userId,
-      },
-    });
-
-    setCardTitle('');
-    setIsOpenCard(false);
+    if (cardTitle.trim().length) {
+      await postTask({
+        boardId,
+        columnId,
+        body: {
+          title: cardTitle,
+          order: data.length ? data[data.length - 1].order + 1 : 0,
+          description: cardTitle,
+          userId: userId,
+        },
+      });
+    }
   };
 
   const handleCardTitle = (event: ChangeEvent<HTMLTextAreaElement>) => {
@@ -96,14 +95,14 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
     setIsOpenCard(true);
   };
 
-  const removeCardVisibility = () => {
-    setIsOpenCard(false);
-    setCardTitle('');
-  };
-
   useEffect(() => {
     columnRef.current ? (columnRef.current.scrollTop = columnRef.current.scrollHeight) : null;
   }, [data.length, isOpenCard]);
+
+  useEffect(() => {
+    setCardTitle('');
+    setIsOpenCard(false);
+  }, [data.length]);
 
   return (
     <div className="board__column" ref={columnRef} style={{ order: order }}>
@@ -123,25 +122,22 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
         />
       </div>
 
-      <div>
-        <CardList tasks={data} removeCard={removeCard} toggleCardComplete={toggleCardComplete} />
-        <div className="card__add">
-          <TertiaryButton
-            className="button__tertiary column__btn"
-            type="button"
-            description="+ Add a card"
-            isOpenCard={isOpenCard}
-            onClick={addCardVisibility}
-          />
-        </div>
-        <CardContainer
+      <CardList tasks={data} removeCard={removeCard} toggleCardComplete={toggleCardComplete} />
+      <div className="card__add">
+        <TertiaryButton
+          className="button__tertiary column__btn"
+          type="button"
+          description="+ Add a card"
           isOpenCard={isOpenCard}
-          removeCardVisibility={removeCardVisibility}
-          cardTitle={cardTitle}
-          handleCardTitle={handleCardTitle}
-          addCard={addCard}
+          onClick={addCardVisibility}
         />
       </div>
+      <CardContainer
+        isOpenCard={isOpenCard}
+        cardTitle={cardTitle}
+        handleCardTitle={handleCardTitle}
+        addCard={addCard}
+      />
     </div>
   );
 };

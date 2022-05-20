@@ -1,5 +1,11 @@
 @import '../../sass/Constants.scss';
 
+.board__task {
+  display: flex;
+  flex-direction: column;
+  row-gap: $base * 2;
+}
+
 .board__task-input {
   display: flex;
   align-items: flex-start;
