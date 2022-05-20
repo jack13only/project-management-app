@@ -2,7 +2,7 @@ import React, { FC, useState } from 'react';
 import { InputCheckbox, Textarea } from '..';
 import { DeleteButton } from '../buttons';
 
-import { useUpdateTaskMutation } from '../../app/RtkQuery';
+import { useDeleteTaskMutation, useUpdateTaskMutation } from '../../app/RtkQuery';
 
 import './CardItem.scss';
 
@@ -13,7 +13,6 @@ interface CardItemProps {
   columnId: string;
   boardId: string;
   order: number;
-  removeCard: (cardId: string) => void;
   toggleCardComplete: (cardId: string) => void;
 }
 
@@ -23,7 +22,6 @@ const CardItem: FC<CardItemProps> = ({
   id,
   cardTitle,
   complete,
-  removeCard,
   toggleCardComplete,
   order,
   columnId,
@@ -32,6 +30,7 @@ const CardItem: FC<CardItemProps> = ({
   const [isTitleOpenToChange, setIsTitleOpenToChange] = useState(false);
   const [taskTitle, setTaskTitle] = useState('');
   const [updateTask] = useUpdateTaskMutation();
+  const [deleteTask] = useDeleteTaskMutation();
 
   const handleTaskTitle = () => {
     setIsTitleOpenToChange(true);
@@ -61,6 +60,14 @@ const CardItem: FC<CardItemProps> = ({
         },
       });
     }
+  };
+
+  const removeCard = async () => {
+    await deleteTask({
+      boardId,
+      columnId,
+      taskId: id,
+    });
   };
 
   return (

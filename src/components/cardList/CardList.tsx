@@ -12,11 +12,10 @@ interface CardsState {
 
 interface CardListProps {
   tasks: CardsState[];
-  removeCard: (cardId: string) => void;
   toggleCardComplete: (cardId: string) => void;
 }
 
-const CardList: FC<CardListProps> = ({ tasks, removeCard, toggleCardComplete }) => {
+const CardList: FC<CardListProps> = ({ tasks, toggleCardComplete }) => {
   return (
     <ul className="cards__list">
       {tasks.map((task) => {
@@ -24,7 +23,6 @@ const CardList: FC<CardListProps> = ({ tasks, removeCard, toggleCardComplete }) 
           <CardItem
             {...task}
             key={task.id}
-            removeCard={removeCard}
             toggleCardComplete={toggleCardComplete}
             cardTitle={task.title}
             order={task.order}

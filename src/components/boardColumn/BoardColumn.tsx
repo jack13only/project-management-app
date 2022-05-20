@@ -40,7 +40,6 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
   const [deleteColumn] = useDeleteColumnMutation();
   const [activeModal, setActiveModal] = useState<boolean>(false);
   const [postTask] = usePostTaskMutation();
-  const [deleteTask] = useDeleteTaskMutation();
 
   if (error && 'status' in error) {
     console.log('error.data', error.status);
@@ -68,14 +67,6 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
   const handleCardTitle = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const VALUE = event.target.value;
     setCardTitle(VALUE);
-  };
-
-  const removeCard = async (cardId: string) => {
-    await deleteTask({
-      boardId,
-      columnId,
-      taskId: cardId,
-    });
   };
 
   const toggleCardComplete = (cardId: string | undefined) => {
@@ -126,7 +117,7 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
         </div>
 
         <div>
-          <CardList tasks={data} removeCard={removeCard} toggleCardComplete={toggleCardComplete} />
+          <CardList tasks={data} toggleCardComplete={toggleCardComplete} />
           <div className="card__add">
             <TertiaryButton
               className="button__tertiary column__btn"
