@@ -1,19 +1,39 @@
 @import '../../../sass/Constants.scss';
 
+.btn-back__wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $base;
+  padding: $base;
+  background-color: white;
+  border: none;
+  border-radius: $base * 2;
+  cursor: pointer;
+
+  &:hover {
+    .btn-back {
+      filter: brightness(0.7);
+      transition: $transition;
+    }
+  }
+}
+
 .btn-back {
   width: $base * 5;
   height: $base * 5;
   background-color: transparent;
-  background-image: url(../../../images/icons/back.svg);
-  background-size: 100%;
+  background-image: url('../../../images/icons/back.svg');
+  background-size: 80%;
   background-repeat: no-repeat;
   background-position: center;
   border: none;
   transition: $transition;
-  cursor: pointer;
+}
 
-  &:hover {
-    filter: brightness(0.7);
-    transition: $transition;
-  }
+.btn-back-description {
+  @include poppins;
+  font-weight: $fw-medium;
+  text-decoration: none;
+  text-transform: uppercase;
 }

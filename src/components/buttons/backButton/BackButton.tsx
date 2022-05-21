@@ -7,7 +7,12 @@ interface BackButtonProps {
 }
 
 const BackButton: FC<BackButtonProps> = ({ type }) => {
-  return <button className="btn-back" type={type} />;
+  return (
+    <button className="btn-back__wrapper" type={type}>
+      <div className="btn-back" />
+      <div className="btn-back-description">Back</div>
+    </button>
+  );
 };
 
 export { BackButton };

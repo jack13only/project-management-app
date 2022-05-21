@@ -91,3 +91,11 @@ body {
   line-height: $base * 4;
   letter-spacing: 0.06em;
 }
+
+a {
+  text-decoration: none;
+}
+
+.border-right {
+  border-right: 1px solid $color-dark-03;
+}

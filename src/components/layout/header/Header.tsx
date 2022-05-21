@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { PrimaryButton } from '../../buttons/header/PrimaryButton';
 import logo from '../../../images/icons/logo.svg';
 import './Header.scss';
@@ -15,6 +15,8 @@ const Header: FC = () => {
   const body = window.document.body as HTMLBodyElement;
   const heightScrollTop = 170;
   const navigate = useNavigate();
+  const location = useLocation();
+  console.log(location.pathname);
   const { userToken } = useAppSelector((state) => state.authStorage);
   const dispatch = useAppDispatch();
 
@@ -36,10 +38,21 @@ const Header: FC = () => {
 
   return (
     <header data-testid="header" className={'header' + (scrolledPage ? ' header-scrolled' : '')}>
-      <div className="wrapper">
-        <Link to={PATHS.main} className="header__logo">
-          <img src={logo} alt="logo" className="header__logo-img" />
-        </Link>
+      <div className="wrapper header__wrapper">
+        <div className="header__logo__wrapper">
+          <Link
+            to={PATHS.main}
+            className={'header__logo' + (location.pathname === '/boards' ? ' border-right' : '')}
+          >
+            <img src={logo} alt="logo" className="header__logo-img" />
+          </Link>
+          {location.pathname === '/boards' && (
+            <div className="boards-logo__wrapper">
+              <div className="boards-logo" />
+              <div className="boards-logo-description">Boards</div>
+            </div>
+          )}
+        </div>
         <div className="header__navigation">
           <div className="header__buttons">
             {!userToken && (
