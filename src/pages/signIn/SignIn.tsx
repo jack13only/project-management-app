@@ -93,7 +93,7 @@ const SignIn = (): JSX.Element => {
       </form>
 
       <Modal activeModal={activeModal} setActiveModal={setActiveModal}>
-        <div>
+        <div className="error-content">
           <ErrorSign errorMsg={errorMsg} />
         </div>
       </Modal>

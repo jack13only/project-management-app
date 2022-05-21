@@ -24,7 +24,7 @@
     transform: scale(0.5);
     transition: 0.4s all;
     width: 60%;
-    height: 50vh;
+    height: 60vh;
 
     @media (max-width: 1200px) {
       width: 70vw;
@@ -45,22 +45,27 @@
   }
 
   .modal__wrapper {
-    padding: 50px 20px 20px;
+    display: flex;
+    justify-content: space-between;
     width: 100%;
     height: 100%;
+  }
+
+  .modal__img {
+    flex-basis: 44%;
+    height: auto;
     background: url('../../images/confirmation.jpg');
     background-repeat: no-repeat;
-    background-size: auto 100%;
+    background-size: cover;
     background-color: rgb(255, 255, 255);
+    background-position: center;
+    border-radius: 15px 0 0 15px;
   }
 
   .modal__text {
-    max-width: 40%;
-    margin-left: auto;
-    
-    @media (max-width: 1200px) {
-      max-width: 33%;
-    }
+    padding: 50px 20px 20px;
+    flex-basis: 40%;
+    text-align: end;
   }
 
   .modal__close {

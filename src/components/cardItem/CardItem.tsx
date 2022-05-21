@@ -120,6 +120,7 @@ const CardItem: FC<CardItemProps> = ({
 
           <Modal activeModal={activeModal} setActiveModal={setActiveModal}>
             <div className="modal__wrapper">
+              <div className="modal__img" />
               <div className="modal__text">
                 <h2>{`Do you want to delete task '${cardTitle}'`} ?</h2>
                 <button type="button" onClick={removeTask}>

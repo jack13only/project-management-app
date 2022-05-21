@@ -95,6 +95,7 @@ const Boards: FC = () => {
 
       <Modal activeModal={activeModal} setActiveModal={setActiveModal}>
         <div className="modal__wrapper">
+          <div className="modal__img" />
           <div className="modal__text">
             <h2>Are you sure?</h2>
             <h3>{`Do you want to delete board '${deletedBoardTitle}'`} ?</h3>
