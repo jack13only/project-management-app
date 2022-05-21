@@ -4,14 +4,8 @@ import { DeleteButton, TertiaryButton } from '../buttons';
 import { BoardColumnTitle, CardContainer, CardList, Modal } from '..';
 
 import './BoardColumn.scss';
-import { title } from 'process';
 
-import {
-  useDeleteColumnMutation,
-  useDeleteTaskMutation,
-  useGetTasksQuery,
-  usePostTaskMutation,
-} from '../../app/RtkQuery';
+import { useDeleteColumnMutation, useGetTasksQuery, usePostTaskMutation } from '../../app/RtkQuery';
 
 import './BoardColumn.scss';
 import { useAppSelector } from '../../app/hooks';
