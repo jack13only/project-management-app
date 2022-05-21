@@ -3,4 +3,5 @@ export interface BoardsTypes {
   id: string;
   order?: number;
   isActiveModal: (shouldShowModal: boolean) => void;
+  getDeletedBoard: (boardTitle: string, boardId: string) => void;
 }

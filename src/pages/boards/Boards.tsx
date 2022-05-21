@@ -1,9 +1,13 @@
 import React, { FC, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useGetBoardsQuery, usePostBoardMutation } from '../../app/RtkQuery';
+import {
+  useDeleteBoardMutation,
+  useGetBoardsQuery,
+  usePostBoardMutation,
+} from '../../app/RtkQuery';
 
 import { TertiaryButton } from '../../components/buttons';
-import { PreloaderSuspense } from '../../components';
+import { Modal, PreloaderSuspense } from '../../components';
 
 import { BoardsTypes } from './typesBoards/TypesBoards';
 
@@ -16,8 +20,12 @@ const BoardsItem = React.lazy(() => import('./BoardsItem'));
 
 const Boards: FC = () => {
   const [activeModal, setActiveModal] = useState<boolean>(false);
+  const [deletedBoardTitle, setdeletedBoardTitle] = useState<string>('');
+  const [deletedBoardId, setDeletedBoardId] = useState<string>('');
+
   const { data = [], error, isLoading } = useGetBoardsQuery('');
   const [postBoard] = usePostBoardMutation();
+  const [deleteBoard] = useDeleteBoardMutation();
 
   if (error && 'status' in error) {
     console.log('error.data', error.status);
@@ -27,6 +35,22 @@ const Boards: FC = () => {
 
   const handlerModal = (isActiveModal: boolean) => {
     setActiveModal(isActiveModal);
+  };
+
+  const getDeletedBoard = (deletedBoardTitle: string, deletedBoardId: string) => {
+    setdeletedBoardTitle(deletedBoardTitle);
+    setDeletedBoardId(deletedBoardId);
+  };
+
+  const cancelDeleteBoard = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    setActiveModal(false);
+  };
+
+  const deleteBoardItem = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    setActiveModal(false);
+    deleteBoard(deletedBoardId);
   };
 
   return (
@@ -54,7 +78,12 @@ const Boards: FC = () => {
                       : undefined
                   }
                 >
-                  <BoardsItem title={title} id={id} isActiveModal={handlerModal} />
+                  <BoardsItem
+                    title={title}
+                    id={id}
+                    isActiveModal={handlerModal}
+                    getDeletedBoard={getDeletedBoard}
+                  />
                 </Link>
               );
             })}
@@ -63,6 +92,21 @@ const Boards: FC = () => {
           <div>Loading...</div>
         )}
       </div>
+
+      <Modal activeModal={activeModal} setActiveModal={setActiveModal}>
+        <div className="modal__text">
+          <h2>Are you sure?</h2>
+          <h3>{`Do you want to delete board '${deletedBoardTitle}'`} ?</h3>
+          <p>If you press `Yes`, the board will be deleted</p>
+          <p>If you would like to cancel, press `Cancel`</p>
+          <button type="button" onClick={deleteBoardItem}>
+            Yes
+          </button>
+          <button type="button" onClick={cancelDeleteBoard}>
+            Cancel
+          </button>
+        </div>
+      </Modal>
     </section>
   );
 };
