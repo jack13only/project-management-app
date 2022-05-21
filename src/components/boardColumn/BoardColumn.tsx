@@ -139,14 +139,16 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
       </div>
 
       <Modal activeModal={activeModal} setActiveModal={setActiveModal}>
-        <div className="modal__text">
-          <h2>{`Do you want to delete column '${columnTitle}'`} ?</h2>
-          <button type="button" onClick={removeColumn}>
-            Yes
-          </button>
-          <button type="button" onClick={() => setActiveModal(false)}>
-            Cancel
-          </button>
+        <div className="modal__wrapper">
+          <div className="modal__text">
+            <h2>{`Do you want to delete column '${columnTitle}'`} ?</h2>
+            <button type="button" onClick={removeColumn}>
+              Yes
+            </button>
+            <button type="button" onClick={() => setActiveModal(false)}>
+              Cancel
+            </button>
+          </div>
         </div>
       </Modal>
     </>

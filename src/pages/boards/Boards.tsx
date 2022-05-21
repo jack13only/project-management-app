@@ -94,17 +94,19 @@ const Boards: FC = () => {
       </div>
 
       <Modal activeModal={activeModal} setActiveModal={setActiveModal}>
-        <div className="modal__text">
-          <h2>Are you sure?</h2>
-          <h3>{`Do you want to delete board '${deletedBoardTitle}'`} ?</h3>
-          <p>If you press `Yes`, the board will be deleted</p>
-          <p>If you would like to cancel, press `Cancel`</p>
-          <button type="button" onClick={deleteBoardItem}>
-            Yes
-          </button>
-          <button type="button" onClick={cancelDeleteBoard}>
-            Cancel
-          </button>
+        <div className="modal__wrapper">
+          <div className="modal__text">
+            <h2>Are you sure?</h2>
+            <h3>{`Do you want to delete board '${deletedBoardTitle}'`} ?</h3>
+            <p>If you press `Yes`, the board will be deleted</p>
+            <p>If you would like to cancel, press `Cancel`</p>
+            <button type="button" onClick={deleteBoardItem}>
+              Yes
+            </button>
+            <button type="button" onClick={cancelDeleteBoard}>
+              Cancel
+            </button>
+          </div>
         </div>
       </Modal>
     </section>

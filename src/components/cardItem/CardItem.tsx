@@ -119,13 +119,17 @@ const CardItem: FC<CardItemProps> = ({
           </li>
 
           <Modal activeModal={activeModal} setActiveModal={setActiveModal}>
-            <h2>{`Do you want to delete task '${cardTitle}'`} ?</h2>
-            <button type="button" onClick={removeTask}>
-              Yes
-            </button>
-            <button type="button" onClick={() => setActiveModal(false)}>
-              Cancel
-            </button>
+            <div className="modal__wrapper">
+              <div className="modal__text">
+                <h2>{`Do you want to delete task '${cardTitle}'`} ?</h2>
+                <button type="button" onClick={removeTask}>
+                  Yes
+                </button>
+                <button type="button" onClick={() => setActiveModal(false)}>
+                  Cancel
+                </button>
+              </div>
+            </div>
           </Modal>
         </>
       )}
