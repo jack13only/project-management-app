@@ -53,7 +53,7 @@
 }
 
 .footer__title {
-  @include spartan;
+  @include poppins;
   font-size: $fs-m;
   font-weight: $fw-medium;
 }
@@ -98,7 +98,7 @@
 }
 
 .footer__year {
-  @include spartan;
+  @include poppins;
   flex-basis: 20%;
   font-size: $fs-m;
   text-align: left;

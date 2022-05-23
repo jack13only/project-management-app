@@ -7,6 +7,7 @@ import {
   usePostColumnMutation,
 } from '../../app/RtkQuery';
 import { TertiaryButton } from '../../components/buttons';
+import { BackButton } from '../../components/buttons';
 import { PreloaderSuspense } from '../../components/preloader/index';
 
 import './Board.scss';
@@ -45,10 +46,12 @@ const Board: FC = () => {
   return (
     <div className="board">
       <div className="wrapper board__wrapper">
-        <h2 className="board__title">Board {currentBoardTitle}</h2>
-        <Link to="/boards">
-          <button type="button">Back</button>
-        </Link>
+        <div className="board__title__wrapper">
+          <h2 className="board__title">Board {currentBoardTitle}</h2>
+          <Link to="/boards">
+            <BackButton type="button" />
+          </Link>
+        </div>
 
         {!isLoading ? (
           <div className="board__columns">

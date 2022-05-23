@@ -1,16 +1,18 @@
+@import '../../sass/Constants.scss';
+
 .modal {
-  height: 100vh;
-  width: 100vw;
-  background-color: rgba(0, 0, 0, 0.400);
   position: fixed;
   top: 0;
   left: 0;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
   opacity: 0;
+  transition: $transition;
   pointer-events: none;
-  transition: 0.5s;
   z-index: 50;
 
   &.active {
@@ -19,12 +21,13 @@
   }
 
   .modal__content {
-    border-radius: 15px;
+    padding: $base * 10 $base * 4 $base * 4;
+    border-radius: $base * 3;
     background-color: rgb(255, 255, 255);
     transform: scale(0.5);
-    transition: 0.4s all;
     width: 60%;
     height: 60vh;
+    transition: $transition all;
 
     @media (max-width: 1200px) {
       width: 70vw;
@@ -70,10 +73,10 @@
 
   .modal__close {
     position: absolute;
-    top: 5px;
-    right: 10px;
-    font-size: 30px;
-    transition: 0.2s linear;
+    top: $base;
+    right: $base * 2;
+    font-size: $base * 6;
+    transition: $transition linear;
     cursor: default;
 
     &:hover {

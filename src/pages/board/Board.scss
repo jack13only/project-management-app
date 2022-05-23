@@ -43,3 +43,11 @@
   flex-basis: 10%;
   height: fit-content;
 }
+
+.board__title__wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-direction: column-reverse;
+  min-width: $base * 22;
+}

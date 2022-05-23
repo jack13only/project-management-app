@@ -62,7 +62,7 @@ const BoardColumnTitle: FC<BoardColumnTitleTypes> = ({ columnId, columnTitle, bo
           </div>
         </div>
       ) : (
-        <h4 className="board__column-title" onClick={changeTitle}>
+        <h4 className="h4" onClick={changeTitle}>
           {columnTitle}
         </h4>
       )}

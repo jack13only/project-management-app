@@ -109,13 +109,7 @@ const CardItem: FC<CardItemProps> = ({
             <span className="task-text" onClick={handleTaskTitle}>
               {cardTitle}
             </span>
-            <DeleteButton
-              className="task-delete"
-              type="button"
-              description="&times;"
-              id={id}
-              removeCard={handlerModal}
-            />
+            <DeleteButton type="button" id={id} onClick={handlerModal} />
           </li>
 
           <Modal activeModal={activeModal} setActiveModal={setActiveModal}>

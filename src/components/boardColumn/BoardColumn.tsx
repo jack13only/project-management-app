@@ -103,12 +103,7 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
             order={order}
           />
 
-          <DeleteButton
-            className="task-delete"
-            type="button"
-            description="&times;"
-            removeCard={() => setActiveModal(true)}
-          />
+          <DeleteButton type="button" onClick={() => setActiveModal(true)} />
         </div>
 
         <div>
@@ -124,7 +119,7 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
           </div>
           <CardContainer
             isOpenCard={isOpenCard}
-            removeCardVisibility={() => setIsOpenCard(false)}
+            onClick={() => setIsOpenCard(false)}
             cardTitle={cardTitle}
             handleCardTitle={handleCardTitle}
             addCard={addCard}

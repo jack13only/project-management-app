@@ -57,13 +57,6 @@ const Boards: FC = () => {
     <section className="boards">
       <h2 className="h2">Your boards</h2>
       <div className="boards__container">
-        <TertiaryButton
-          className="button__tertiary board__new-btn"
-          type="button"
-          description="+ Create a new board"
-          onClick={addNewBoard}
-        />
-
         {!isLoading ? (
           <PreloaderSuspense>
             {data?.map(({ id, title }: BoardsTypes) => {

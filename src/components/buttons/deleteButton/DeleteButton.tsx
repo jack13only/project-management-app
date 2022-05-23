@@ -1,31 +1,15 @@
-import { FC } from 'react';
+import { FC, MouseEvent } from 'react';
+
+import './DeleteButton.scss';
 
 interface DeleteButtonProps {
-  className: string;
   type: 'button';
-  description: string;
   id?: string;
-  removeCard?: (cardId: string) => void;
-  removeCardVisibility?: () => void;
+  onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
 }
 
-const DeleteButton: FC<DeleteButtonProps> = ({
-  className,
-  type,
-  description,
-  id,
-  removeCard,
-  removeCardVisibility,
-}) => {
-  return (
-    <button
-      className={className}
-      type={type}
-      onClick={removeCard ? () => removeCard(id ?? '') : removeCardVisibility}
-    >
-      {description}
-    </button>
-  );
+const DeleteButton: FC<DeleteButtonProps> = ({ type, id, onClick }) => {
+  return <button className="btn-delete" type={type} onClick={onClick} />;
 };
 
 export { DeleteButton };
