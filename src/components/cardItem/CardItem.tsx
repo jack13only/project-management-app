@@ -1,8 +1,8 @@
 import React, { FC, useState } from 'react';
-import { InputCheckbox, Textarea } from '..';
+import { InputCheckbox, Modal, Textarea } from '..';
 import { DeleteButton } from '../buttons';
 
-import { useUpdateTaskMutation } from '../../app/RtkQuery';
+import { useDeleteTaskMutation, useUpdateTaskMutation } from '../../app/RtkQuery';
 
 import './CardItem.scss';
 
@@ -13,7 +13,6 @@ interface CardItemProps {
   columnId: string;
   boardId: string;
   order: number;
-  removeCard: (cardId: string) => void;
   toggleCardComplete: (cardId: string) => void;
 }
 
@@ -23,7 +22,6 @@ const CardItem: FC<CardItemProps> = ({
   id,
   cardTitle,
   complete,
-  removeCard,
   toggleCardComplete,
   order,
   columnId,
@@ -32,6 +30,8 @@ const CardItem: FC<CardItemProps> = ({
   const [isTitleOpenToChange, setIsTitleOpenToChange] = useState(false);
   const [taskTitle, setTaskTitle] = useState('');
   const [updateTask] = useUpdateTaskMutation();
+  const [deleteTask] = useDeleteTaskMutation();
+  const [activeModal, setActiveModal] = useState<boolean>(false);
 
   const handleTaskTitle = () => {
     setIsTitleOpenToChange(true);
@@ -63,6 +63,18 @@ const CardItem: FC<CardItemProps> = ({
     }
   };
 
+  const handlerModal = () => {
+    setActiveModal(true);
+  };
+
+  const removeTask = async () => {
+    await deleteTask({
+      boardId,
+      columnId,
+      taskId: id,
+    });
+  };
+
   return (
     <div className="board__task" style={{ order: order }}>
       {isTitleOpenToChange ? (
@@ -85,19 +97,36 @@ const CardItem: FC<CardItemProps> = ({
           </div>
         </>
       ) : (
-        <li key={id} className="task" style={{ order: order }}>
-          <InputCheckbox
-            className="task-checkbox"
-            type="checkbox"
-            complete={complete}
-            id={id}
-            toggleCardComplete={toggleCardComplete}
-          />
-          <span className="task-text" onClick={handleTaskTitle}>
-            {cardTitle}
-          </span>
-          <DeleteButton type="button" id={id} removeCard={removeCard} />
-        </li>
+        <>
+          <li key={id} className="task" style={{ order: order }}>
+            <InputCheckbox
+              className="task-checkbox"
+              type="checkbox"
+              complete={complete}
+              id={id}
+              toggleCardComplete={toggleCardComplete}
+            />
+            <span className="task-text" onClick={handleTaskTitle}>
+              {cardTitle}
+            </span>
+            <DeleteButton type="button" id={id} onClick={handlerModal} />
+          </li>
+
+          <Modal activeModal={activeModal} setActiveModal={setActiveModal}>
+            <div className="modal__wrapper">
+              <div className="modal__img" />
+              <div className="modal__text">
+                <h2>{`Do you want to delete task '${cardTitle}'`} ?</h2>
+                <button type="button" onClick={removeTask}>
+                  Yes
+                </button>
+                <button type="button" onClick={() => setActiveModal(false)}>
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </Modal>
+        </>
       )}
     </div>
   );

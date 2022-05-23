@@ -24,7 +24,7 @@ const Board: FC = () => {
   const { id } = useParams();
   const boardId = id ?? '';
 
-  const { data = [], error } = useGetColumnsQuery({ boardId });
+  const { data = [], error, isLoading } = useGetColumnsQuery({ boardId });
   const [postColumn] = usePostColumnMutation();
   const getBoardsById = useGetBoardsByIdQuery(boardId);
   const currentBoardTitle = getBoardsById.data?.title;
@@ -52,21 +52,26 @@ const Board: FC = () => {
             <BackButton type="button" />
           </Link>
         </div>
-        <div className="board__columns">
-          <PreloaderSuspense>
-            {data?.map(({ title, id, order }: ColumnType) => {
-              return (
-                <BoardColumn
-                  columnTitle={title}
-                  key={id}
-                  boardId={boardId}
-                  columnId={id}
-                  order={order}
-                />
-              );
-            })}
-          </PreloaderSuspense>
-        </div>
+
+        {!isLoading ? (
+          <div className="board__columns">
+            <PreloaderSuspense>
+              {data?.map(({ title, id, order }: ColumnType) => {
+                return (
+                  <BoardColumn
+                    columnTitle={title}
+                    key={id}
+                    boardId={boardId}
+                    columnId={id}
+                    order={order}
+                  />
+                );
+              })}
+            </PreloaderSuspense>
+          </div>
+        ) : (
+          <div>Loading...</div>
+        )}
 
         <TertiaryButton
           className="button__tertiary column__new-btn"

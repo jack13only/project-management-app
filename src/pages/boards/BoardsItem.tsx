@@ -1,20 +1,22 @@
-import { MouseEvent } from 'react';
+import { MouseEvent, useState } from 'react';
 import { useDeleteBoardMutation } from '../../app/RtkQuery';
 import { BoardsTypes } from './typesBoards/TypesBoards';
 import { DeleteButton } from '../../components/buttons';
 
-const BoardsItem = ({ title, id }: BoardsTypes) => {
-  const [deleteBoard] = useDeleteBoardMutation();
+const BoardsItem = ({ title, id, isActiveModal, getDeletedBoard }: BoardsTypes) => {
+  const [activeModal, setActiveModal] = useState<boolean>(false);
 
-  const deleteBoardItem = (event: MouseEvent<HTMLButtonElement>) => {
+  const handlerActiveModal = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    deleteBoard(id);
+    setActiveModal(true);
+    isActiveModal(true);
+    getDeletedBoard(title, id);
   };
 
   return (
     <div className="boards__item">
       <h2 className="boards__item-title">{title}</h2>
-      <DeleteButton type="button" deleteBoardItem={deleteBoardItem} />
+      <DeleteButton type="button" onClick={handlerActiveModal} />
     </div>
   );
 };

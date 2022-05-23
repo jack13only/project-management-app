@@ -6,30 +6,44 @@ import './Header.scss';
 import { PATHS } from '../../../shared/constants/routes';
 import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { saveTokenToLS } from '../../../features/ls-load-save';
-import { loginUser } from '../../../reducers/auth';
+import { logoutUser } from '../../../reducers/auth';
 import decodeUserId from '../../../features/decodeUserId';
-import { useGetUserByIdQuery } from '../../../app/RtkQuery';
+import { useGetUserByIdQuery, usePostBoardMutation } from '../../../app/RtkQuery';
+import { setEmptyUser, setUserData } from '../../../reducers/userReducer';
+import { TertiaryButton } from '../../buttons';
+
+const getRandomTitleBoard = () => Math.floor(Math.random() * 100).toString();
 
 const Header: FC = () => {
+  const [postBoard] = usePostBoardMutation();
   const [scrolledPage, isScrolledPage] = useState(false);
   const body = window.document.body as HTMLBodyElement;
   const heightScrollTop = 170;
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(location.pathname);
   const { userToken } = useAppSelector((state) => state.authStorage);
+  const { userName } = useAppSelector((state) => state.userStorage);
   const dispatch = useAppDispatch();
 
   const listenScrollEvent = () => {
     body.scrollTop > heightScrollTop ? isScrolledPage(true) : isScrolledPage(false);
   };
 
-  let userName = '';
-  const userId = decodeUserId(userToken);
+  const userId = decodeUserId(userToken); // receive userId
   const { data } = useGetUserByIdQuery(userId);
-  if (data && 'name' in data) {
-    userName = data.name;
-  }
+
+  const addNewBoard = async () => await postBoard({ title: getRandomTitleBoard() });
+
+  useEffect(() => {
+    if (data && 'name' in data && 'id' in data) {
+      dispatch(
+        setUserData({
+          userName: data.name,
+          userId: data.id,
+        })
+      );
+    }
+  }, [userId, data]);
 
   useEffect(() => {
     body.addEventListener('scroll', listenScrollEvent);
@@ -40,17 +54,26 @@ const Header: FC = () => {
     <header data-testid="header" className={'header' + (scrolledPage ? ' header-scrolled' : '')}>
       <div className="wrapper header__wrapper">
         <div className="header__logo__wrapper">
-          <Link
-            to={PATHS.main}
-            className={'header__logo' + (location.pathname === '/boards' ? ' border-right' : '')}
-          >
+          <Link to={PATHS.main} className={'header__logo' + (userToken ? ' border-right' : '')}>
             <img src={logo} alt="logo" className="header__logo-img" />
           </Link>
-          {location.pathname === '/boards' && (
-            <div className="boards-logo__wrapper">
-              <div className="boards-logo" />
-              <div className="boards-logo-description">Boards</div>
-            </div>
+          {userToken && (
+            <>
+              <Link to={PATHS.boards}>
+                <div className="boards-logo__wrapper">
+                  <div className="boards-logo" />
+                  <div className="boards-logo-description">Boards</div>
+                </div>
+              </Link>
+              {location.pathname === '/boards' && (
+                <TertiaryButton
+                  className="button__tertiary board__new-btn"
+                  type="button"
+                  description="+ Create a new board"
+                  onClick={addNewBoard}
+                />
+              )}
+            </>
           )}
         </div>
         <div className="header__navigation">
@@ -82,7 +105,8 @@ const Header: FC = () => {
                   className="btn btn-sign btn-colored"
                   description="Sign out"
                   onClick={() => {
-                    dispatch(loginUser(''));
+                    dispatch(logoutUser());
+                    dispatch(setEmptyUser());
                     saveTokenToLS('');
                     console.log('logout');
                   }}
