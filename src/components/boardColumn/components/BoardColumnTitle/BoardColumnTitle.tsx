@@ -12,7 +12,7 @@ interface BoardColumnTitleTypes {
 }
 
 const BoardColumnTitle: FC<BoardColumnTitleTypes> = ({ columnId, columnTitle, boardId, order }) => {
-  const [currentColumnTitle, setColumnTitle] = useState<string>('');
+  const [currentColumnTitle, setColumnTitle] = useState<string>(columnTitle);
   const [isOpenColumnTitle, setIsOpenColumnTitle] = useState<boolean>(false);
 
   const [updateColumn] = useUpdateColumnMutation();
