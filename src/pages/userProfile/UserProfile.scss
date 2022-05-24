@@ -1,0 +1,32 @@
+@import '../../sass/Constants.scss';
+
+.user-profile {
+  width: $base * 130;
+  margin: $base * 10 auto $base * 10;
+  border: 1px solid rgb(0, 0, 0);
+  border-radius: $base;
+  padding: $base * 6;
+  display: grid;
+  font-size: $fs-xxxl;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  justify-items: center;
+  gap: 30px;
+
+  .user-profile__button {
+    background-color: rgb(255, 255, 255);
+    border: 2px solid rgb(0, 0, 0);
+    border-radius: $base;
+    font-size: $fs-xxl;
+    margin: 0 auto;
+    width: 50%;
+    transition: 0.3s linear;
+
+    &:hover {
+      // border: 4px solid rgb(255, 255, 255);
+      border-radius: $base * 3;
+      box-shadow: inset 0px 0px $base * 4 rgb(201, 255, 209);
+      cursor: pointer;
+    }
+  }
+}

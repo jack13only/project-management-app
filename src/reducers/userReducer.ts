@@ -3,13 +3,13 @@ import { createSlice } from '@reduxjs/toolkit';
 interface UserState {
   userName: string;
   userId: string;
-  // userLogin: string;
+  userLogin: string;
 }
 
 const initialUserState: UserState = {
   userName: '',
   userId: '',
-  // userLogin: '',
+  userLogin: '',
 };
 
 const userSlice = createSlice({
