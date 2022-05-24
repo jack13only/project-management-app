@@ -28,6 +28,7 @@ const UserProfile: FC = () => {
   const [activeModal, setActiveModal] = useState<boolean>(false);
   const [errorMsg, setErrorMsg] = useState<string>('');
   const [deleteMsg, setDeleteMsg] = useState<boolean>(false);
+  const [successMsg, setSuccessMsg] = useState<string>('');
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
   const {
@@ -60,6 +61,8 @@ const UserProfile: FC = () => {
       })
       .then(() => {
         setIsEditing(false);
+        setActiveModal(true);
+        setSuccessMsg('User update successful!');
       })
       .catch((error) => {
         setActiveModal(true);
@@ -85,7 +88,10 @@ const UserProfile: FC = () => {
   };
 
   useEffect(() => {
-    if (!activeModal) setErrorMsg('');
+    if (!activeModal) {
+      setSuccessMsg('');
+      setErrorMsg('');
+    }
   }, [activeModal]);
 
   return (
@@ -181,8 +187,14 @@ const UserProfile: FC = () => {
       )}
 
       <Modal activeModal={activeModal} setActiveModal={setActiveModal}>
-        <div>
+        <>
           {!!errorMsg && <ErrorSign errorMsg={errorMsg} />}
+          {!!successMsg && (
+            <div className="error-modal">
+              <h3 className="error-modal__title green">Success!</h3>
+              <div>{successMsg}</div>
+            </div>
+          )}
           {!!deleteMsg && (
             <div className="modal__text">
               <h2>{`Do you want to delete user '${userName}'`} ?</h2>
@@ -201,7 +213,7 @@ const UserProfile: FC = () => {
               </button>
             </div>
           )}
-        </div>
+        </>
       </Modal>
     </>
   );
