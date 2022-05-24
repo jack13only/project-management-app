@@ -51,7 +51,6 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
         columnId,
         body: {
           title: cardTitle,
-          order: data.length ? data[data.length - 1].order + 1 : 0,
           description: cardTitle,
           userId: userId,
         },

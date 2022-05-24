@@ -20,7 +20,7 @@ export type ColumnType = {
 
 export type TaskType = {
   title: string;
-  order: number;
+  order?: number;
   description: string;
   userId: string;
 };

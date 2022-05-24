@@ -12,7 +12,7 @@ import { BoardType, SigninType, SignupType, ColumnType, TaskType, FileType } fro
 import { RootState } from './store';
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: 'https://bublikbackend.herokuapp.com/',
+  baseUrl: 'https://bublikbackend2.herokuapp.com/',
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).authStorage.userToken;
 
