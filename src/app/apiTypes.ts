@@ -11,6 +11,7 @@ export type SignupType = {
 
 export type BoardType = {
   title: string;
+  description: string;
 };
 
 export type ColumnType = {

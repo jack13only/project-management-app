@@ -1,6 +1,7 @@
 import { FC, useState } from 'react';
 
 import { useUpdateColumnMutation } from '../../../../app/RtkQuery';
+import { ChangeTitleBtns } from '../../../buttons';
 
 import './BoardColumnTitle.scss';
 
@@ -52,14 +53,8 @@ const BoardColumnTitle: FC<BoardColumnTitleTypes> = ({ columnId, columnTitle, bo
             onChange={handleColumnTitleValue}
             value={currentColumnTitle}
           />
-          <div className="board__column-btns">
-            <button type="submit" onClick={submitColumnTitle}>
-              Submit
-            </button>
-            <button type="button" onClick={cancelColumnTitle}>
-              Cancel
-            </button>
-          </div>
+
+          <ChangeTitleBtns onClickSubmit={submitColumnTitle} onClickCancel={cancelColumnTitle} />
         </div>
       ) : (
         <h4 className="h4" onClick={changeTitle}>
