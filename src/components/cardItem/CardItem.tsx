@@ -28,7 +28,7 @@ const CardItem: FC<CardItemProps> = ({
   boardId,
 }) => {
   const [isTitleOpenToChange, setIsTitleOpenToChange] = useState(false);
-  const [taskTitle, setTaskTitle] = useState('');
+  const [taskTitle, setTaskTitle] = useState(cardTitle);
   const [updateTask] = useUpdateTaskMutation();
   const [deleteTask] = useDeleteTaskMutation();
   const [activeModal, setActiveModal] = useState<boolean>(false);
