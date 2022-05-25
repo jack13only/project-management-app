@@ -30,7 +30,7 @@ const Board: FC = () => {
   const getBoardsById = useGetBoardsByIdQuery(boardId);
   const currentBoardTitle = getBoardsById.data?.title;
 
-  const [columnsList, updateColumnsList] = useState<ColumnType[]>([]);
+  const [columnsList, updateColumnsList] = useState<ColumnType[]>(data);
   console.log(columnsList);
 
   if (error && 'status' in error) {
@@ -46,8 +46,8 @@ const Board: FC = () => {
     });
   };
 
-  const reorderColumns = (startIndex: number, endIndex: number) => {
-    const columns = [...data];
+  const reorderColumns = (columnsList: ColumnType[], startIndex: number, endIndex: number) => {
+    const columns = [...columnsList];
     const [movedColumn] = columns.splice(startIndex, 1);
     columns.splice(endIndex, 0, movedColumn);
     return columns;
@@ -58,7 +58,7 @@ const Board: FC = () => {
 
     if (!destination) return;
 
-    const columns: ColumnType[] = reorderColumns(source.index, destination.index);
+    const columns: ColumnType[] = reorderColumns(columnsList, source.index, destination.index);
     updateColumnsList(columns);
   };
 
