@@ -16,7 +16,8 @@ import './UserProfile.scss';
 export type UserEditValues = {
   name: string;
   login: string;
-  password: string;
+  oldpassword: string;
+  newpassword: string;
 };
 
 const UserProfile: FC = () => {
@@ -39,7 +40,7 @@ const UserProfile: FC = () => {
   } = useForm<UserEditValues>({
     mode: 'onSubmit',
     reValidateMode: 'onSubmit',
-    defaultValues: { name: userName, login: userLogin, password: '' },
+    defaultValues: { name: userName, login: userLogin, oldpassword: '', newpassword: '' },
   });
 
   useEffect(() => {
@@ -50,16 +51,19 @@ const UserProfile: FC = () => {
     }
   }, [activeModal]);
 
-  const onSubmit = async ({ name, login, password }: UserEditValues) => {
-    const body: UserEditValues = {
+  const onSubmit = async ({ name, login, oldpassword, newpassword }: UserEditValues) => {
+    const body = {
       name,
       login,
-      password,
+      password: newpassword,
     };
-    updateUser({ userId, body })
+    signinUser({ login, password: oldpassword })
       .unwrap()
       .then(() => {
-        return signinUser({ login, password }).unwrap();
+        return updateUser({ userId, body }).unwrap();
+      })
+      .then(() => {
+        return signinUser({ login, password: newpassword }).unwrap();
       })
       .then(({ token }) => {
         dispatch(loginUser(token));
@@ -73,7 +77,11 @@ const UserProfile: FC = () => {
       })
       .catch((error) => {
         setActiveModal(true);
-        setErrorMsg(error.data.message);
+        if (error.data.statusCode === 403) {
+          setErrorMsg('Wrong password');
+        } else {
+          setErrorMsg(error.data.message);
+        }
       });
   };
 
@@ -85,7 +93,6 @@ const UserProfile: FC = () => {
           dispatch(logoutUser());
           dispatch(setEmptyUser());
           saveTokenToLS('');
-          console.log('logout after remove');
         }
       })
       .catch((error) => {
@@ -165,11 +172,11 @@ const UserProfile: FC = () => {
           </label>
 
           <label className="form__password">
-            <span className="form__label-tittle">Password:</span>
+            <span className="form__label-tittle">Old password:</span>
             <input
               className="signup__password"
               type="password"
-              {...register('password', {
+              {...register('oldpassword', {
                 required: 'Empty password',
                 validate: {
                   passLength: (v) => v.length > 3 || 'Password can not be less than 4 letters',
@@ -177,7 +184,23 @@ const UserProfile: FC = () => {
               })}
               placeholder="Enter your password"
             />
-            {errors.password && <div className="form__error">{errors.password.message}</div>}
+            {errors.oldpassword && <div className="form__error">{errors.oldpassword.message}</div>}
+          </label>
+
+          <label className="form__password">
+            <span className="form__label-tittle">New password:</span>
+            <input
+              className="signup__password"
+              type="password"
+              {...register('newpassword', {
+                required: 'Empty password',
+                validate: {
+                  passLength: (v) => v.length > 3 || 'Password can not be less than 4 letters',
+                },
+              })}
+              placeholder="Enter your password"
+            />
+            {errors.newpassword && <div className="form__error">{errors.newpassword.message}</div>}
           </label>
 
           <input type="submit" value="Update" className="form__submit" />
