@@ -18,14 +18,8 @@ const Footer: FC = () => {
         </div>
 
         <div className="footer__team">
-          <h4 className="footer__title">Our team:</h4>
+          <h4 className="footer__title">Meet our team</h4>
           <ul className="footer__contacts">
-            <li className="footer__contact">
-              <FooterLink
-                href="https://github.com/mitrofanzxc"
-                className="footer__link contact-1"
-              />
-            </li>
             <li className="footer__contact">
               <FooterLink
                 href="https://github.com/jack13onlycv"
@@ -36,6 +30,12 @@ const Footer: FC = () => {
               <FooterLink
                 href="https://github.com/VictoriaKochieva"
                 className="footer__link contact-3"
+              />
+            </li>
+            <li className="footer__contact">
+              <FooterLink
+                href="https://github.com/mitrofanzxc"
+                className="footer__link contact-1"
               />
             </li>
           </ul>

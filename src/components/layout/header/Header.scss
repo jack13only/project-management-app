@@ -19,19 +19,23 @@
 .header__logo__wrapper {
   display: flex;
   align-items: center;
+  gap: $base;
 }
 
 .boards-logo__wrapper {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: $base;
-  padding: $base;
   background-color: transparent;
   cursor: pointer;
 
   &:hover {
     .boards-logo {
+      filter: brightness(0.9);
+      transition: $transition;
+    }
+
+    .user-logo {
       filter: brightness(0.9);
       transition: $transition;
     }
@@ -50,7 +54,12 @@
   transition: $transition;
 }
 
+.user-logo {
+  background-image: url('../../../images/icons/user.svg');
+}
+
 .boards-logo-description {
+  color: $color-dark;
   font-weight: $fw-medium;
 }
 
@@ -69,7 +78,6 @@
 .header__logo {
   display: flex;
   align-items: center;
-  padding-right: $base * 2;
   cursor: pointer;
 
   &:hover {
@@ -80,14 +88,8 @@
   }
 }
 
-.header__navigation {
-  display: flex;
-  justify-content: flex-end;
-}
-
 .header__buttons {
   display: flex;
-  justify-content: flex-end;
-  column-gap: $base * 4;
-  flex-wrap: wrap;
+  align-items: center;
+  column-gap: $base;
 }
