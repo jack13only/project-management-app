@@ -66,6 +66,7 @@ const UserProfile: FC = () => {
         saveTokenToLS(token);
       })
       .then(() => {
+        reset();
         setIsEditing(false);
         setActiveModal(true);
         setSuccessMsg('User update successful!');
