@@ -42,7 +42,13 @@ const UserProfile: FC = () => {
     defaultValues: { name: userName, login: userLogin, password: '' },
   });
 
-  console.log(userName);
+  useEffect(() => {
+    if (!activeModal) {
+      setErrorMsg('');
+      setSuccessMsg('');
+      setDeleteMsg(false);
+    }
+  }, [activeModal]);
 
   const onSubmit = async ({ name, login, password }: UserEditValues) => {
     const body: UserEditValues = {
