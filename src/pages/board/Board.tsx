@@ -1,4 +1,5 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
+import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { Link, useParams } from 'react-router-dom';
 
 import {
@@ -29,6 +30,9 @@ const Board: FC = () => {
   const getBoardsById = useGetBoardsByIdQuery(boardId);
   const currentBoardTitle = getBoardsById.data?.title;
 
+  const [columnsList, updateColumnsList] = useState<ColumnType[]>([]);
+  console.log(columnsList);
+
   if (error && 'status' in error) {
     console.log('error.data', error.status);
   }
@@ -42,44 +46,73 @@ const Board: FC = () => {
     });
   };
 
+  const reorderColumns = (startIndex: number, endIndex: number) => {
+    const columns = [...data];
+    const [movedColumn] = columns.splice(startIndex, 1);
+    columns.splice(endIndex, 0, movedColumn);
+    return columns;
+  };
+
+  const onDragEndHandler = (result: DropResult) => {
+    const { source, destination } = result;
+
+    if (!destination) return;
+
+    const columns: ColumnType[] = reorderColumns(source.index, destination.index);
+    updateColumnsList(columns);
+  };
+
+  useEffect(() => {
+    updateColumnsList(data);
+  }, [data.length]);
+
   return (
-    <div className="board">
-      <div className="wrapper board__wrapper">
-        <div className="board__title__wrapper">
-          <h2 className="board__title">Board {currentBoardTitle}</h2>
-          <Link to="/boards">
-            <BackButton type="button" />
-          </Link>
-        </div>
-
-        {!isLoading ? (
-          <div className="board__columns">
-            <PreloaderSuspense>
-              {data?.map(({ title, id, order }: ColumnType) => {
-                return (
-                  <BoardColumn
-                    columnTitle={title}
-                    key={id}
-                    boardId={boardId}
-                    columnId={id}
-                    order={order}
-                  />
-                );
-              })}
-            </PreloaderSuspense>
+    <DragDropContext onDragEnd={onDragEndHandler}>
+      <div className="board">
+        <div className="wrapper board__wrapper">
+          <div className="board__title__wrapper">
+            <h2 className="board__title">Board {currentBoardTitle}</h2>
+            <Link to="/boards">
+              <BackButton type="button" />
+            </Link>
           </div>
-        ) : (
-          <div>Loading...</div>
-        )}
+          {!isLoading ? (
+            <Droppable droppableId={boardId} direction="horizontal">
+              {(provided) => (
+                <div
+                  className="board__columns"
+                  ref={provided.innerRef}
+                  {...provided.droppableProps}
+                >
+                  {columnsList.map(({ title, id, order }: ColumnType, index: number) => {
+                    return (
+                      <BoardColumn
+                        columnTitle={title}
+                        key={id}
+                        boardId={boardId}
+                        columnId={id}
+                        order={order}
+                        index={index}
+                      />
+                    );
+                  })}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          ) : (
+            <div>Loading...</div>
+          )}
 
-        <TertiaryButton
-          className="button__tertiary column__new-btn"
-          type="button"
-          description="+ Add a new column"
-          onClick={addNewColumn}
-        />
+          <TertiaryButton
+            className="button__tertiary column__new-btn"
+            type="button"
+            description="+ Add a new column"
+            onClick={addNewColumn}
+          />
+        </div>
       </div>
-    </div>
+    </DragDropContext>
   );
 };
 

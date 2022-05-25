@@ -1,9 +1,11 @@
+import { FC } from 'react';
+
 interface ChangeTitleBtnsProps {
   onClickSubmit: (event: React.MouseEvent<HTMLButtonElement>) => void;
   onClickCancel: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-const ChangeTitleBtns = ({ onClickSubmit, onClickCancel }: ChangeTitleBtnsProps) => {
+const ChangeTitleBtns: FC<ChangeTitleBtnsProps> = ({ onClickSubmit, onClickCancel }) => {
   return (
     <div className="board__column-btns">
       <button type="submit" onClick={onClickSubmit}>
