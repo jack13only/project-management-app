@@ -35,11 +35,12 @@ const Header: FC = () => {
   const addNewBoard = async () => await postBoard({ title: getRandomTitleBoard() });
 
   useEffect(() => {
-    if (data && 'name' in data && 'id' in data) {
+    if (data && 'name' in data && 'id' in data && 'login' in data) {
       dispatch(
         setUserData({
           userName: data.name,
           userId: data.id,
+          userLogin: data.login,
         })
       );
     }
@@ -98,7 +99,9 @@ const Header: FC = () => {
             )}
             {userToken && (
               <>
-                <div>{userName}</div>
+                <div role="button" onClick={() => navigate(PATHS.userProfile)}>
+                  {userName}
+                </div>
                 <PrimaryButton
                   dataTestId="PrimaryButton"
                   type="button"
