@@ -31,7 +31,6 @@ const Board: FC = () => {
   const currentBoardTitle = getBoardsById.data?.title;
 
   const [columnsList, updateColumnsList] = useState<ColumnType[]>(data);
-  console.log(columnsList);
 
   if (error && 'status' in error) {
     console.log('error.data', error.status);
@@ -64,7 +63,7 @@ const Board: FC = () => {
 
   useEffect(() => {
     updateColumnsList(data);
-  }, [data.length]);
+  }, [data]);
 
   return (
     <DragDropContext onDragEnd={onDragEndHandler}>
