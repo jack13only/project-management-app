@@ -93,6 +93,9 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
     setIsOpenCard(false);
   }, [data.length]);
 
+  // console.log('index', index, '--- order', order);
+  // console.log('order', order);
+
   return (
     <Draggable draggableId={columnId} index={index}>
       {(provided, snapshot) => (
@@ -103,7 +106,9 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
             {...provided.dragHandleProps}
             {...provided.draggableProps}
             style={{
+              // order: order,
               // order: snapshot.isDropAnimating ? '' : order,
+              // order: order,
               boxShadow: snapshot.draggingOver ? '0 10px 15px grey' : '',
               ...provided.draggableProps.style,
             }}

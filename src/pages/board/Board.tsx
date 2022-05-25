@@ -6,6 +6,7 @@ import {
   useGetBoardsByIdQuery,
   useGetColumnsQuery,
   usePostColumnMutation,
+  useUpdateColumnMutation,
 } from '../../app/RtkQuery';
 import { TertiaryButton } from '../../components/buttons';
 import { BackButton } from '../../components/buttons';
@@ -25,16 +26,31 @@ const Board: FC = () => {
   const { id } = useParams();
   const boardId = id ?? '';
 
-  const { data = [], error, isLoading } = useGetColumnsQuery({ boardId });
+  const { data: data1 = [], error, isLoading } = useGetColumnsQuery({ boardId });
   const [postColumn] = usePostColumnMutation();
+  const [updateColumn] = useUpdateColumnMutation();
   const getBoardsById = useGetBoardsByIdQuery(boardId);
   const currentBoardTitle = getBoardsById.data?.title;
 
-  const [columnsList, updateColumnsList] = useState<ColumnType[]>(data);
+  const [columnsList, updateColumnsList] = useState<ColumnType[]>([]);
 
   if (error && 'status' in error) {
     console.log('error.data', error.status);
   }
+
+  const updateColumnHandler = async (
+    columnId: string,
+    body: {
+      title: string;
+      order: number;
+    }
+  ) => {
+    await updateColumn({
+      columnId,
+      boardId,
+      body,
+    });
+  };
 
   const addNewColumn = async () => {
     await postColumn({
@@ -49,6 +65,10 @@ const Board: FC = () => {
     const columns = [...columnsList];
     const [movedColumn] = columns.splice(startIndex, 1);
     columns.splice(endIndex, 0, movedColumn);
+    const body = { title: movedColumn.title, order: endIndex + 1 };
+    updateColumnHandler(movedColumn.id, body);
+    console.log('startIndex', startIndex);
+    console.log('endIndex', endIndex);
     return columns;
   };
 
@@ -62,8 +82,10 @@ const Board: FC = () => {
   };
 
   useEffect(() => {
-    updateColumnsList(data);
-  }, [data]);
+    if (data1.length) {
+      updateColumnsList([...data1].sort((a: ColumnType, b: ColumnType) => a.order - b.order));
+    }
+  }, [data1]);
 
   return (
     <DragDropContext onDragEnd={onDragEndHandler}>
