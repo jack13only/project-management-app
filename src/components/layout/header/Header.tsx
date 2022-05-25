@@ -35,7 +35,7 @@ const Header: FC = () => {
   const addNewBoard = async () => await postBoard({ title: getRandomTitleBoard() });
 
   useEffect(() => {
-    if (data && 'name' in data && 'id' in data) {
+    if (data && 'name' in data && 'id' in data && 'login' in data) {
       dispatch(
         setUserData({
           userName: data.name,

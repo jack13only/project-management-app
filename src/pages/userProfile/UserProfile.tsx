@@ -31,6 +31,7 @@ const UserProfile: FC = () => {
   const [deleteMsg, setDeleteMsg] = useState<boolean>(false);
   const [successMsg, setSuccessMsg] = useState<string>('');
   const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [isPassChanging, setIsPassChanging] = useState<boolean>(false);
 
   const {
     register,
@@ -38,8 +39,8 @@ const UserProfile: FC = () => {
     reset,
     formState: { errors },
   } = useForm<UserEditValues>({
-    mode: 'onSubmit',
-    reValidateMode: 'onSubmit',
+    mode: 'onChange',
+    reValidateMode: 'onChange',
     defaultValues: { name: userName, login: userLogin, oldpassword: '', newpassword: '' },
   });
 
@@ -53,27 +54,36 @@ const UserProfile: FC = () => {
 
   const onSubmit = async ({ name, login, oldpassword, newpassword }: UserEditValues) => {
     const body = {
-      name,
-      login,
-      password: newpassword,
+      name: isPassChanging ? userName : name,
+      login: isPassChanging ? userLogin : login,
+      password: isPassChanging ? newpassword : oldpassword,
     };
-    signinUser({ login, password: oldpassword })
+    signinUser({ login: userLogin, password: oldpassword })
       .unwrap()
       .then(() => {
         return updateUser({ userId, body }).unwrap();
       })
       .then(() => {
-        return signinUser({ login, password: newpassword }).unwrap();
+        return signinUser({
+          login: isPassChanging ? userLogin : login,
+          password: isPassChanging ? newpassword : oldpassword,
+        }).unwrap();
       })
       .then(({ token }) => {
         dispatch(loginUser(token));
         saveTokenToLS(token);
       })
       .then(() => {
-        reset();
+        console.log(userName);
+        reset({
+          name: name,
+          login: login,
+          oldpassword: '',
+          newpassword: '',
+        });
         setIsEditing(false);
         setActiveModal(true);
-        setSuccessMsg('User update successful!');
+        setSuccessMsg(isPassChanging ? 'Password update successful!' : 'User update successful!');
       })
       .catch((error) => {
         setActiveModal(true);
@@ -116,8 +126,23 @@ const UserProfile: FC = () => {
           <div className="user-profile__value">{userName}</div>
           <div className="user-profile__field">Login: </div>
           <div className="user-profile__value">{userLogin}</div>
-          <button className="user-profile__button" onClick={() => setIsEditing(true)}>
-            Edit
+          <button
+            className="user-profile__button"
+            onClick={() => {
+              setIsEditing(true);
+              setIsPassChanging(false);
+            }}
+          >
+            Edit user
+          </button>
+          <button
+            className="user-profile__button"
+            onClick={() => {
+              setIsEditing(true);
+              setIsPassChanging(true);
+            }}
+          >
+            Change password
           </button>
           <button
             className="user-profile__button"
@@ -133,44 +158,46 @@ const UserProfile: FC = () => {
 
       {isEditing && (
         <form className="signup" onSubmit={handleSubmit(onSubmit)}>
-          <label className="form__nickname" title="Only numbers and english letters">
-            <span className="form__label-tittle">Name:</span>
-            <input
-              className="signup__name"
-              {...register('name', {
-                required: 'Empty name',
-                pattern: {
-                  value: /^[A-Za-z0-9]+$/i,
-                  message: 'Only numbers and english letters!',
-                },
-                validate: {
-                  nameLength: (v) => v.length > 3 || 'Name can not be less than 4 letters',
-                },
-              })}
-              placeholder="Enter your name"
-            />
-            {errors.name && <div className="form__error">{errors.name.message}</div>}
-          </label>
-
-          <label className="form__nickname" title="Only numbers and english letters">
-            <span className="form__label-tittle">Login:</span>
-            <input
-              className="signup__name"
-              {...register('login', {
-                required: 'Empty login',
-                pattern: {
-                  value: /^[A-Za-z0-9]+$/i,
-                  message: 'Only numbers and english letters!',
-                },
-                validate: {
-                  nameLength: (v) => v.length > 3 || 'Login can not be less than 4 letters',
-                },
-              })}
-              placeholder="Enter your login"
-            />
-            {errors.login && <div className="form__error">{errors.login.message}</div>}
-          </label>
-
+          {!isPassChanging && (
+            <>
+              <label className="form__nickname" title="Only numbers and english letters">
+                <span className="form__label-tittle">Name:</span>
+                <input
+                  className="signup__name"
+                  {...register('name', {
+                    required: 'Empty name',
+                    pattern: {
+                      value: /^[A-Za-z0-9]+$/i,
+                      message: 'Only numbers and english letters!',
+                    },
+                    validate: {
+                      nameLength: (v) => v.length > 3 || 'Name can not be less than 4 letters',
+                    },
+                  })}
+                  placeholder="Enter your name"
+                />
+                {errors.name && <div className="form__error">{errors.name.message}</div>}
+              </label>
+              <label className="form__nickname" title="Only numbers and english letters">
+                <span className="form__label-tittle">Login:</span>
+                <input
+                  className="signup__name"
+                  {...register('login', {
+                    required: 'Empty login',
+                    pattern: {
+                      value: /^[A-Za-z0-9]+$/i,
+                      message: 'Only numbers and english letters!',
+                    },
+                    validate: {
+                      nameLength: (v) => v.length > 3 || 'Login can not be less than 4 letters',
+                    },
+                  })}
+                  placeholder="Enter your login"
+                />
+                {errors.login && <div className="form__error">{errors.login.message}</div>}
+              </label>
+            </>
+          )}
           <label className="form__password">
             <span className="form__label-tittle">Old password:</span>
             <input
@@ -187,21 +214,25 @@ const UserProfile: FC = () => {
             {errors.oldpassword && <div className="form__error">{errors.oldpassword.message}</div>}
           </label>
 
-          <label className="form__password">
-            <span className="form__label-tittle">New password:</span>
-            <input
-              className="signup__password"
-              type="password"
-              {...register('newpassword', {
-                required: 'Empty password',
-                validate: {
-                  passLength: (v) => v.length > 3 || 'Password can not be less than 4 letters',
-                },
-              })}
-              placeholder="Enter your password"
-            />
-            {errors.newpassword && <div className="form__error">{errors.newpassword.message}</div>}
-          </label>
+          {isPassChanging && (
+            <label className="form__password">
+              <span className="form__label-tittle">New password:</span>
+              <input
+                className="signup__password"
+                type="password"
+                {...register('newpassword', {
+                  required: 'Empty password',
+                  validate: {
+                    passLength: (v) => v.length > 3 || 'Password can not be less than 4 letters',
+                  },
+                })}
+                placeholder="Enter your password"
+              />
+              {errors.newpassword && (
+                <div className="form__error">{errors.newpassword.message}</div>
+              )}
+            </label>
+          )}
 
           <input type="submit" value="Update" className="form__submit" />
           <input
