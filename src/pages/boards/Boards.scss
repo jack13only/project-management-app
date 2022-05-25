@@ -4,10 +4,14 @@
   padding: $base * 5 0;
   width: 80%;
   margin: 0 auto;
+
+  @media (max-width: $breakpoint-lg-min) {
+    width: 97%;
+  }
 }
 
 .boards__container {
-  @include flexStart;
+  @include flexSpaceBetween;
   flex-wrap: wrap;
   column-gap: $base * 2;
   row-gap: $base * 4;

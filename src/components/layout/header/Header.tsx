@@ -9,7 +9,6 @@ import { useGetUserByIdQuery, usePostBoardMutation } from '../../../app/RtkQuery
 import { setEmptyUser, setUserData } from '../../../reducers/userReducer';
 import { PrimaryButton, TertiaryButton } from '../../buttons';
 
-import logo from '../../../images/icons/logo.svg';
 import './Header.scss';
 
 const getRandomTitleBoard = () => Math.floor(Math.random() * 100).toString();
@@ -18,7 +17,7 @@ const Header: FC = () => {
   const [postBoard] = usePostBoardMutation();
   const [scrolledPage, isScrolledPage] = useState(false);
   const body = window.document.body as HTMLBodyElement;
-  const heightScrollTop = 170;
+  const heightScrollTop = 55;
   const navigate = useNavigate();
   const location = useLocation();
   const { userToken } = useAppSelector((state) => state.authStorage);
@@ -55,9 +54,7 @@ const Header: FC = () => {
     <header data-testid="header" className={'header' + (scrolledPage ? ' header-scrolled' : '')}>
       <div className="wrapper header__wrapper">
         <div className="header__logo__wrapper">
-          <Link to={PATHS.main} className={'header__logo' + (userToken ? ' border-right' : '')}>
-            <img src={logo} alt="logo" className="header__logo-img" />
-          </Link>
+          <Link to={PATHS.main} className={'header__logo' + (userToken ? ' border-right' : '')} />
           {userToken && (
             <>
               <Link

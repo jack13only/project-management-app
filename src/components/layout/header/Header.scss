@@ -2,7 +2,7 @@
 
 .header {
   position: sticky;
-  padding: $base * 4 0;
+  padding: $base * 2 0;
   top: 0;
   width: 100%;
   height: auto;
@@ -52,6 +52,12 @@
   background-position: center;
   border: none;
   transition: $transition;
+
+  @media (max-width: $breakpoint-xs-min) {
+    width: $base * 7;
+    height: $base * 7;
+    background-size: 100%;
+  }
 }
 
 .user-logo {
@@ -61,35 +67,45 @@
 .boards-logo-description {
   color: $color-dark;
   font-weight: $fw-medium;
+
+  @media (max-width: $breakpoint-xs-min) {
+    display: none;
+  }
 }
 
 .header-scrolled {
-  padding: $base * 3 0;
+  padding: $base 0;
   background: $color-grey-07;
   box-shadow: 0 $base * 0.1 $base * 3 $color-dark-02;
-}
-
-.header__logo-img {
-  width: $base * 20;
-  height: auto;
-  transition: $transition;
 }
 
 .header__logo {
   display: flex;
   align-items: center;
+  justify-content: center;
+  width: $base * 20;
+  height: 100%;
+  background-image: url('../../../images/icons/logo.svg');
+  background-size: 90%;
+  background-position: center;
+  background-repeat: no-repeat;
   cursor: pointer;
+  transition: $transition;
 
-  &:hover {
-    .header__logo-img {
-      transform: scale(1.05);
-      transition: $transition;
-    }
+  @media (max-width: $breakpoint-sm-min) {
+    width: $base * 10;
+    background-image: url('../../../images/icons/logo-small.png');
+    background-size: 70%;
+    transition: $transition;
   }
 }
 
 .header__buttons {
   display: flex;
   align-items: center;
-  column-gap: $base;
+  column-gap: $base * 2;
+
+  @media (max-width: $breakpoint-lg-min) {
+    column-gap: $base;
+  }
 }
