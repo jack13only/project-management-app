@@ -17,7 +17,7 @@ const Header: FC = () => {
   const [postBoard] = usePostBoardMutation();
   const [scrolledPage, isScrolledPage] = useState(false);
   const body = window.document.body as HTMLBodyElement;
-  const heightScrollTop = 55;
+  const heightScrollTop = 10;
   const navigate = useNavigate();
   const location = useLocation();
   const { userToken } = useAppSelector((state) => state.authStorage);

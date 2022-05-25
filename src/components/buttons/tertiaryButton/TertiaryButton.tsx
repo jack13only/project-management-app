@@ -23,7 +23,7 @@ const TertiaryButton: FC<TertiaryButtonProps> = ({
       type={type}
       onClick={onClick}
     >
-      {description}
+      <span className="button__tertiary-description">{description}</span>
     </button>
   );
 };
