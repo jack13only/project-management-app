@@ -6,6 +6,7 @@ import { useDeleteTaskMutation, useUpdateTaskMutation } from '../../app/RtkQuery
 
 import './CardItem.scss';
 import { useAppSelector } from '../../app/hooks';
+import { localizationObj } from '../../features/localization';
 
 interface CardItemProps {
   id: string;
@@ -32,6 +33,7 @@ const CardItem: FC<CardItemProps> = ({
   const [deleteTask] = useDeleteTaskMutation();
   const [activeModal, setActiveModal] = useState<boolean>(false);
   const { userId } = useAppSelector((state) => state.userStorage);
+  const { lang } = useAppSelector((state) => state.langStorage);
 
   const handleTaskTitle = () => {
     setIsTitleOpenToChange(true);
@@ -116,12 +118,12 @@ const CardItem: FC<CardItemProps> = ({
             <div className="modal__wrapper">
               <div className="modal__img" />
               <div className="modal__text">
-                <h2>{`Do you want to delete task '${cardTitle}'`} ?</h2>
+                <h2>{`${localizationObj[lang].doYouWantToDelete} '${cardTitle}'`} ?</h2>
                 <button type="button" onClick={removeTask}>
-                  Yes
+                  {localizationObj[lang].submit}
                 </button>
                 <button type="button" onClick={() => setActiveModal(false)}>
-                  Cancel
+                  {localizationObj[lang].cancel}
                 </button>
               </div>
             </div>

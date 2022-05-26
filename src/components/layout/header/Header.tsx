@@ -10,6 +10,7 @@ import { setEmptyUser, setUserData } from '../../../reducers/userReducer';
 import { PrimaryButton, TertiaryButton } from '../../buttons';
 
 import './Header.scss';
+import { localizationObj } from '../../../features/localization';
 
 const getRandomTitleBoard = () => Math.floor(Math.random() * 100).toString();
 
@@ -23,6 +24,7 @@ const Header: FC = () => {
   const { userToken } = useAppSelector((state) => state.authStorage);
   const { userName } = useAppSelector((state) => state.userStorage);
   const dispatch = useAppDispatch();
+  const { lang } = useAppSelector((state) => state.langStorage);
 
   const listenScrollEvent = () => {
     body.scrollTop > heightScrollTop ? isScrolledPage(true) : isScrolledPage(false);
@@ -64,14 +66,14 @@ const Header: FC = () => {
               >
                 <div className="boards-logo__wrapper">
                   <div className="boards-logo" />
-                  <div className="boards-logo-description">Boards</div>
+                  <div className="boards-logo-description">{localizationObj[lang].boards}</div>
                 </div>
               </Link>
               {location.pathname === '/boards' && (
                 <TertiaryButton
                   className="button__tertiary"
                   type="button"
-                  description="+ Create a new board"
+                  description={'+ ' + localizationObj[lang].createBoard}
                   onClick={addNewBoard}
                 />
               )}
@@ -85,14 +87,14 @@ const Header: FC = () => {
                 dataTestId="PrimaryButton"
                 type="button"
                 className="btn btn-log btn-bordered"
-                description="Sign In"
+                description={localizationObj[lang].signIn}
                 onClick={() => navigate(PATHS.signIn, { replace: true })}
               />
               <PrimaryButton
                 dataTestId="PrimaryButton"
                 type="button"
                 className="btn btn-sign btn-colored"
-                description="Sign up"
+                description={localizationObj[lang].signUp}
                 onClick={() => navigate(PATHS.signUp, { replace: true })}
               />
             </>
@@ -111,7 +113,7 @@ const Header: FC = () => {
                 dataTestId="PrimaryButton"
                 type="button"
                 className="btn btn-sign btn-colored"
-                description="Sign out"
+                description={localizationObj[lang].signOut}
                 onClick={() => {
                   dispatch(logoutUser());
                   dispatch(setEmptyUser());

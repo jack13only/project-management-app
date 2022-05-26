@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { Link, useParams } from 'react-router-dom';
+import { useAppSelector } from '../../app/hooks';
 
 import {
   useGetBoardsByIdQuery,
@@ -10,6 +11,7 @@ import {
 } from '../../app/RtkQuery';
 import { TertiaryButton } from '../../components/buttons';
 import { BackButton } from '../../components/buttons';
+import { localizationObj } from '../../features/localization';
 
 import './Board.scss';
 
@@ -30,6 +32,7 @@ const Board: FC = () => {
   const [updateColumn] = useUpdateColumnMutation();
   const getBoardsById = useGetBoardsByIdQuery(boardId);
   const currentBoardTitle = getBoardsById.data?.title;
+  const { lang } = useAppSelector((state) => state.langStorage);
 
   const [columnsList, updateColumnsList] = useState<ColumnType[]>([]);
 
@@ -85,7 +88,9 @@ const Board: FC = () => {
       <div className="board">
         <div className="wrapper">
           <div className="board__title__wrapper">
-            <h2 className="board__title">Board {currentBoardTitle}</h2>
+            <h2 className="board__title">
+              {localizationObj[lang].board} {currentBoardTitle}
+            </h2>
             <Link to="/boards">
               <BackButton type="button" />
             </Link>
@@ -115,12 +120,12 @@ const Board: FC = () => {
               )}
             </Droppable>
           ) : (
-            <div>Loading...</div>
+            <div>{localizationObj[lang].loading}</div>
           )}
           <TertiaryButton
             className="button__tertiary column__new-btn"
             type="button"
-            description="+ Add a new column"
+            description={'+ ' + localizationObj[lang].createColumn}
             onClick={addNewColumn}
           />
         </div>
