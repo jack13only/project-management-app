@@ -11,6 +11,7 @@ export type SignupType = {
 
 export type BoardType = {
   title: string;
+  description: string;
 };
 
 export type ColumnType = {
@@ -20,7 +21,7 @@ export type ColumnType = {
 
 export type TaskType = {
   title: string;
-  order: number;
+  order?: number;
   description: string;
   userId: string;
 };

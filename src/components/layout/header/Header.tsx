@@ -31,7 +31,8 @@ const Header: FC = () => {
   const userId = decodeUserId(userToken); // receive userId
   const { data } = useGetUserByIdQuery(userId);
 
-  const addNewBoard = async () => await postBoard({ title: getRandomTitleBoard() });
+  const addNewBoard = async () =>
+    await postBoard({ title: getRandomTitleBoard(), description: "it's a description" });
 
   useEffect(() => {
     if (data && 'name' in data && 'id' in data && 'login' in data) {

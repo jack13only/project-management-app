@@ -31,8 +31,6 @@ const Boards: FC = () => {
     console.log('error.data', error.status);
   }
 
-  const addNewBoard = async () => await postBoard({ title: getRandomTitleBoard() });
-
   const handlerModal = (isActiveModal: boolean) => {
     setActiveModal(isActiveModal);
   };
@@ -59,7 +57,7 @@ const Boards: FC = () => {
       <div className="boards__container">
         {!isLoading ? (
           <PreloaderSuspense>
-            {data?.map(({ id, title }: BoardsTypes) => {
+            {data?.map(({ id, title, description }: BoardsTypes) => {
               return (
                 <Link
                   to={`/boards/${id}`}
@@ -76,6 +74,7 @@ const Boards: FC = () => {
                     id={id}
                     isActiveModal={handlerModal}
                     getDeletedBoard={getDeletedBoard}
+                    description={description}
                   />
                 </Link>
               );
