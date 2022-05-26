@@ -3,6 +3,7 @@
 .button__tertiary {
   @include poppins;
   width: auto;
+  height: fit-content;
   padding: $base $base * 2;
   color: $color-dark-09;
   background-color: $color-grey-07;
@@ -18,22 +19,5 @@
     border-color: $color-dark;
     filter: brightness(0.8);
     transition: $transition;
-  }
-
-  @media (max-width: $breakpoint-sm-min) {
-    width: $base * 7;
-    height: $base * 7;
-    background-color: transparent;
-    background-image: url('../../../images/icons/plus.svg');
-    background-size: 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-    border: none;
-  }
-}
-
-.button__tertiary-description {
-  @media (max-width: $breakpoint-sm-min) {
-    display: none;
   }
 }

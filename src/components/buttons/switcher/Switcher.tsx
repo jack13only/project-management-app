@@ -1,8 +1,8 @@
-import { MutableRefObject } from 'react';
+import { FC } from 'react';
 
 import './Switcher.scss';
 
-type SwitcherTypes = {
+interface SwitcherProps {
   description: string;
   type: string;
   id: string;
@@ -10,10 +10,9 @@ type SwitcherTypes = {
   firstValue: string;
   secondValue: string;
   defaultChecked: boolean;
-  inputCheckboxRef: MutableRefObject<HTMLInputElement | null>;
-};
+}
 
-const Switcher = ({
+const Switcher: FC<SwitcherProps> = ({
   description,
   type,
   id,
@@ -21,21 +20,14 @@ const Switcher = ({
   firstValue,
   secondValue,
   defaultChecked,
-  inputCheckboxRef,
-}: SwitcherTypes) => {
+}: SwitcherProps) => {
   return (
     <div className="form__container">
       <div>{description}</div>
       <div className="switcher__container">
         <div>{firstValue}</div>
         <label className="switch">
-          <input
-            type={type}
-            id={id}
-            name={name}
-            defaultChecked={defaultChecked}
-            ref={inputCheckboxRef}
-          />
+          <input type={type} id={id} name={name} defaultChecked={defaultChecked} />
           <span className="slider round" />
         </label>
         <div>{secondValue}</div>

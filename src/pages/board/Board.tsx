@@ -74,7 +74,7 @@ const Board: FC = () => {
         )}
 
         <TertiaryButton
-          className="button__tertiary column__new-btn"
+          className="button__tertiary"
           type="button"
           description="+ Add a new column"
           onClick={addNewColumn}

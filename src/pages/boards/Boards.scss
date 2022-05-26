@@ -23,9 +23,29 @@
   height: $base * 20;
 }
 
+.boards__item-title {
+  color: $color-dark;
+  transition: $transition;
+}
+
 .boards-item__link {
   flex-basis: 30%;
   height: $base * 20;
   border: 1px solid $color-dark-03;
   cursor: pointer;
+
+  &:hover {
+    .boards__item-title {
+      color: $color-yellow;
+      transition: $transition;
+    }
+  }
+
+  @media (max-width: $breakpoint-md-min) {
+    flex-basis: 48%;
+  }
+
+  @media (max-width: $breakpoint-xs-min) {
+    flex-basis: 100%;
+  }
 }
