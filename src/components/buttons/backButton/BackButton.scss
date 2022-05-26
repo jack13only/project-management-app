@@ -1,14 +1,12 @@
 @import '../../../sass/Constants.scss';
 
 .btn-back__wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include flexCenter;
   gap: $base;
   padding: $base;
-  background-color: white;
+  background-color: $color-white;
   border: none;
-  border-radius: $base * 2;
+  border-radius: $base;
   cursor: pointer;
 
   &:hover {

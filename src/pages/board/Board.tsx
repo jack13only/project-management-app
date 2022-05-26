@@ -85,10 +85,16 @@ const Board: FC = () => {
       <div className="board">
         <div className="wrapper">
           <div className="board__title__wrapper">
-            <h2 className="board__title">Board {currentBoardTitle}</h2>
             <Link to="/boards">
               <BackButton type="button" />
             </Link>
+            <h2 className="board__title">Board {currentBoardTitle}</h2>
+            <TertiaryButton
+              className="button__tertiary column__new-btn"
+              type="button"
+              description="+ Add a new column"
+              onClick={addNewColumn}
+            />
           </div>
           {!isLoading ? (
             <Droppable droppableId={boardId} direction="horizontal">
@@ -117,12 +123,6 @@ const Board: FC = () => {
           ) : (
             <div>Loading...</div>
           )}
-          <TertiaryButton
-            className="button__tertiary column__new-btn"
-            type="button"
-            description="+ Add a new column"
-            onClick={addNewColumn}
-          />
         </div>
       </div>
     </DragDropContext>
