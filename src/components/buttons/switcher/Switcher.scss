@@ -13,8 +13,8 @@
 .switch {
   position: relative;
   display: inline-block;
-  width: $base * 12;
-  height: $base * 7;
+  width: $base * 8;
+  height: $base * 5;
 }
 
 .switch input {
@@ -38,8 +38,8 @@
 .slider:before {
   position: absolute;
   content: '';
-  height: $base * 5;
-  width: $base * 5;
+  height: $base * 3;
+  width: $base * 3;
   left: $base;
   bottom: $base;
   background-color: $color-white;
@@ -56,9 +56,9 @@ input:focus + .slider {
 }
 
 input:checked + .slider:before {
-  -webkit-transform: translateX($base * 5);
-  -ms-transform: translateX($base * 5);
-  transform: translateX($base * 5);
+  -webkit-transform: translateX($base * 3);
+  -ms-transform: translateX($base * 3);
+  transform: translateX($base * 3);
 }
 
 .slider.round {
