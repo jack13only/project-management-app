@@ -83,7 +83,7 @@ const Board: FC = () => {
   return (
     <DragDropContext onDragEnd={onDragEndHandler}>
       <div className="board">
-        <div className="wrapper board__wrapper">
+        <div className="wrapper">
           <div className="board__title__wrapper">
             <h2 className="board__title">Board {currentBoardTitle}</h2>
             <Link to="/boards">
@@ -94,7 +94,7 @@ const Board: FC = () => {
             <Droppable droppableId={boardId} direction="horizontal">
               {(provided) => (
                 <div
-                  className="board__columns"
+                  className="board__columns board__wrapper"
                   ref={provided.innerRef}
                   {...provided.droppableProps}
                 >
