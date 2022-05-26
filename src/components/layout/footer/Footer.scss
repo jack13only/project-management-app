@@ -9,6 +9,7 @@
 
 .footer__wrapper {
   @include flexSpaceBetween;
+  column-gap: $base;
 }
 
 .footer__info {
@@ -107,6 +108,7 @@
 
 .footer__year {
   @include poppins;
+  @include disableSelection;
   font-size: $fs-xxl;
   font-weight: $fw-medium;
 
