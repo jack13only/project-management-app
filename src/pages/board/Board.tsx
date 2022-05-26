@@ -5,13 +5,11 @@ import { Link, useParams } from 'react-router-dom';
 import {
   useGetBoardsByIdQuery,
   useGetColumnsQuery,
-  useGetTasksQuery,
   usePostColumnMutation,
   useUpdateColumnMutation,
 } from '../../app/RtkQuery';
 import { TertiaryButton } from '../../components/buttons';
 import { BackButton } from '../../components/buttons';
-import { PreloaderSuspense } from '../../components/preloader/index';
 
 import './Board.scss';
 
