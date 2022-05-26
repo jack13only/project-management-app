@@ -16,7 +16,6 @@ const WelcomePage: FC = () => {
           specialization="Front-end Developer"
           github="https://github.com/jack13only"
           linkedin="https://www.linkedin.com/in/jack13only/"
-          instagram="https://www.instagram.com/"
         />
         <WelcomeCard
           src={avatar3}
@@ -24,7 +23,6 @@ const WelcomePage: FC = () => {
           specialization="Front-end Developer"
           github="https://github.com/VictoriaKochieva"
           linkedin="https://www.linkedin.com/in/victoria-kochieva/"
-          instagram="https://www.instagram.com/"
         />
         <WelcomeCard
           src={avatar1}
@@ -32,7 +30,6 @@ const WelcomePage: FC = () => {
           specialization="Front-end Developer"
           github="https://github.com/mitrofanzxc"
           linkedin="https://www.linkedin.com/in/dzmitry-karakulka/"
-          instagram="https://www.instagram.com/mitrofanzxc/"
         />
       </div>
     </div>

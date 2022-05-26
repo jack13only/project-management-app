@@ -2,7 +2,8 @@
 
 .button__tertiary {
   @include poppins;
-  width: 100%;
+  width: auto;
+  height: fit-content;
   padding: $base $base * 2;
   color: $color-dark-09;
   background-color: $color-grey-07;
@@ -13,12 +14,10 @@
   cursor: pointer;
   transition: $transition;
 
-  &:hover,
-  &:focus,
-  &:active {
+  &:hover {
     color: $color-dark;
-    background-color: $color-dark-02;
     border-color: $color-dark;
+    filter: brightness(0.8);
     transition: $transition;
   }
 }

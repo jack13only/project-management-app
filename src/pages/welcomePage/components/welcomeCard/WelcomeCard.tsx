@@ -8,17 +8,9 @@ interface WelcomeCardProps {
   specialization: string;
   github: string;
   linkedin: string;
-  instagram: string;
 }
 
-const WelcomeCard: FC<WelcomeCardProps> = ({
-  src,
-  name,
-  specialization,
-  github,
-  linkedin,
-  instagram,
-}) => {
+const WelcomeCard: FC<WelcomeCardProps> = ({ src, name, specialization, github, linkedin }) => {
   return (
     <div className="welcome__card">
       <img className="card-img" src={src} alt="Avatar" />
@@ -40,14 +32,6 @@ const WelcomeCard: FC<WelcomeCardProps> = ({
               target="_blank"
               rel="noreferrer noopener"
               className="card-link linkedin"
-            />
-          </li>
-          <li className="card__list-item">
-            <a
-              href={instagram}
-              target="_blank"
-              rel="noreferrer noopener"
-              className="card-link instagram"
             />
           </li>
         </ul>

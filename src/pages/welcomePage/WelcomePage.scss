@@ -5,9 +5,15 @@
 }
 
 .welcome__page {
-  display: flex;
+  @include flexCenter;
   flex-direction: column;
   gap: $base * 3;
+  width: 80%;
+  margin: 0 auto $base * 3 auto;
+
+  @media (max-width: $breakpoint-lg-min) {
+    width: 97%;
+  }
 
   .h2 {
     margin-top: $base * 2;
@@ -15,9 +21,11 @@
 }
 
 .welcome__container {
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
+  @include flexSpaceBetween;
   flex-wrap: wrap;
   gap: $base * 3;
+
+  @media (max-width: $breakpoint-sm-min) {
+    justify-content: center;
+  }
 }
