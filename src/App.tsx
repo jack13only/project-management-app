@@ -12,6 +12,7 @@ import './App.scss';
 import RequireAuth from './components/requireAuth/RequireAuth';
 import SignIn from './pages/signIn/SignIn';
 import SignUp from './pages/signUp/SignUp';
+import { UserProfile } from './pages';
 
 const App: FC = () => {
   return (
@@ -31,6 +32,14 @@ const App: FC = () => {
           element={
             <RequireAuth needAuth={true}>
               <Board />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path={PATHS.userProfile}
+          element={
+            <RequireAuth needAuth={true}>
+              <UserProfile />
             </RequireAuth>
           }
         />

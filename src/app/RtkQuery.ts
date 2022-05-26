@@ -41,7 +41,7 @@ const baseQueryAuth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryErro
 
 export const apiUser = createApi({
   reducerPath: 'apiUser',
-  tagTypes: ['User', 'Board', 'Column', 'Task'],
+  tagTypes: ['User', 'UserUpdate', 'Board', 'Column', 'Task'],
   baseQuery: baseQueryAuth,
   endpoints: (build) => ({
     //USERS
@@ -54,6 +54,7 @@ export const apiUser = createApi({
           url: `users/${userId}`,
         };
       },
+      providesTags: ['UserUpdate'],
     }),
     updateUser: build.mutation({
       query(data: { userId: string; body: SignupType }) {
@@ -64,7 +65,7 @@ export const apiUser = createApi({
           body,
         };
       },
-      invalidatesTags: ['User'],
+      invalidatesTags: ['User', 'UserUpdate'],
     }),
     deleteUser: build.mutation({
       query(userId: string) {

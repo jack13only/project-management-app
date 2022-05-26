@@ -1,17 +1,11 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useState } from 'react';
 import { InputCheckbox, Modal, Textarea } from '..';
 import { DeleteButton } from '../buttons';
 
-import {
-  useDeleteTaskMutation,
-  useGetUserByIdQuery,
-  useUpdateTaskMutation,
-} from '../../app/RtkQuery';
+import { useDeleteTaskMutation, useUpdateTaskMutation } from '../../app/RtkQuery';
 
 import './CardItem.scss';
-import decodeUserId from '../../features/decodeUserId';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { setUserData } from '../../reducers/userReducer';
+import { useAppSelector } from '../../app/hooks';
 
 interface CardItemProps {
   id: string;
@@ -37,22 +31,7 @@ const CardItem: FC<CardItemProps> = ({
   const [updateTask] = useUpdateTaskMutation();
   const [deleteTask] = useDeleteTaskMutation();
   const [activeModal, setActiveModal] = useState<boolean>(false);
-  const { userToken } = useAppSelector((state) => state.authStorage);
-  const dispatch = useAppDispatch();
-
-  const userId = decodeUserId(userToken);
-  const { data } = useGetUserByIdQuery(userId);
-
-  useEffect(() => {
-    if (data && 'name' in data && 'id' in data) {
-      dispatch(
-        setUserData({
-          userName: data.name,
-          userId: data.id,
-        })
-      );
-    }
-  }, [userId, data]);
+  const { userId } = useAppSelector((state) => state.userStorage);
 
   const handleTaskTitle = () => {
     setIsTitleOpenToChange(true);

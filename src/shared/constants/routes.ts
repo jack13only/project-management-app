@@ -4,6 +4,7 @@ interface IPATH {
   board: string;
   signIn: string;
   signUp: string;
+  userProfile: string;
   notFound: string;
 }
 
@@ -13,5 +14,6 @@ export const PATHS: IPATH = {
   board: '/boards/:id',
   signIn: '/signin',
   signUp: '/signup',
+  userProfile: '/userprofile',
   notFound: '*',
 };
