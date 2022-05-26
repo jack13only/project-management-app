@@ -103,12 +103,11 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
             {...provided.dragHandleProps}
             {...provided.draggableProps}
             style={{
-              // order: snapshot.isDropAnimating ? '' : order,
               boxShadow: snapshot.draggingOver ? '0 10px 15px grey' : '',
               ...provided.draggableProps.style,
             }}
           >
-            <div className="board__column" ref={columnRef} style={{ order: order }}>
+            <div className="board__column" ref={columnRef}>
               <div className="board__column-head">
                 <BoardColumnTitle
                   columnTitle={columnTitle}
