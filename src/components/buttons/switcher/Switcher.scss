@@ -1,5 +1,9 @@
 @import '../../../sass/Constants.scss';
 
+.form__container {
+  font-weight: $fw-medium;
+}
+
 .switcher__container {
   display: flex;
   align-items: center;
@@ -26,7 +30,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: pink;
+  background-color: $color-yellow;
   -webkit-transition: $transition;
   transition: $transition;
 }
@@ -44,11 +48,11 @@
 }
 
 input:checked + .slider {
-  background-color: #2196f3;
+  background-color: $color-blue-light;
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #2196f3;
+  box-shadow: 0 0 1px $color-blue-light;
 }
 
 input:checked + .slider:before {
