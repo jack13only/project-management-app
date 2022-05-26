@@ -117,8 +117,14 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
                 />
                 <DeleteButton type="button" onClick={() => setActiveModal(true)} />
               </div>
-              <div className="cards__list__container">
-                <CardList tasks={data} toggleCardComplete={toggleCardComplete} />
+              <div className="card__add">
+                <TertiaryButton
+                  className="button__tertiary column__btn"
+                  type="button"
+                  description="+ Add a card"
+                  isOpenCard={isOpenCard}
+                  onClick={addCardVisibility}
+                />
                 <CardContainer
                   isOpenCard={isOpenCard}
                   onClick={() => setIsOpenCard(false)}
@@ -127,15 +133,9 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
                   addCard={addCard}
                 />
               </div>
-            </div>
-            <div className="card__add">
-              <TertiaryButton
-                className="button__tertiary column__btn"
-                type="button"
-                description="+ Add a card"
-                isOpenCard={isOpenCard}
-                onClick={addCardVisibility}
-              />
+              <div className="cards__list__container">
+                <CardList tasks={data} toggleCardComplete={toggleCardComplete} />
+              </div>
             </div>
           </div>
           <Modal activeModal={activeModal} setActiveModal={setActiveModal}>

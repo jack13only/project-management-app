@@ -117,7 +117,6 @@ const Board: FC = () => {
           ) : (
             <div>Loading...</div>
           )}
-
           <TertiaryButton
             className="button__tertiary column__new-btn"
             type="button"
