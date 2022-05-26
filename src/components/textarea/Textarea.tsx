@@ -9,9 +9,18 @@ interface TextareaProps {
   placeholder: string;
   value: string;
   onChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
+  onClick?: (event: React.MouseEvent<HTMLTextAreaElement>) => void;
 }
 
-const Textarea: FC<TextareaProps> = ({ className, cols, rows, placeholder, value, onChange }) => {
+const Textarea: FC<TextareaProps> = ({
+  className,
+  cols,
+  rows,
+  placeholder,
+  value,
+  onChange,
+  onClick,
+}) => {
   return (
     <textarea
       className={className}
@@ -20,6 +29,7 @@ const Textarea: FC<TextareaProps> = ({ className, cols, rows, placeholder, value
       placeholder={placeholder}
       value={value}
       onChange={onChange}
+      onClick={onClick}
     />
   );
 };
