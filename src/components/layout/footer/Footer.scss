@@ -51,8 +51,7 @@
   @include flexEnd;
   flex-direction: column;
   align-items: flex-end;
-  column-gap: $base * 3;
-  row-gap: $base * 2;
+  row-gap: $base;
 }
 
 .footer__title {

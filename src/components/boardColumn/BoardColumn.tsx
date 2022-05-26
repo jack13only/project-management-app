@@ -115,21 +115,19 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
                   boardId={boardId}
                   order={order}
                 />
-
                 <DeleteButton type="button" onClick={() => setActiveModal(true)} />
               </div>
-
-              <div>
+              <div className="cards__list__container">
                 <CardList tasks={data} toggleCardComplete={toggleCardComplete} />
-                <div className="card__add">
-                  <TertiaryButton
-                    className="button__tertiary column__btn"
-                    type="button"
-                    description="+ Add a card"
-                    isOpenCard={isOpenCard}
-                    onClick={addCardVisibility}
-                  />
-                </div>
+              </div>
+              <div className="card__add">
+                <TertiaryButton
+                  className="button__tertiary column__btn"
+                  type="button"
+                  description="+ Add a card"
+                  isOpenCard={isOpenCard}
+                  onClick={addCardVisibility}
+                />
                 <CardContainer
                   isOpenCard={isOpenCard}
                   onClick={() => setIsOpenCard(false)}
@@ -140,7 +138,6 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
               </div>
             </div>
           </div>
-
           <Modal activeModal={activeModal} setActiveModal={setActiveModal}>
             <div className="modal__wrapper">
               <div className="modal__img" />

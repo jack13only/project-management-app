@@ -4,6 +4,7 @@
   display: flex;
   flex-direction: column;
   row-gap: $base * 2;
+  width: 97%;
 }
 
 .board__task-input {
