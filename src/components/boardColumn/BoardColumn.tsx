@@ -117,6 +117,9 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
                 />
                 <DeleteButton type="button" onClick={() => setActiveModal(true)} />
               </div>
+              <div className="cards__list__container">
+                <CardList tasks={data} toggleCardComplete={toggleCardComplete} />
+              </div>
               <div className="card__add">
                 <TertiaryButton
                   className="button__tertiary column__btn"
@@ -132,9 +135,6 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
                   handleCardTitle={handleCardTitle}
                   addCard={addCard}
                 />
-              </div>
-              <div className="cards__list__container">
-                <CardList tasks={data} toggleCardComplete={toggleCardComplete} />
               </div>
             </div>
           </div>
