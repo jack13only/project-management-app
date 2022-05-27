@@ -17,21 +17,21 @@ const WelcomePage: FC = () => {
         <WelcomeCard
           src={avatar2}
           name={localizationObj[lang].shatau}
-          specialization={localizationObj[lang].frontend}
+          specialization="Front-end Developer"
           github="https://github.com/jack13only"
           linkedin="https://www.linkedin.com/in/jack13only/"
         />
         <WelcomeCard
           src={avatar3}
           name={localizationObj[lang].kochieva}
-          specialization={localizationObj[lang].frontend}
+          specialization="Front-end Developer"
           github="https://github.com/VictoriaKochieva"
           linkedin="https://www.linkedin.com/in/victoria-kochieva/"
         />
         <WelcomeCard
           src={avatar1}
           name={localizationObj[lang].karakulka}
-          specialization={localizationObj[lang].frontend}
+          specialization="Front-end Developer"
           github="https://github.com/mitrofanzxc"
           linkedin="https://www.linkedin.com/in/dzmitry-karakulka/"
         />

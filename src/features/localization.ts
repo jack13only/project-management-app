@@ -48,7 +48,6 @@ export const localizationObj = {
     shatau: 'ЕВГЕНИЙ ШАТОВ',
     kochieva: 'ВИКТОРИЯ КОЧИЕВА',
     karakulka: 'ДМИТРИЙ КАРАКУЛЬКО',
-    frontend: 'Разработчик внешнего интерфейса',
   },
   [enLang]: {
     signIn: 'Sign In',
@@ -96,6 +95,5 @@ export const localizationObj = {
     shatau: 'YAUHENI SHATAU',
     kochieva: 'VICTORIA KOCHIEVA',
     karakulka: 'DZMITRY KARAKULKA',
-    frontend: 'Front-end Developer',
   },
 };
