@@ -9,6 +9,7 @@ import { useDeleteColumnMutation, useGetTasksQuery, usePostTaskMutation } from '
 
 import './BoardColumn.scss';
 import { useAppSelector } from '../../app/hooks';
+import { ColumnType } from '../../pages/board/Board';
 import { Draggable } from 'react-beautiful-dnd';
 
 type BoardColumnProps = {
@@ -17,11 +18,21 @@ type BoardColumnProps = {
   columnId: string;
   order: number;
   index: number;
+  tasksList: TasksList[];
 };
 
 type CardsState = {
   id: string;
   cardTitle: string;
+  complete: boolean;
+};
+
+export type TasksList = {
+  order: number;
+  title: string;
+  id: string;
+  boardId: string;
+  columnId: string;
   complete: boolean;
 };
 
@@ -31,6 +42,7 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
   const [cardTitle, setCardTitle] = useState<string>('');
   const [isOpenCard, setIsOpenCard] = useState<boolean>(false);
   const { userId } = useAppSelector((state) => state.userStorage);
+  const [tasks, setTasks] = useState<TasksList[]>([]);
 
   const { data = [], error, isLoading } = useGetTasksQuery({ columnId, boardId });
   const [deleteColumn] = useDeleteColumnMutation();
@@ -93,6 +105,16 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
     setIsOpenCard(false);
   }, [data.length]);
 
+  useEffect(() => {
+    if (data.length) {
+      setTasks([...data].sort((a: ColumnType, b: ColumnType) => a.order - b.order));
+    }
+  }, [data]);
+
+  useEffect(() => {
+    setTasks(data);
+  }, [data.length]);
+
   return (
     <Draggable draggableId={columnId} index={index}>
       {(provided, snapshot) => (
@@ -118,9 +140,12 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
 
                 <DeleteButton type="button" onClick={() => setActiveModal(true)} />
               </div>
-
               <div>
-                <CardList tasks={data} toggleCardComplete={toggleCardComplete} />
+                <CardList
+                  tasks={tasks}
+                  toggleCardComplete={toggleCardComplete}
+                  columnId={columnId}
+                />
                 <div className="card__add">
                   <TertiaryButton
                     className="button__tertiary column__btn"

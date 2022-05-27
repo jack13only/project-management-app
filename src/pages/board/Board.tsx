@@ -3,16 +3,23 @@ import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { Link, useParams } from 'react-router-dom';
 
 import {
+  apiUser,
+  useDeleteTaskMutation,
   useGetBoardsByIdQuery,
   useGetColumnsQuery,
   usePostColumnMutation,
+  usePostTaskMutation,
   useUpdateColumnMutation,
+  useUpdateTaskMutation,
 } from '../../app/RtkQuery';
 import { TertiaryButton } from '../../components/buttons';
 import { BackButton } from '../../components/buttons';
+import { RootState, store } from '../../app/store';
 
 import './Board.scss';
-
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { TaskType } from '../../app/apiTypes';
+import { TasksList } from '../../components/boardColumn/BoardColumn';
 const BoardColumn = React.lazy(() => import('../../components/boardColumn/BoardColumn'));
 
 export interface ColumnType {
@@ -21,17 +28,32 @@ export interface ColumnType {
   order: number;
 }
 
+type Tasks = {
+  title: string;
+  order: number;
+  description: string;
+  userId: string;
+};
+
 const Board: FC = () => {
   const { id } = useParams();
   const boardId = id ?? '';
 
+  const api = apiUser;
+  const dispatch = useAppDispatch();
+  const { userId } = useAppSelector((state) => state.userStorage);
+
   const { data: data1 = [], error, isLoading } = useGetColumnsQuery({ boardId });
   const [postColumn] = usePostColumnMutation();
   const [updateColumn] = useUpdateColumnMutation();
+  const [postTask] = usePostTaskMutation();
+  const [deleteTask] = useDeleteTaskMutation();
+  const [updateTask] = useUpdateTaskMutation();
   const getBoardsById = useGetBoardsByIdQuery(boardId);
   const currentBoardTitle = getBoardsById.data?.title;
 
   const [columnsList, updateColumnsList] = useState<ColumnType[]>([]);
+  const [tasks, setTasks] = useState<TasksList[]>([]);
 
   if (error && 'status' in error) {
     console.log('error.data', error.status);
@@ -65,13 +87,110 @@ const Board: FC = () => {
     return columns;
   };
 
+  const addTaskToAnotherColumn = async (columnId: string, taskTitle: string) => {
+    await postTask({
+      columnId,
+      boardId,
+      body: {
+        title: taskTitle,
+        description: taskTitle,
+        userId,
+      },
+    });
+  };
+
+  const deleteTaskFromCurrentCol = async (columnId: string, taskId: string) => {
+    await deleteTask({
+      columnId,
+      boardId,
+      taskId,
+    });
+  };
+
+  const updateTaskHandler = async (
+    columnId: string,
+    taskTitle: string,
+    taskId: string,
+    order: number
+  ) => {
+    await updateTask({
+      columnId: columnId,
+      boardId,
+      taskId,
+      task: {
+        title: taskTitle,
+        order,
+        description: taskTitle,
+        userId,
+      },
+    });
+  };
+
+  const reorderTasks = (
+    tasksList: TasksList[],
+    startIndex: number,
+    endIndex: number,
+    columnId: string,
+    taskId: string
+  ) => {
+    const tasks = [...tasksList];
+    const [movedTask] = tasksList.filter((task) => task.id === taskId);
+    tasks.splice(startIndex, 1);
+    tasks.splice(endIndex, 0, movedTask);
+    updateTaskHandler(columnId, movedTask.title, taskId, endIndex + 1);
+  };
+
   const onDragEndHandler = (result: DropResult) => {
-    const { source, destination } = result;
+    const { source, destination, draggableId, type } = result;
 
     if (!destination) return;
 
-    const columns: ColumnType[] = reorderColumns(columnsList, source.index, destination.index);
-    updateColumnsList(columns);
+    if (destination.droppableId === boardId && type === 'tasks') return;
+
+    //get tasks of current column
+    const tasks = dispatch(
+      api.endpoints.getTasks.initiate({
+        columnId: source.droppableId,
+        boardId,
+      })
+    );
+
+    //get task to dragg to another column
+    const task = dispatch(
+      api.endpoints.getTaskById.initiate({
+        columnId: source.droppableId,
+        boardId,
+        taskId: draggableId,
+      })
+    );
+
+    //if dragging to another column
+    if (source.droppableId !== destination.droppableId && type === 'tasks') {
+      deleteTaskFromCurrentCol(source.droppableId, draggableId);
+
+      task
+        .then((res) => addTaskToAnotherColumn(destination.droppableId, res.data.title))
+        .catch((error) => console.log('error', error));
+
+      return;
+    }
+
+    //if dragging inside column
+    if (source.droppableId === destination.droppableId && type === 'tasks') {
+      tasks
+        .then((res) => res.data)
+        .then((data) =>
+          reorderTasks(data, source.index, destination.index, source.droppableId, draggableId)
+        )
+        .catch((error) => console.log('error', error));
+      return;
+    }
+
+    //dragColumns
+    if (type === 'columns') {
+      const columns: ColumnType[] = reorderColumns(columnsList, source.index, destination.index);
+      updateColumnsList(columns);
+    }
   };
 
   useEffect(() => {
@@ -91,7 +210,7 @@ const Board: FC = () => {
             </Link>
           </div>
           {!isLoading ? (
-            <Droppable droppableId={boardId} direction="horizontal">
+            <Droppable droppableId={boardId} direction="horizontal" type="columns">
               {(provided) => (
                 <div
                   className="board__columns"
@@ -107,6 +226,7 @@ const Board: FC = () => {
                         columnId={id}
                         order={order}
                         index={index}
+                        tasksList={tasks}
                       />
                     );
                   })}
