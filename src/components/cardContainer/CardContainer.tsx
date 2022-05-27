@@ -37,7 +37,7 @@ const CardContainer: FC<CardContainerProps> = ({
         <SecondaryButton
           className="button__tertiary"
           type="button"
-          description={'+ ' + localizationObj[lang].createColumn}
+          description={'+ ' + localizationObj[lang].createTask}
           onClick={addCard}
         />
         <DeleteButton type="button" onClick={onClick} />
