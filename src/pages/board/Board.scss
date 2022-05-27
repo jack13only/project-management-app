@@ -58,19 +58,14 @@
   width: max-content;
   text-align: center;
 
-  .board__title {
-    width: max-content;
-    text-align: left;
-
-    @media (max-width: $breakpoint-sm-min) {
-      width: fit-content;
-    }
+  @media (max-width: $breakpoint-lg-min) {
+    align-items: center;
   }
 
   .button__tertiary {
     width: max-content;
 
-    @media (max-width: $breakpoint-sm-min) {
+    @media (max-width: $breakpoint-lg-min) {
       width: $base * 10;
       height: $base * 10;
       background-color: $color-white;
@@ -83,8 +78,23 @@
   }
 
   .button__tertiary-description {
-    @media (max-width: $breakpoint-sm-min) {
+    @media (max-width: $breakpoint-lg-min) {
       display: none;
     }
+  }
+}
+
+.board__title {
+  width: max-content;
+  text-align: left;
+
+  @media (max-width: $breakpoint-sm-min) {
+    width: fit-content;
+  }
+}
+
+.board__title-description {
+  @media (max-width: $breakpoint-lg-min) {
+    display: none;
   }
 }

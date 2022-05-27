@@ -8,7 +8,6 @@ import {
   usePostColumnMutation,
   useUpdateColumnMutation,
 } from '../../app/RtkQuery';
-import { TertiaryButton } from '../../components/buttons';
 import { BackButton } from '../../components/buttons';
 
 import './Board.scss';
@@ -86,13 +85,22 @@ const Board: FC = () => {
         <div className="wrapper">
           <div className="board__title__wrapper">
             <Link to="/boards">
-              <BackButton type="button" />
+              <BackButton
+                classNameWrapper="btn-back__wrapper"
+                className="btn-back-common btn-back"
+                type="button"
+                description="Back"
+              />
             </Link>
-            <h2 className="board__title">Board {currentBoardTitle}</h2>
-            <TertiaryButton
-              className="button__tertiary column__new-btn"
+            <h2 className="board__title">
+              <span className="board__title-description">Board </span>
+              {currentBoardTitle}
+            </h2>
+            <BackButton
+              classNameWrapper="btn-back__wrapper"
+              className="btn-back-common btn-new"
               type="button"
-              description="+ Add a new column"
+              description="New column"
               onClick={addNewColumn}
             />
           </div>
