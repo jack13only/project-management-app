@@ -72,7 +72,7 @@ export const localizationObj = {
     lessThanFour: ' can not be less than 4 symbols',
     passwordsMatch: 'Passwords do not match',
     createBoard: 'Create a new board',
-    createColumn: 'Add a new column',
+    createColumn: 'New column',
     createTask: 'Add a new task',
     yourBoards: 'Your boards',
     board: 'Board',
