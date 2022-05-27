@@ -16,22 +16,22 @@ const WelcomePage: FC = () => {
       <div className="welcome__container">
         <WelcomeCard
           src={avatar2}
-          name="Yauheni Shatau"
-          specialization="Front-end Developer"
+          name={localizationObj[lang].shatau}
+          specialization={localizationObj[lang].frontend}
           github="https://github.com/jack13only"
           linkedin="https://www.linkedin.com/in/jack13only/"
         />
         <WelcomeCard
           src={avatar3}
-          name="Victoria Kochieva"
-          specialization="Front-end Developer"
+          name={localizationObj[lang].kochieva}
+          specialization={localizationObj[lang].frontend}
           github="https://github.com/VictoriaKochieva"
           linkedin="https://www.linkedin.com/in/victoria-kochieva/"
         />
         <WelcomeCard
           src={avatar1}
-          name="Dzmitry Karakulka"
-          specialization="Front-end Developer"
+          name={localizationObj[lang].karakulka}
+          specialization={localizationObj[lang].frontend}
           github="https://github.com/mitrofanzxc"
           linkedin="https://www.linkedin.com/in/dzmitry-karakulka/"
         />

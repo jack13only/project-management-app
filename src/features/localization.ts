@@ -45,6 +45,10 @@ export const localizationObj = {
     loading: 'Загрузка...',
     addATitle: 'Добавить заголовок',
     yourTask: 'Твоя задача',
+    shatau: 'ЕВГЕНИЙ ШАТОВ',
+    kochieva: 'ВИКТОРИЯ КОЧИЕВА',
+    karakulka: 'ДМИТРИЙ КАРАКУЛЬКО',
+    frontend: 'Разработчик внешнего интерфейса',
   },
   [enLang]: {
     signIn: 'Sign In',
@@ -89,5 +93,9 @@ export const localizationObj = {
     loading: 'Loading...',
     addATitle: 'Add a title',
     yourTask: 'Your task',
+    shatau: 'YAUHENI SHATAU',
+    kochieva: 'VICTORIA KOCHIEVA',
+    karakulka: 'DZMITRY KARAKULKA',
+    frontend: 'Front-end Developer',
   },
 };
