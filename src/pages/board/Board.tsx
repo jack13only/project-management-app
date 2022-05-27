@@ -14,11 +14,9 @@ import {
 } from '../../app/RtkQuery';
 import { TertiaryButton } from '../../components/buttons';
 import { BackButton } from '../../components/buttons';
-import { RootState, store } from '../../app/store';
 
 import './Board.scss';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { TaskType } from '../../app/apiTypes';
 import { TasksList } from '../../components/boardColumn/BoardColumn';
 const BoardColumn = React.lazy(() => import('../../components/boardColumn/BoardColumn'));
 
@@ -27,13 +25,6 @@ export interface ColumnType {
   id: string;
   order: number;
 }
-
-type Tasks = {
-  title: string;
-  order: number;
-  description: string;
-  userId: string;
-};
 
 const Board: FC = () => {
   const { id } = useParams();
@@ -53,7 +44,6 @@ const Board: FC = () => {
   const currentBoardTitle = getBoardsById.data?.title;
 
   const [columnsList, updateColumnsList] = useState<ColumnType[]>([]);
-  const [tasks, setTasks] = useState<TasksList[]>([]);
 
   if (error && 'status' in error) {
     console.log('error.data', error.status);
@@ -128,7 +118,6 @@ const Board: FC = () => {
 
   const reorderTasks = (
     tasksList: TasksList[],
-    startIndex: number,
     endIndex: number,
     columnId: string,
     taskId: string
@@ -176,9 +165,7 @@ const Board: FC = () => {
     if (source.droppableId === destination.droppableId && type === 'tasks') {
       tasks
         .then((res) => res.data)
-        .then((data) =>
-          reorderTasks(data, source.index, destination.index, source.droppableId, draggableId)
-        )
+        .then((data) => reorderTasks(data, destination.index, source.droppableId, draggableId))
         .catch((error) => console.log('error', error));
       return;
     }
