@@ -62,14 +62,14 @@ const Header: FC = () => {
             <>
               <Link
                 to={PATHS.boards}
-                className={location.pathname === '/boards' ? 'border-right' : ''}
+                className={location.pathname === `${PATHS.boards}` ? 'border-right' : ''}
               >
                 <div className="boards-logo__wrapper">
                   <div className="boards-logo" />
                   <div className="boards-logo-description">{localizationObj[lang].boards}</div>
                 </div>
               </Link>
-              {location.pathname === '/boards' && (
+              {location.pathname === `${PATHS.boards}` && (
                 <TertiaryButton
                   className="button__tertiary"
                   type="button"

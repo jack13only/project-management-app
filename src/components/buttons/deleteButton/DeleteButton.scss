@@ -4,16 +4,16 @@
   width: $base * 5;
   height: $base * 5;
   background-color: transparent;
-  background-image: url(../../../images/icons/delete.svg);
+  background-image: url('../../../images/icons/delete.svg');
   background-size: 100%;
   background-repeat: no-repeat;
   background-position: center;
   border: none;
-  transition: $transition;
   cursor: pointer;
+  transition: $transition-01;
 
   &:hover {
     filter: brightness(0.7);
-    transition: $transition;
+    transition: $transition-01;
   }
 }

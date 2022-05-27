@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useState, lazy } from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { Link, useParams } from 'react-router-dom';
 import { useAppSelector } from '../../app/hooks';
@@ -9,13 +9,13 @@ import {
   usePostColumnMutation,
   useUpdateColumnMutation,
 } from '../../app/RtkQuery';
-import { TertiaryButton } from '../../components/buttons';
 import { BackButton } from '../../components/buttons';
 import { localizationObj } from '../../features/localization';
+import { Preloader } from '../../components/preloader/Preloader';
 
 import './Board.scss';
 
-const BoardColumn = React.lazy(() => import('../../components/boardColumn/BoardColumn'));
+const BoardColumn = lazy(() => import('../../components/boardColumn/BoardColumn'));
 
 export interface ColumnType {
   title: string;
@@ -88,12 +88,25 @@ const Board: FC = () => {
       <div className="board">
         <div className="wrapper">
           <div className="board__title__wrapper">
-            <h2 className="board__title">
-              {localizationObj[lang].board} {currentBoardTitle}
-            </h2>
             <Link to="/boards">
-              <BackButton type="button" />
+              <BackButton
+                classNameWrapper="btn-back__wrapper"
+                className="btn-back-common btn-back"
+                type="button"
+                description={localizationObj[lang].back}
+              />
             </Link>
+            <h2 className="board__title">
+              <span className="board__title-description">{localizationObj[lang].board} </span>
+              {currentBoardTitle}
+            </h2>
+            <BackButton
+              classNameWrapper="btn-back__wrapper"
+              className="btn-back-common btn-new"
+              type="button"
+              description={localizationObj[lang].createColumn}
+              onClick={addNewColumn}
+            />
           </div>
           {!isLoading ? (
             <Droppable droppableId={boardId} direction="horizontal">
@@ -120,14 +133,8 @@ const Board: FC = () => {
               )}
             </Droppable>
           ) : (
-            <div>{localizationObj[lang].loading}</div>
+            <Preloader />
           )}
-          <TertiaryButton
-            className="button__tertiary column__new-btn"
-            type="button"
-            description={'+ ' + localizationObj[lang].createColumn}
-            onClick={addNewColumn}
-          />
         </div>
       </div>
     </DragDropContext>

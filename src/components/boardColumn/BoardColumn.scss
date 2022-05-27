@@ -11,12 +11,14 @@
   flex-direction: column;
   row-gap: $base * 2;
   flex-basis: 26%;
+  min-width: $base * 50;
+  max-height: 72vh;
+  margin-right: 1px;
   padding: $base * 2.2 0 $base * 2.2 $base * 2.2;
   border-top: 8px solid $color-purple-09;
   border-radius: $base * 2;
-  min-width: $base * 50;
-  max-height: 75vh;
   background-color: $color-white-07;
+  box-shadow: 1px 1px 1px $color-dark-05, 0 0 0.06em $color-dark-05, 0 0 0.06em $color-dark-05;
 }
 
 .board__column-head {
@@ -40,9 +42,7 @@
 }
 
 .task {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
+  @include flexStart;
   gap: $base * 2;
   padding: $base * 4 $base;
   border: 1px solid $color-dark-04;

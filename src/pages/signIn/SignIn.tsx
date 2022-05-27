@@ -7,10 +7,11 @@ import { PATHS } from '../../shared/constants/routes';
 import { useSigninMutation } from '../../app/RtkQuery';
 import { SigninType } from '../../app/apiTypes';
 import { saveTokenToLS } from '../../features/ls-load-save';
-import './SignIn.scss';
 import { Modal } from '../../components';
 import { ErrorSign } from '../../components/modal/components';
 import { localizationObj } from '../../features/localization';
+
+import '../signUp/SignUp.scss';
 
 const SignIn = (): JSX.Element => {
   const navigate = useNavigate();
@@ -41,7 +42,7 @@ const SignIn = (): JSX.Element => {
       })
       .then(() => {
         reset();
-        navigate(PATHS.main, { replace: true });
+        navigate(PATHS.boards, { replace: true });
       })
       .catch((error) => {
         setActiveModal(true);

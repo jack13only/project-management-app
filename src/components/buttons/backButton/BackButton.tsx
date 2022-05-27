@@ -1,19 +1,26 @@
 import { FC } from 'react';
-import { useAppSelector } from '../../../app/hooks';
-import { localizationObj } from '../../../features/localization';
 
 import './BackButton.scss';
 
 interface BackButtonProps {
+  classNameWrapper: string;
+  className: string;
   type: 'button';
+  description: string;
+  onClick?: () => void;
 }
 
-const BackButton: FC<BackButtonProps> = ({ type }) => {
-  const { lang } = useAppSelector((state) => state.langStorage);
+const BackButton: FC<BackButtonProps> = ({
+  classNameWrapper,
+  className,
+  type,
+  description,
+  onClick,
+}) => {
   return (
-    <button className="btn-back__wrapper" type={type}>
-      <div className="btn-back" />
-      <div className="btn-back-description">{localizationObj[lang].back}</div>
+    <button className={classNameWrapper} type={type} onClick={onClick}>
+      <div className={className} />
+      <div className="btn-back-description">{description}</div>
     </button>
   );
 };
