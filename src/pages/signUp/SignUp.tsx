@@ -63,7 +63,7 @@ const SignUp = (): JSX.Element => {
       })
       .then(() => {
         reset();
-        navigate(PATHS.main, { replace: true });
+        navigate(PATHS.boards, { replace: true });
       })
       .catch((error) => {
         setActiveModal(true);

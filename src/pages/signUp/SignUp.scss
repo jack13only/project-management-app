@@ -2,16 +2,14 @@
 
 .signup {
   display: flex;
-  flex-direction: column;
   justify-content: center;
-  transform: translate(0, 5%);
+  flex-direction: column;
   width: 60%;
-  height: 90%;
-  margin: 0 auto;
-  padding: $base * 3;
+  margin: $base * 2 auto;
+  padding: $base * 2;
   font-size: $fs-xxxl;
-  border: 1px solid $color-dark;
-  border-radius: $base;
+  border-radius: $base * 3;
+  box-shadow: 1px 1px 1px $color-sale, 0 0 0.06em $color-dark, 0 0 0.06em $color-dark;
 
   .form__title {
     @include disableSelection;
