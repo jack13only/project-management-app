@@ -8,6 +8,7 @@ import {
 } from '../../app/RtkQuery';
 import { Modal } from '../../components';
 import { ErrorSign } from '../../components/modal/components';
+import { localizationObj } from '../../features/localization';
 import { saveTokenToLS } from '../../features/ls-load-save';
 import { loginUser, logoutUser } from '../../reducers/auth';
 import { setEmptyUser } from '../../reducers/userReducer';
@@ -32,6 +33,7 @@ const UserProfile: FC = () => {
   const [successMsg, setSuccessMsg] = useState<string>('');
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [isPassChanging, setIsPassChanging] = useState<boolean>(false);
+  const { lang } = useAppSelector((state) => state.langStorage);
 
   const {
     register,
@@ -83,12 +85,16 @@ const UserProfile: FC = () => {
         });
         setIsEditing(false);
         setActiveModal(true);
-        setSuccessMsg(isPassChanging ? 'Password update successful!' : 'User update successful!');
+        setSuccessMsg(
+          isPassChanging
+            ? `${localizationObj[lang].password} ${localizationObj[lang].updateSuccessful}`
+            : `${localizationObj[lang].user} ${localizationObj[lang].updateSuccessful}`
+        );
       })
       .catch((error) => {
         setActiveModal(true);
         if (error.data.statusCode === 403) {
-          setErrorMsg('Wrong password');
+          setErrorMsg(localizationObj[lang].wrongPassword);
         } else {
           setErrorMsg(error.data.message);
         }
@@ -122,9 +128,9 @@ const UserProfile: FC = () => {
     <>
       {!isEditing && (
         <div className="user-profile">
-          <div className="user-profile__field">Name:</div>
+          <div className="user-profile__field">{localizationObj[lang].name}:</div>
           <div className="user-profile__value">{userName}</div>
-          <div className="user-profile__field">Login: </div>
+          <div className="user-profile__field">{localizationObj[lang].login}: </div>
           <div className="user-profile__value">{userLogin}</div>
           <button
             className="user-profile__button"
@@ -133,7 +139,7 @@ const UserProfile: FC = () => {
               setIsPassChanging(false);
             }}
           >
-            Edit user
+            {localizationObj[lang].editUser}
           </button>
           <button
             className="user-profile__button"
@@ -142,7 +148,7 @@ const UserProfile: FC = () => {
               setIsPassChanging(true);
             }}
           >
-            Change password
+            {localizationObj[lang].changePassword}
           </button>
           <button
             className="user-profile__button"
@@ -151,7 +157,7 @@ const UserProfile: FC = () => {
               setDeleteMsg(true);
             }}
           >
-            Delete
+            {localizationObj[lang].deleteUser}
           </button>
         </div>
       )}
@@ -161,72 +167,80 @@ const UserProfile: FC = () => {
           {!isPassChanging && (
             <>
               <label className="form__nickname" title="Only numbers and english letters">
-                <span className="form__label-tittle">Name:</span>
+                <span className="form__label-tittle">{localizationObj[lang].name}:</span>
                 <input
                   className="signup__name"
                   {...register('name', {
-                    required: 'Empty name',
+                    required: localizationObj[lang].emptyField,
                     pattern: {
                       value: /^[A-Za-z0-9]+$/i,
-                      message: 'Only numbers and english letters!',
+                      message: localizationObj[lang].onlyNumbersLetters,
                     },
                     validate: {
-                      nameLength: (v) => v.length > 3 || 'Name can not be less than 4 letters',
+                      nameLength: (v) =>
+                        v.length > 3 ||
+                        `${localizationObj[lang].name}${localizationObj[lang].lessThanFour}`,
                     },
                   })}
-                  placeholder="Enter your name"
+                  placeholder={localizationObj[lang].enterYourName}
                 />
                 {errors.name && <div className="form__error">{errors.name.message}</div>}
               </label>
-              <label className="form__nickname" title="Only numbers and english letters">
-                <span className="form__label-tittle">Login:</span>
+              <label className="form__nickname" title={localizationObj[lang].onlyNumbersLetters}>
+                <span className="form__label-tittle">{localizationObj[lang].login}:</span>
                 <input
                   className="signup__name"
                   {...register('login', {
-                    required: 'Empty login',
+                    required: localizationObj[lang].emptyField,
                     pattern: {
                       value: /^[A-Za-z0-9]+$/i,
-                      message: 'Only numbers and english letters!',
+                      message: localizationObj[lang].onlyNumbersLetters,
                     },
                     validate: {
-                      nameLength: (v) => v.length > 3 || 'Login can not be less than 4 letters',
+                      nameLength: (v) =>
+                        v.length > 3 ||
+                        `${localizationObj[lang].login}${localizationObj[lang].lessThanFour}`,
                     },
                   })}
-                  placeholder="Enter your login"
+                  placeholder={localizationObj[lang].enterYourLogin}
                 />
                 {errors.login && <div className="form__error">{errors.login.message}</div>}
               </label>
             </>
           )}
           <label className="form__password">
-            <span className="form__label-tittle">Old password:</span>
+            <span className="form__label-tittle">{localizationObj[lang].oldPassword}:</span>
             <input
               className="signup__password"
               type="password"
               {...register('oldpassword', {
-                required: 'Empty password',
+                required: localizationObj[lang].emptyField,
                 validate: {
-                  passLength: (v) => v.length > 3 || 'Password can not be less than 4 letters',
+                  passLength: (v) =>
+                    v.length > 3 ||
+                    `${localizationObj[lang].password}${localizationObj[lang].lessThanFour}`,
                 },
               })}
-              placeholder="Enter your password"
+              placeholder={localizationObj[lang].enterYourPassword}
             />
             {errors.oldpassword && <div className="form__error">{errors.oldpassword.message}</div>}
           </label>
 
           {isPassChanging && (
             <label className="form__password">
-              <span className="form__label-tittle">New password:</span>
+              <span className="form__label-tittle">{localizationObj[lang].newPassword}:</span>
               <input
                 className="signup__password"
                 type="password"
                 {...register('newpassword', {
-                  required: 'Empty password',
+                  required: localizationObj[lang].emptyField,
                   validate: {
-                    passLength: (v) => v.length > 3 || 'Password can not be less than 4 letters',
+                    passLength: (v) =>
+                      v.length > 3 ||
+                      `${localizationObj[lang].password}${localizationObj[lang].lessThanFour}`,
                   },
                 })}
-                placeholder="Enter your password"
+                placeholder={localizationObj[lang].enterYourPassword}
               />
               {errors.newpassword && (
                 <div className="form__error">{errors.newpassword.message}</div>
@@ -234,10 +248,10 @@ const UserProfile: FC = () => {
             </label>
           )}
 
-          <input type="submit" value="Update" className="form__submit" />
+          <input type="submit" value={localizationObj[lang].update} className="form__submit" />
           <input
             type="button"
-            value="Cancel"
+            value={localizationObj[lang].cancel}
             className="form__submit"
             onClick={() => {
               setIsEditing(false);
@@ -252,16 +266,16 @@ const UserProfile: FC = () => {
           {!!errorMsg && <ErrorSign errorMsg={errorMsg} />}
           {!!successMsg && (
             <div className="error-modal">
-              <h3 className="error-modal__title green">Success!</h3>
+              <h3 className="error-modal__title green">{localizationObj[lang].success}</h3>
               <div>{successMsg}</div>
             </div>
           )}
           {!!deleteMsg && (
             <div className="modal__text">
-              <h2>{`Do you want to delete user '${userName}'`} ?</h2>
-              <div>After deletion, you will be redirected to the welcome page!</div>
+              <h2>{`${localizationObj[lang].doYouWantToDelete} '${userName}'`} ?</h2>
+              <div>{localizationObj[lang].afterDeleteRedirect}</div>
               <button type="button" onClick={deleteHandler}>
-                Yes
+                {localizationObj[lang].submit}
               </button>
               <button
                 type="button"
@@ -270,7 +284,7 @@ const UserProfile: FC = () => {
                   setDeleteMsg(false);
                 }}
               >
-                Cancel
+                {localizationObj[lang].cancel}
               </button>
             </div>
           )}
