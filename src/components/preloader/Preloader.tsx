@@ -1,9 +1,9 @@
-import { useAppSelector } from '../../app/hooks';
-import { localizationObj } from '../../features/localization';
+import { FC } from 'react';
 
-const Preloader = () => {
-  const { lang } = useAppSelector((state) => state.langStorage);
-  return <div>{localizationObj[lang].loading}</div>;
+import './Preloader.scss';
+
+const Preloader: FC = () => {
+  return <div className="preloader" />;
 };
 
 export { Preloader };

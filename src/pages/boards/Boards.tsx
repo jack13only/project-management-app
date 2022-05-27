@@ -8,6 +8,7 @@ import {
 
 import { TertiaryButton } from '../../components/buttons';
 import { Modal, PreloaderSuspense } from '../../components';
+import { Preloader } from '../../components/preloader/Preloader';
 
 import { BoardsTypes } from './typesBoards/TypesBoards';
 
@@ -84,7 +85,7 @@ const Boards: FC = () => {
             })}
           </PreloaderSuspense>
         ) : (
-          <div>{localizationObj[lang].loading}</div>
+          <Preloader />
         )}
       </div>
 

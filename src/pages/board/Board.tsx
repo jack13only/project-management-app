@@ -11,6 +11,7 @@ import {
 } from '../../app/RtkQuery';
 import { BackButton } from '../../components/buttons';
 import { localizationObj } from '../../features/localization';
+import { Preloader } from '../../components/preloader/Preloader';
 
 import './Board.scss';
 
@@ -132,7 +133,7 @@ const Board: FC = () => {
               )}
             </Droppable>
           ) : (
-            <div>{localizationObj[lang].loading}</div>
+            <Preloader />
           )}
         </div>
       </div>
