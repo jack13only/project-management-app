@@ -53,6 +53,7 @@ body {
 .wrapper {
   display: flex;
   width: 80%;
+  max-width: $base * 288;
   margin: 0 auto;
 
   @media (max-width: $breakpoint-lg-min) {

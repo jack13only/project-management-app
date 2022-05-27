@@ -11,7 +11,7 @@ const WelcomePage: FC = () => {
   const { lang } = useAppSelector((state) => state.langStorage);
 
   return (
-    <div data-testid="welcomepage" className="welcome__page">
+    <div data-testid="welcomepage" className="wrapper welcome__page">
       <h2 className="h2">{localizationObj[lang].meetOurTeam}</h2>
       <div className="welcome__container">
         <WelcomeCard
