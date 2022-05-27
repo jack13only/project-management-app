@@ -7,9 +7,10 @@ import { PATHS } from '../../shared/constants/routes';
 import { useSigninMutation } from '../../app/RtkQuery';
 import { SigninType } from '../../app/apiTypes';
 import { saveTokenToLS } from '../../features/ls-load-save';
-import './SignIn.scss';
 import { Modal } from '../../components';
 import { ErrorSign } from '../../components/modal/components';
+
+import '../signUp/SignUp.scss';
 
 const SignIn = (): JSX.Element => {
   const navigate = useNavigate();
