@@ -18,7 +18,6 @@ type BoardColumnProps = {
   columnId: string;
   order: number;
   index: number;
-  tasksList: TasksList[];
 };
 
 type CardsState = {

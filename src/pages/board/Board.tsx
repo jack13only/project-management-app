@@ -133,10 +133,7 @@ const Board: FC = () => {
     columnId: string,
     taskId: string
   ) => {
-    const tasks = [...tasksList];
     const [movedTask] = tasksList.filter((task) => task.id === taskId);
-    tasks.splice(startIndex, 1);
-    tasks.splice(endIndex, 0, movedTask);
     updateTaskHandler(columnId, movedTask.title, taskId, endIndex + 1);
   };
 
@@ -226,7 +223,6 @@ const Board: FC = () => {
                         columnId={id}
                         order={order}
                         index={index}
-                        tasksList={tasks}
                       />
                     );
                   })}
