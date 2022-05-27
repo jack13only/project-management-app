@@ -61,27 +61,6 @@
   @media (max-width: $breakpoint-lg-min) {
     align-items: center;
   }
-
-  .button__tertiary {
-    width: max-content;
-
-    @media (max-width: $breakpoint-lg-min) {
-      width: $base * 10;
-      height: $base * 10;
-      background-color: $color-white;
-      background-image: url('../../images/icons/plus.svg');
-      background-size: 100%;
-      background-position: center;
-      background-repeat: no-repeat;
-      border: none;
-    }
-  }
-
-  .button__tertiary-description {
-    @media (max-width: $breakpoint-lg-min) {
-      display: none;
-    }
-  }
 }
 
 .board__title {

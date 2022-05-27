@@ -3,21 +3,27 @@
 .btn-back__wrapper {
   @include flexCenter;
   gap: $base;
+  width: $base * 20;
   padding: $base;
   background-color: $color-white;
   border: none;
   border-radius: $base;
   cursor: pointer;
 
+  @media (max-width: $breakpoint-lg-min) {
+    width: auto;
+    height: auto;
+  }
+
   &:hover {
     .btn-back {
       filter: brightness(0.7);
-      transition: $transition;
+      transition: $transition-01;
     }
 
     .btn-new {
       filter: brightness(0.7);
-      transition: $transition;
+      transition: $transition-01;
     }
   }
 }
@@ -26,11 +32,11 @@
   width: $base * 5;
   height: $base * 5;
   background-color: transparent;
-  background-size: 80%;
+  background-size: 100%;
   background-repeat: no-repeat;
   background-position: center;
   border: none;
-  transition: $transition;
+  transition: $transition-01;
 
   @media (max-width: $breakpoint-lg-min) {
     width: $base * 7;
@@ -49,6 +55,7 @@
 
 .btn-back-description {
   @include poppins;
+  width: min-content;
   font-weight: $fw-medium;
   text-decoration: none;
 

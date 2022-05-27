@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useState, lazy } from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { Link, useParams } from 'react-router-dom';
 
@@ -12,7 +12,7 @@ import { BackButton } from '../../components/buttons';
 
 import './Board.scss';
 
-const BoardColumn = React.lazy(() => import('../../components/boardColumn/BoardColumn'));
+const BoardColumn = lazy(() => import('../../components/boardColumn/BoardColumn'));
 
 export interface ColumnType {
   title: string;
