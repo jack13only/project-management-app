@@ -1,6 +1,7 @@
 import { FC, useEffect, useState, lazy } from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { Link, useParams } from 'react-router-dom';
+import { useAppSelector } from '../../app/hooks';
 
 import {
   useGetBoardsByIdQuery,
@@ -9,6 +10,7 @@ import {
   useUpdateColumnMutation,
 } from '../../app/RtkQuery';
 import { BackButton } from '../../components/buttons';
+import { localizationObj } from '../../features/localization';
 
 import './Board.scss';
 
@@ -29,6 +31,7 @@ const Board: FC = () => {
   const [updateColumn] = useUpdateColumnMutation();
   const getBoardsById = useGetBoardsByIdQuery(boardId);
   const currentBoardTitle = getBoardsById.data?.title;
+  const { lang } = useAppSelector((state) => state.langStorage);
 
   const [columnsList, updateColumnsList] = useState<ColumnType[]>([]);
 
@@ -89,18 +92,18 @@ const Board: FC = () => {
                 classNameWrapper="btn-back__wrapper"
                 className="btn-back-common btn-back"
                 type="button"
-                description="Back"
+                description={localizationObj[lang].back}
               />
             </Link>
             <h2 className="board__title">
-              <span className="board__title-description">Board </span>
+              <span className="board__title-description">{localizationObj[lang].board} </span>
               {currentBoardTitle}
             </h2>
             <BackButton
               classNameWrapper="btn-back__wrapper"
               className="btn-back-common btn-new"
               type="button"
-              description="New column"
+              description={localizationObj[lang].createColumn}
               onClick={addNewColumn}
             />
           </div>
@@ -129,7 +132,7 @@ const Board: FC = () => {
               )}
             </Droppable>
           ) : (
-            <div>Loading...</div>
+            <div>{localizationObj[lang].loading}</div>
           )}
         </div>
       </div>

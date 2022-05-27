@@ -1,4 +1,7 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks';
+import { enLang, ruLang } from '../../../features/ls-load-save';
+import { setLang } from '../../../reducers/langReducer';
 
 import './Switcher.scss';
 
@@ -7,30 +10,32 @@ interface SwitcherProps {
   type: string;
   id: string;
   name: string;
-  firstValue: string;
-  secondValue: string;
-  defaultChecked: boolean;
 }
 
-const Switcher: FC<SwitcherProps> = ({
-  description,
-  type,
-  id,
-  name,
-  firstValue,
-  secondValue,
-  defaultChecked,
-}: SwitcherProps) => {
+const Switcher: FC<SwitcherProps> = ({ description, type, id, name }: SwitcherProps) => {
+  const dispatch = useAppDispatch();
+  const { lang } = useAppSelector((state) => state.langStorage);
+  const [isChecked, setIsChecked] = useState(lang === ruLang);
+  useEffect(() => {
+    dispatch(setLang(isChecked ? ruLang : enLang));
+  }, [isChecked]);
+
   return (
     <div className="form__container">
       <div>{description}</div>
       <div className="switcher__container">
-        <div>{firstValue}</div>
+        <div>{enLang}</div>
         <label className="switch">
-          <input type={type} id={id} name={name} defaultChecked={defaultChecked} />
+          <input
+            type={type}
+            id={id}
+            name={name}
+            checked={isChecked}
+            onChange={() => setIsChecked(!isChecked)}
+          />
           <span className="slider round" />
         </label>
-        <div>{secondValue}</div>
+        <div>{ruLang}</div>
       </div>
     </div>
   );

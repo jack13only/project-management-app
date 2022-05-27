@@ -3,19 +3,19 @@ import { FooterLink } from './FooterLink';
 import { Switcher } from '../../buttons';
 
 import './Footer.scss';
+import { useAppSelector } from '../../../app/hooks';
+import { localizationObj } from '../../../features/localization';
 
 const Footer: FC = () => {
+  const { lang } = useAppSelector((state) => state.langStorage);
   return (
     <footer data-testid="footer" className="footer">
       <div className="wrapper footer__wrapper">
         <Switcher
-          description="Language:"
+          description={localizationObj[lang].language}
           type="checkbox"
           id="language"
           name="language"
-          firstValue="EN"
-          secondValue="RU"
-          defaultChecked={false}
         />
         <div className="footer__info">
           <div className="footer__logo">
@@ -27,7 +27,7 @@ const Footer: FC = () => {
           <span className="footer__year">2022</span>
         </div>
         <div className="footer__team">
-          <h4 className="footer__title">Meet our team</h4>
+          <h4 className="footer__title">{localizationObj[lang].meetOurTeam}</h4>
           <ul className="footer__contacts">
             <li className="footer__contact">
               <FooterLink

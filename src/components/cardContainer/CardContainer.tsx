@@ -1,6 +1,8 @@
 import { FC, ChangeEvent } from 'react';
 
 import { Textarea } from '..';
+import { useAppSelector } from '../../app/hooks';
+import { localizationObj } from '../../features/localization';
 import { SecondaryButton, DeleteButton } from '../buttons';
 
 import './CardContainer.scss';
@@ -20,13 +22,14 @@ const CardContainer: FC<CardContainerProps> = ({
   handleCardTitle,
   addCard,
 }) => {
+  const { lang } = useAppSelector((state) => state.langStorage);
   return (
     <section className={isOpenCard ? 'card__container' : 'card__container hidden'}>
       <Textarea
         className="textarea"
         cols={10}
         rows={3}
-        placeholder="Enter a title for this card..."
+        placeholder={localizationObj[lang].addATitle}
         value={cardTitle}
         onChange={handleCardTitle}
       />
@@ -34,7 +37,7 @@ const CardContainer: FC<CardContainerProps> = ({
         <SecondaryButton
           className="button__tertiary"
           type="button"
-          description="Add card"
+          description={'+ ' + localizationObj[lang].createColumn}
           onClick={addCard}
         />
         <DeleteButton type="button" onClick={onClick} />

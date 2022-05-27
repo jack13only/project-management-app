@@ -4,29 +4,33 @@ import avatar1 from '../../images/avatar-1.jpg';
 import avatar2 from '../../images/avatar-2.jpg';
 import avatar3 from '../../images/avatar-3.jpg';
 import './WelcomePage.scss';
+import { useAppSelector } from '../../app/hooks';
+import { localizationObj } from '../../features/localization';
 
 const WelcomePage: FC = () => {
+  const { lang } = useAppSelector((state) => state.langStorage);
+
   return (
     <div data-testid="welcomepage" className="welcome__page">
-      <h2 className="h2">Meet Our Team</h2>
+      <h2 className="h2">{localizationObj[lang].meetOurTeam}</h2>
       <div className="welcome__container">
         <WelcomeCard
           src={avatar2}
-          name="Yauheni Shatau"
+          name={localizationObj[lang].shatau}
           specialization="Front-end Developer"
           github="https://github.com/jack13only"
           linkedin="https://www.linkedin.com/in/jack13only/"
         />
         <WelcomeCard
           src={avatar3}
-          name="Victoria Kochieva"
+          name={localizationObj[lang].kochieva}
           specialization="Front-end Developer"
           github="https://github.com/VictoriaKochieva"
           linkedin="https://www.linkedin.com/in/victoria-kochieva/"
         />
         <WelcomeCard
           src={avatar1}
-          name="Dzmitry Karakulka"
+          name={localizationObj[lang].karakulka}
           specialization="Front-end Developer"
           github="https://github.com/mitrofanzxc"
           linkedin="https://www.linkedin.com/in/dzmitry-karakulka/"

@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useAppDispatch } from '../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { loginUser } from '../../reducers/auth';
 import './SignUp.scss';
 import { useNavigate } from 'react-router-dom';
@@ -10,6 +10,7 @@ import { SignupType } from '../../app/apiTypes';
 import { saveTokenToLS } from '../../features/ls-load-save';
 import { Modal } from '../../components';
 import { ErrorSign } from '../../components/modal/components';
+import { localizationObj } from '../../features/localization';
 
 export type SignUpValues = {
   name: string;
@@ -23,6 +24,7 @@ const SignUp = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const [signupUser] = useSignupMutation();
   const [signinUser] = useSigninMutation();
+  const { lang } = useAppSelector((state) => state.langStorage);
   const [activeModal, setActiveModal] = useState<boolean>(false);
   const [errorMsg, setErrorMsg] = useState<string>('');
 
@@ -34,7 +36,7 @@ const SignUp = (): JSX.Element => {
     formState: { errors },
   } = useForm<SignUpValues>({
     mode: 'onSubmit',
-    reValidateMode: 'onSubmit',
+    reValidateMode: 'onChange',
     defaultValues: { name: '', login: '', password: '', repeatPassword: '' },
   });
 
@@ -74,80 +76,88 @@ const SignUp = (): JSX.Element => {
   return (
     <>
       <form className="signup" onSubmit={handleSubmit(onSubmit)}>
-        <div className="form__title">Sign Up</div>
-        <label className="form__nickname" title="Only numbers and english letters">
-          <span className="form__label-tittle">Name:</span>
+        <div className="form__title">{localizationObj[lang].signUp}</div>
+        <label className="form__nickname" title={localizationObj[lang].onlyNumbersLetters}>
+          <span className="form__label-tittle">{localizationObj[lang].name}:</span>
           <input
             className="signup__name"
             {...register('name', {
-              required: 'Empty name',
+              required: localizationObj[lang].emptyField,
               pattern: {
                 value: /^[A-Za-z0-9]+$/i,
-                message: 'Only numbers and english letters!',
+                message: localizationObj[lang].onlyNumbersLetters,
               },
               validate: {
-                nameLength: (v) => v.length > 3 || 'Name can not be less than 4 letters',
+                nameLength: (v) =>
+                  v.length > 3 ||
+                  `${localizationObj[lang].name}${localizationObj[lang].lessThanFour}`,
               },
             })}
-            placeholder="Enter your name"
+            placeholder={localizationObj[lang].enterYourName}
           />
           {errors.name && <div className="form__error">{errors.name.message}</div>}
         </label>
 
-        <label className="form__nickname" title="Only numbers and english letters">
-          <span className="form__label-tittle">Login:</span>
+        <label className="form__nickname" title={localizationObj[lang].onlyNumbersLetters}>
+          <span className="form__label-tittle">{localizationObj[lang].login}</span>
           <input
             className="signup__name"
             {...register('login', {
-              required: 'Empty login',
+              required: localizationObj[lang].emptyField,
               pattern: {
                 value: /^[A-Za-z0-9]+$/i,
-                message: 'Only numbers and english letters!',
+                message: localizationObj[lang].onlyNumbersLetters,
               },
               validate: {
-                nameLength: (v) => v.length > 3 || 'Login can not be less than 4 letters',
+                nameLength: (v) =>
+                  v.length > 3 ||
+                  `${localizationObj[lang].login}${localizationObj[lang].lessThanFour}`,
               },
             })}
-            placeholder="Enter your login"
+            placeholder={localizationObj[lang].enterYourLogin}
           />
           {errors.login && <div className="form__error">{errors.login.message}</div>}
         </label>
 
         <label className="form__password">
-          <span className="form__label-tittle">Password:</span>
+          <span className="form__label-tittle">{localizationObj[lang].password}:</span>
           <input
             className="signup__password"
             type="password"
             {...register('password', {
-              required: 'Empty password',
+              required: localizationObj[lang].emptyField,
               validate: {
-                passLength: (v) => v.length > 3 || 'Password can not be less than 4 letters',
+                passLength: (v) =>
+                  v.length > 3 ||
+                  `${localizationObj[lang].password}${localizationObj[lang].lessThanFour}`,
               },
             })}
-            placeholder="Enter your password"
+            placeholder={localizationObj[lang].enterYourPassword}
           />
           {errors.password && <div className="form__error">{errors.password.message}</div>}
         </label>
 
         <label className="form__password">
-          <span className="form__label-tittle">Repeat password:</span>
+          <span className="form__label-tittle">{localizationObj[lang].repeatPassword}:</span>
           <input
             className="signup__password"
             type="password"
             {...register('repeatPassword', {
-              required: 'Empty password',
+              required: localizationObj[lang].emptyField,
               validate: {
-                passLength: (v) => v.length > 3 || 'Password can not be less than 4 letters',
-                passRepeat: (v) => v === password.current || 'The passwords do not match',
+                passLength: (v) =>
+                  v.length > 3 ||
+                  `${localizationObj[lang].password}${localizationObj[lang].lessThanFour}`,
+                passRepeat: (v) => v === password.current || localizationObj[lang].passwordsMatch,
               },
             })}
-            placeholder="Repeat your password"
+            placeholder={localizationObj[lang].repeatPassword}
           />
           {errors.repeatPassword && (
             <div className="form__error">{errors.repeatPassword.message}</div>
           )}
         </label>
-        <input type="submit" value="Sign Up" className="form__submit" />
+        <input type="submit" value={localizationObj[lang].signUp} className="form__submit" />
       </form>
       <Modal activeModal={activeModal} setActiveModal={setActiveModal}>
         <div>
