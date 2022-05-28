@@ -20,6 +20,7 @@
   border-radius: $base * 2;
   background-color: $color-white-07;
   box-shadow: 1px 1px 1px $color-dark-05, 0 0 0.06em $color-dark-05, 0 0 0.06em $color-dark-05;
+  overflow-x: hidden;
 }
 
 .board__column-head {
