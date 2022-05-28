@@ -10,10 +10,8 @@
   background-position: center;
   border: none;
   cursor: pointer;
-  transition: $transition-01;
 
   &:hover {
     filter: brightness(0.7);
-    transition: $transition-01;
   }
 }

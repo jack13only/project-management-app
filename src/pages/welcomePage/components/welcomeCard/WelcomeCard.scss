@@ -35,7 +35,7 @@
   border-top-left-radius: $base * 4;
   border-bottom-right-radius: $base * 2;
   border-bottom-left-radius: $base * 2;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px $base $base * 3;
+  box-shadow: $color-dark-03 0px $base $base * 3;
 
   .h3 {
     font-size: $fs-xl;

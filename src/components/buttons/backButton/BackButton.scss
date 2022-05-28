@@ -26,12 +26,10 @@
   &:hover {
     .btn-back {
       filter: brightness(0.7);
-      transition: $transition-01;
     }
 
     .btn-new {
       filter: brightness(0.7);
-      transition: $transition-01;
     }
   }
 }
@@ -44,7 +42,6 @@
   background-repeat: no-repeat;
   background-position: center;
   border: none;
-  transition: $transition-01;
 
   @media (max-width: $breakpoint-lg-min) {
     width: $base * 7;
