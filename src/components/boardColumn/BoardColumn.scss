@@ -2,7 +2,7 @@
 
 .board__column-container {
   display: flex;
-  flex-direction: column;
+  // flex-direction: column;
   row-gap: $base;
 }
 
@@ -12,6 +12,7 @@
   row-gap: $base * 2;
   flex-basis: 26%;
   min-width: $base * 50;
+  overflow: auto;
   max-height: 72vh;
   margin-right: 1px;
   padding: $base * 2.2 0 $base * 2.2 $base * 2.2;
@@ -19,6 +20,7 @@
   border-radius: $base * 2;
   background-color: $color-white-07;
   box-shadow: 1px 1px 1px $color-dark-05, 0 0 0.06em $color-dark-05, 0 0 0.06em $color-dark-05;
+  overflow-x: hidden;
 }
 
 .board__column-head {
@@ -27,6 +29,15 @@
   justify-content: space-between;
   padding-bottom: $base * 2;
   border-bottom: 1px solid $color-dark-02;
+  min-width: 100%;
+  max-width: fit-content;
+  .h4 {
+    word-break: break-word; 
+    flex-basis: 85%;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+  }
 }
 
 .cards__list__container {
@@ -47,7 +58,8 @@
   padding: $base * 4 $base;
   border: 1px solid $color-dark-04;
   border-radius: $base;
-  width: 100%;
+  min-width: 100%;
+  max-width: fit-content;
 }
 
 .task-checkbox:checked + .task-text {
@@ -59,6 +71,8 @@
   font-size: $fs-xl;
   overflow: hidden;
   overflow-wrap: break-word;
+  word-break: break-word;
+  flex-basis: 85%;
 }
 
 .column__btn {

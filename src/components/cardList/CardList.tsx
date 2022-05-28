@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { Droppable } from 'react-beautiful-dnd';
 import { CardItem } from '..';
 
 interface CardsState {
@@ -12,24 +13,32 @@ interface CardsState {
 
 interface CardListProps {
   tasks: CardsState[];
+  columnId: string;
   toggleCardComplete: (cardId: string) => void;
 }
 
-const CardList: FC<CardListProps> = ({ tasks, toggleCardComplete }) => {
+const CardList: FC<CardListProps> = ({ columnId, tasks, toggleCardComplete }) => {
   return (
-    <ul className="cards__list">
-      {tasks.map((task) => {
-        return (
-          <CardItem
-            {...task}
-            key={task.id}
-            toggleCardComplete={toggleCardComplete}
-            cardTitle={task.title}
-            order={task.order}
-          />
-        );
-      })}
-    </ul>
+    <Droppable droppableId={columnId} type="tasks">
+      {(provided) => (
+        <ul className="cards__list" ref={provided.innerRef} {...provided.droppableProps}>
+          {tasks.map((task, index) => {
+            return (
+              <CardItem
+                {...task}
+                toggleCardComplete={toggleCardComplete}
+                cardTitle={task.title}
+                order={task.order}
+                index={index}
+                id={task.id}
+                key={task.id}
+              />
+            );
+          })}
+          {provided.placeholder}
+        </ul>
+      )}
+    </Droppable>
   );
 };
 

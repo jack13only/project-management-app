@@ -9,6 +9,7 @@ import { useDeleteColumnMutation, useGetTasksQuery, usePostTaskMutation } from '
 
 import './BoardColumn.scss';
 import { useAppSelector } from '../../app/hooks';
+import { ColumnType } from '../../pages/board/Board';
 import { Draggable } from 'react-beautiful-dnd';
 import { localizationObj } from '../../features/localization';
 
@@ -26,14 +27,24 @@ type CardsState = {
   complete: boolean;
 };
 
+export type TasksList = {
+  order: number;
+  title: string;
+  id: string;
+  boardId: string;
+  columnId: string;
+  complete: boolean;
+};
+
 const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, order, index }) => {
   const columnRef = useRef() as RefObject<HTMLDivElement>;
   const [cards, setCards] = useState<CardsState[]>([]);
   const [cardTitle, setCardTitle] = useState<string>('');
   const [isOpenCard, setIsOpenCard] = useState<boolean>(false);
   const { userId } = useAppSelector((state) => state.userStorage);
+  const [tasks, setTasks] = useState<TasksList[]>([]);
   const { lang } = useAppSelector((state) => state.langStorage);
-  const { data = [], error, isLoading } = useGetTasksQuery({ columnId, boardId });
+  const { data, error, isLoading } = useGetTasksQuery({ columnId, boardId });
   const [deleteColumn] = useDeleteColumnMutation();
   const [activeModal, setActiveModal] = useState<boolean>(false);
   const [postTask] = usePostTaskMutation();
@@ -87,12 +98,18 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
 
   useEffect(() => {
     columnRef.current ? (columnRef.current.scrollTop = columnRef.current.scrollHeight) : null;
-  }, [data.length, isOpenCard]);
+  }, [data?.length, isOpenCard]);
 
   useEffect(() => {
     setCardTitle('');
     setIsOpenCard(false);
-  }, [data.length]);
+  }, [data?.length]);
+
+  useEffect(() => {
+    if (data) {
+      setTasks([...data].sort((a: ColumnType, b: ColumnType) => a.order - b.order));
+    }
+  }, [data]);
 
   return (
     <Draggable draggableId={columnId} index={index}>
@@ -118,17 +135,21 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
                 />
                 <DeleteButton type="button" onClick={() => setActiveModal(true)} />
               </div>
-              <div className="cards__list__container">
-                <CardList tasks={data} toggleCardComplete={toggleCardComplete} />
-              </div>
-              <div className="card__add">
-                <TertiaryButton
-                  className="button__tertiary column__btn"
-                  type="button"
-                  description={'+ ' + localizationObj[lang].createTask}
-                  isOpenCard={isOpenCard}
-                  onClick={addCardVisibility}
+              <div>
+                <CardList
+                  tasks={tasks}
+                  toggleCardComplete={toggleCardComplete}
+                  columnId={columnId}
                 />
+                <div className="card__add">
+                  <TertiaryButton
+                    className="button__tertiary column__btn"
+                    type="button"
+                    description={'+ ' + localizationObj[lang].createTask}
+                    isOpenCard={isOpenCard}
+                    onClick={addCardVisibility}
+                  />
+                </div>
                 <CardContainer
                   isOpenCard={isOpenCard}
                   onClick={() => setIsOpenCard(false)}
