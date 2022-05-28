@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import { Link, useParams } from 'react-router-dom';
 
@@ -34,7 +34,7 @@ const Board: FC = () => {
   const dispatch = useAppDispatch();
   const { userId } = useAppSelector((state) => state.userStorage);
 
-  const { data: data1 = [], error, isLoading } = useGetColumnsQuery({ boardId });
+  const { data: data1, error, isLoading } = useGetColumnsQuery({ boardId });
   const [postColumn] = usePostColumnMutation();
   const [updateColumn] = useUpdateColumnMutation();
   const [postTask] = usePostTaskMutation();
@@ -42,6 +42,7 @@ const Board: FC = () => {
   const [updateTask] = useUpdateTaskMutation();
   const getBoardsById = useGetBoardsByIdQuery(boardId);
   const currentBoardTitle = getBoardsById.data?.title;
+  const moveRef = useRef(['', '']);
 
   const [columnsList, updateColumnsList] = useState<ColumnType[]>([]);
 
@@ -78,7 +79,7 @@ const Board: FC = () => {
   };
 
   const addTaskToAnotherColumn = async (columnId: string, taskTitle: string) => {
-    await postTask({
+    return await postTask({
       columnId,
       boardId,
       body: {
@@ -90,7 +91,7 @@ const Board: FC = () => {
   };
 
   const deleteTaskFromCurrentCol = async (columnId: string, taskId: string) => {
-    await deleteTask({
+    return await deleteTask({
       columnId,
       boardId,
       taskId,
@@ -103,7 +104,7 @@ const Board: FC = () => {
     taskId: string,
     order: number
   ) => {
-    await updateTask({
+    return await updateTask({
       columnId: columnId,
       boardId,
       taskId,
@@ -116,14 +117,14 @@ const Board: FC = () => {
     });
   };
 
-  const reorderTasks = (
+  const reorderTasks = async (
     tasksList: TasksList[],
     endIndex: number,
     columnId: string,
     taskId: string
   ) => {
     const [movedTask] = tasksList.filter((task) => task.id === taskId);
-    updateTaskHandler(columnId, movedTask.title, taskId, endIndex + 1);
+    await updateTaskHandler(columnId, movedTask.title, taskId, endIndex + 1);
   };
 
   const onDragEndHandler = (result: DropResult) => {
@@ -133,40 +134,51 @@ const Board: FC = () => {
 
     if (destination.droppableId === boardId && type === 'tasks') return;
 
-    //get tasks of current column
-    const tasks = dispatch(
-      api.endpoints.getTasks.initiate({
-        columnId: source.droppableId,
-        boardId,
-      })
-    );
-
-    //get task to dragg to another column
-    const task = dispatch(
-      api.endpoints.getTaskById.initiate({
-        columnId: source.droppableId,
-        boardId,
-        taskId: draggableId,
-      })
-    );
-
     //if dragging to another column
-    if (source.droppableId !== destination.droppableId && type === 'tasks') {
-      deleteTaskFromCurrentCol(source.droppableId, draggableId);
+    if (
+      source.droppableId !== destination.droppableId &&
+      type === 'tasks' &&
+      !moveRef.current.includes(draggableId)
+    ) {
+      moveRef.current.push(draggableId);
+      moveRef.current.shift();
+
+      const task = dispatch(
+        api.endpoints.getTaskById.initiate({
+          columnId: source.droppableId,
+          boardId,
+          taskId: draggableId,
+        })
+      );
 
       task
-        .then((res) => addTaskToAnotherColumn(destination.droppableId, res.data.title))
-        .catch((error) => console.log('error', error));
-
+        .then((res) =>
+          Promise.all([
+            addTaskToAnotherColumn(destination.droppableId, res.data.title),
+            deleteTaskFromCurrentCol(source.droppableId, draggableId),
+          ])
+        )
+        .catch((error) => {
+          console.log('error', error);
+        });
+      task.unsubscribe();
       return;
     }
 
     //if dragging inside column
     if (source.droppableId === destination.droppableId && type === 'tasks') {
+      const tasks = dispatch(
+        api.endpoints.getTasks.initiate({
+          columnId: source.droppableId,
+          boardId,
+        })
+      );
+
       tasks
         .then((res) => res.data)
         .then((data) => reorderTasks(data, destination.index, source.droppableId, draggableId))
         .catch((error) => console.log('error', error));
+      tasks.unsubscribe();
       return;
     }
 
@@ -178,7 +190,7 @@ const Board: FC = () => {
   };
 
   useEffect(() => {
-    if (data1.length) {
+    if (data1) {
       updateColumnsList([...data1].sort((a: ColumnType, b: ColumnType) => a.order - b.order));
     }
   }, [data1]);

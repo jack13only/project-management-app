@@ -43,7 +43,7 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
   const { userId } = useAppSelector((state) => state.userStorage);
   const [tasks, setTasks] = useState<TasksList[]>([]);
 
-  const { data = [], error, isLoading } = useGetTasksQuery({ columnId, boardId });
+  const { data, error, isLoading } = useGetTasksQuery({ columnId, boardId });
   const [deleteColumn] = useDeleteColumnMutation();
   const [activeModal, setActiveModal] = useState<boolean>(false);
   const [postTask] = usePostTaskMutation();
@@ -97,22 +97,18 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
 
   useEffect(() => {
     columnRef.current ? (columnRef.current.scrollTop = columnRef.current.scrollHeight) : null;
-  }, [data.length, isOpenCard]);
+  }, [data?.length, isOpenCard]);
 
   useEffect(() => {
     setCardTitle('');
     setIsOpenCard(false);
-  }, [data.length]);
+  }, [data?.length]);
 
   useEffect(() => {
-    if (data.length) {
+    if (data) {
       setTasks([...data].sort((a: ColumnType, b: ColumnType) => a.order - b.order));
     }
   }, [data]);
-
-  useEffect(() => {
-    setTasks(data);
-  }, [data.length]);
 
   return (
     <Draggable draggableId={columnId} index={index}>
