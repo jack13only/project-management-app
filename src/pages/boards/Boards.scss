@@ -32,7 +32,7 @@
 .boards-item__link {
   flex-basis: 32.4%;
   height: $base * 35;
-  border: 1px solid $color-dark-03;
+  border: 0.063rem solid $color-dark-03;
   cursor: pointer;
 
   &:hover {

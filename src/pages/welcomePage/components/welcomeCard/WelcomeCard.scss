@@ -20,9 +20,9 @@
   width: 90%;
   height: auto;
   border-radius: 50%;
-  border: 1px solid $color-dark-03;
-  box-shadow: rgba(136, 165, 191, 0.6) $base 2px $base * 3 0px,
-    rgba(255, 255, 255, 0.8) -5px -2px $base * 3 0px;
+  border: 0.063rem solid $color-dark-03;
+  box-shadow: rgba(136, 165, 191, 0.6) $base 0.125rem $base * 3 0px,
+    rgba(255, 255, 255, 0.8) -5px -0.125rem $base * 3 0px;
   z-index: 2;
   pointer-events: none;
 }
@@ -38,12 +38,14 @@
   box-shadow: rgba(0, 0, 0, 0.35) 0px $base $base * 3;
 
   .h3 {
+    font-size: $fs-xl;
+    font-weight: $fw-bold;
     letter-spacing: 0.06em;
     color: $color-dark;
-    font-weight: $fw-bold;
   }
 
   .h4 {
+    font-size: $fs-l;
     font-weight: $fw-semi-bold;
   }
 }

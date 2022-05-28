@@ -8,7 +8,8 @@
   background-color: $color-white;
   border: none;
   border-radius: $base;
-  box-shadow: 1px 1px 1px $color-dark-05, 0 0 0.06em $color-dark-05, 0 0 0.06em $color-dark-05;
+  box-shadow: 0.063rem 0.063rem 0.063rem $color-dark-05, 0 0 0.06em $color-dark-05,
+    0 0 0.06em $color-dark-05;
   transition: $transition-01;
   cursor: pointer;
 

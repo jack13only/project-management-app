@@ -19,7 +19,8 @@
     @include disableSelection;
     margin-top: $base * 2;
     font-size: $fs-xxxxl;
-    text-shadow: 1px 1px 1px $color-purple, 0 0 0.06em $color-purple, 0 0 0.06em $color-purple;
+    text-shadow: 0.063rem 0.063rem 0.063rem $color-purple, 0 0 0.06em $color-purple,
+      0 0 0.06em $color-purple;
 
     @media (max-width: $breakpoint-lg-min) {
       font-size: $fs-xxxl;
