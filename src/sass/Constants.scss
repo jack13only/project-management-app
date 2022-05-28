@@ -98,7 +98,10 @@ $fs-l: rem(16px);
 $fs-xl: rem(22px);
 $fs-xxl: rem(26px);
 $fs-xxxl: rem(36px);
+$fs-xxxxl: rem(50px);
 
+$transition-01: 0.1s;
+$transition-02: 0.2s;
 $transition: 0.3s;
 
 $color-dark: rgba(18, 18, 18, 1);
@@ -130,8 +133,10 @@ $color-grey-dark: rgba(156, 156, 156, 1);
 $color-orange: rgba(211, 118, 12, 1);
 $color-green: rgba(0, 255, 119, 1);
 $color-blue: rgba(0, 3, 51, 1);
+$color-blue-light: rgba(33, 150, 243, 1);
 $color-yellow: rgba(233, 192, 10, 1);
 $color-yellow-dark: rgba(235, 159, 19, 0.25);
+$color-purple: rgba(101, 81, 243, 1);
 $color-purple-06: rgba(101, 81, 243, 0.6);
 $color-purple-09: rgba(101, 81, 243, 0.9);
 

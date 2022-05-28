@@ -11,6 +11,7 @@ import './BoardColumn.scss';
 import { useAppSelector } from '../../app/hooks';
 import { ColumnType } from '../../pages/board/Board';
 import { Draggable } from 'react-beautiful-dnd';
+import { localizationObj } from '../../features/localization';
 
 type BoardColumnProps = {
   columnTitle: string;
@@ -42,7 +43,7 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
   const [isOpenCard, setIsOpenCard] = useState<boolean>(false);
   const { userId } = useAppSelector((state) => state.userStorage);
   const [tasks, setTasks] = useState<TasksList[]>([]);
-
+  const { lang } = useAppSelector((state) => state.langStorage);
   const { data, error, isLoading } = useGetTasksQuery({ columnId, boardId });
   const [deleteColumn] = useDeleteColumnMutation();
   const [activeModal, setActiveModal] = useState<boolean>(false);
@@ -132,7 +133,6 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
                   boardId={boardId}
                   order={order}
                 />
-
                 <DeleteButton type="button" onClick={() => setActiveModal(true)} />
               </div>
               <div>
@@ -145,7 +145,7 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
                   <TertiaryButton
                     className="button__tertiary column__btn"
                     type="button"
-                    description="+ Add a card"
+                    description={'+ ' + localizationObj[lang].createTask}
                     isOpenCard={isOpenCard}
                     onClick={addCardVisibility}
                   />
@@ -160,17 +160,16 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
               </div>
             </div>
           </div>
-
           <Modal activeModal={activeModal} setActiveModal={setActiveModal}>
             <div className="modal__wrapper">
               <div className="modal__img" />
               <div className="modal__text">
-                <h2>{`Do you want to delete column '${columnTitle}'`} ?</h2>
+                <h2>{`${localizationObj[lang].doYouWantToDelete} '${columnTitle}'`} ?</h2>
                 <button type="button" onClick={removeColumn}>
-                  Yes
+                  {localizationObj[lang].submit}
                 </button>
                 <button type="button" onClick={() => setActiveModal(false)}>
-                  Cancel
+                  {localizationObj[lang].cancel}
                 </button>
               </div>
             </div>

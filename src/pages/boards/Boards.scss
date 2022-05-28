@@ -4,10 +4,15 @@
   padding: $base * 5 0;
   width: 80%;
   margin: 0 auto;
+
+  @media (max-width: $breakpoint-lg-min) {
+    width: 97%;
+  }
 }
 
 .boards__container {
-  @include flexStart;
+  display: flex;
+  align-items: center;
   flex-wrap: wrap;
   column-gap: $base * 2;
   row-gap: $base * 4;
@@ -19,9 +24,29 @@
   height: $base * 10;
 }
 
+.boards__item-title {
+  color: $color-dark;
+  transition: $transition;
+}
+
 .boards-item__link {
-  flex-basis: 30%;
+  flex-basis: 32.4%;
   height: $base * 35;
   border: 1px solid $color-dark-03;
   cursor: pointer;
+
+  &:hover {
+    .boards__item-title {
+      color: $color-yellow;
+      transition: $transition;
+    }
+  }
+
+  @media (max-width: $breakpoint-md-min) {
+    flex-basis: 48%;
+  }
+
+  @media (max-width: $breakpoint-xs-min) {
+    flex-basis: 100%;
+  }
 }

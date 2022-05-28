@@ -12,8 +12,9 @@ import {
   useUpdateColumnMutation,
   useUpdateTaskMutation,
 } from '../../app/RtkQuery';
-import { TertiaryButton } from '../../components/buttons';
 import { BackButton } from '../../components/buttons';
+import { localizationObj } from '../../features/localization';
+import { Preloader } from '../../components/preloader/Preloader';
 
 import './Board.scss';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
@@ -43,7 +44,7 @@ const Board: FC = () => {
   const getBoardsById = useGetBoardsByIdQuery(boardId);
   const currentBoardTitle = getBoardsById.data?.title;
   const moveRef = useRef(['', '']);
-
+  const { lang } = useAppSelector((state) => state.langStorage);
   const [columnsList, updateColumnsList] = useState<ColumnType[]>([]);
 
   if (error && 'status' in error) {
@@ -198,18 +199,33 @@ const Board: FC = () => {
   return (
     <DragDropContext onDragEnd={onDragEndHandler}>
       <div className="board">
-        <div className="wrapper board__wrapper">
+        <div className="wrapper">
           <div className="board__title__wrapper">
-            <h2 className="board__title">Board {currentBoardTitle}</h2>
             <Link to="/boards">
-              <BackButton type="button" />
+              <BackButton
+                classNameWrapper="btn-back__wrapper"
+                className="btn-back-common btn-back"
+                type="button"
+                description={localizationObj[lang].back}
+              />
             </Link>
+            <h2 className="board__title">
+              <span className="board__title-description">{localizationObj[lang].board} </span>
+              {currentBoardTitle}
+            </h2>
+            <BackButton
+              classNameWrapper="btn-back__wrapper"
+              className="btn-back-common btn-new"
+              type="button"
+              description={localizationObj[lang].createColumn}
+              onClick={addNewColumn}
+            />
           </div>
           {!isLoading ? (
             <Droppable droppableId={boardId} direction="horizontal" type="columns">
               {(provided) => (
                 <div
-                  className="board__columns"
+                  className="board__columns board__wrapper"
                   ref={provided.innerRef}
                   {...provided.droppableProps}
                 >
@@ -230,15 +246,8 @@ const Board: FC = () => {
               )}
             </Droppable>
           ) : (
-            <div>Loading...</div>
+            <Preloader />
           )}
-
-          <TertiaryButton
-            className="button__tertiary column__new-btn"
-            type="button"
-            description="+ Add a new column"
-            onClick={addNewColumn}
-          />
         </div>
       </div>
     </DragDropContext>

@@ -1,20 +1,23 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useAppDispatch } from '../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { loginUser } from '../../reducers/auth';
 import { useNavigate } from 'react-router-dom';
 import { PATHS } from '../../shared/constants/routes';
 import { useSigninMutation } from '../../app/RtkQuery';
 import { SigninType } from '../../app/apiTypes';
 import { saveTokenToLS } from '../../features/ls-load-save';
-import './SignIn.scss';
 import { Modal } from '../../components';
 import { ErrorSign } from '../../components/modal/components';
+import { localizationObj } from '../../features/localization';
+
+import '../signUp/SignUp.scss';
 
 const SignIn = (): JSX.Element => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [signinUser] = useSigninMutation();
+  const { lang } = useAppSelector((state) => state.langStorage);
   const [activeModal, setActiveModal] = useState<boolean>(false);
   const [errorMsg, setErrorMsg] = useState<string>('');
 
@@ -25,7 +28,7 @@ const SignIn = (): JSX.Element => {
     formState: { errors },
   } = useForm<SigninType>({
     mode: 'onSubmit',
-    reValidateMode: 'onSubmit',
+    reValidateMode: 'onChange',
     defaultValues: { login: '', password: '' },
   });
 
@@ -34,14 +37,12 @@ const SignIn = (): JSX.Element => {
     signinUser(user)
       .unwrap()
       .then(({ token }) => {
-        console.log('Token to redux ok');
         dispatch(loginUser(token));
-        console.log('Save to ls ok');
         saveTokenToLS(token);
       })
       .then(() => {
         reset();
-        navigate(PATHS.main, { replace: true });
+        navigate(PATHS.boards, { replace: true });
       })
       .catch((error) => {
         setActiveModal(true);
@@ -52,44 +53,48 @@ const SignIn = (): JSX.Element => {
   return (
     <>
       <form className="signup" onSubmit={handleSubmit(onSubmit)}>
-        <div className="form__title">Sign In</div>
+        <div className="form__title">{localizationObj[lang].signIn}</div>
 
-        <label className="form__nickname" title="Only numbers and english letters">
-          <span className="form__label-tittle">Nickname:</span>
+        <label className="form__nickname" title={localizationObj[lang].onlyNumbersLetters}>
+          <span className="form__label-tittle">{localizationObj[lang].login}:</span>
           <input
             className="signup__name"
             {...register('login', {
-              required: 'Empty login',
+              required: localizationObj[lang].emptyField,
               pattern: {
                 value: /^[A-Za-z0-9]+$/i,
-                message: 'Only numbers and english letters!',
+                message: `${localizationObj[lang].onlyNumbersLetters}`,
               },
               validate: {
-                nameLength: (v) => v.length > 3 || 'Login can not be less than 4 letters',
+                nameLength: (v) =>
+                  v.length > 3 ||
+                  `${localizationObj[lang].login}${localizationObj[lang].lessThanFour}`,
               },
             })}
-            placeholder="Enter your login"
+            placeholder={localizationObj[lang].enterYourLogin}
           />
           {errors.login && <div className="form__error">{errors.login.message}</div>}
         </label>
 
         <label className="form__password">
-          <span className="form__label-tittle">Password:</span>
+          <span className="form__label-tittle">{localizationObj[lang].password}:</span>
           <input
             className="signup__password"
             type="password"
             {...register('password', {
-              required: 'Empty password',
+              required: localizationObj[lang].emptyField,
               validate: {
-                passLength: (v) => v.length > 3 || 'Password can not be less than 4 letters',
+                passLength: (v) =>
+                  v.length > 3 ||
+                  `${localizationObj[lang].password}${localizationObj[lang].lessThanFour}`,
               },
             })}
-            placeholder="Enter your password"
+            placeholder={localizationObj[lang].enterYourPassword}
           />
           {errors.password && <div className="form__error">{errors.password.message}</div>}
         </label>
 
-        <input type="submit" value="Sign In" className="form__submit" />
+        <input type="submit" value={localizationObj[lang].signIn} className="form__submit" />
       </form>
 
       <Modal activeModal={activeModal} setActiveModal={setActiveModal}>

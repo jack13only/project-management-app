@@ -3,6 +3,8 @@ import { useDeleteBoardMutation, useUpdateBoardMutation } from '../../app/RtkQue
 import { BoardsTypes } from './typesBoards/TypesBoards';
 import { DeleteButton, ChangeTitleBtns } from '../../components/buttons';
 import { Textarea } from '../../components';
+import { localizationObj } from '../../features/localization';
+import { useAppSelector } from '../../app/hooks';
 
 const BoardsItem = ({ title, id, description, isActiveModal, getDeletedBoard }: BoardsTypes) => {
   const [activeModal, setActiveModal] = useState<boolean>(false);
@@ -10,6 +12,7 @@ const BoardsItem = ({ title, id, description, isActiveModal, getDeletedBoard }: 
   const [currentDescription, setCurrentTDescription] = useState(description);
   const [isOpenBoardTitle, setIsOpenBoardTitle] = useState(false);
   const [isOpenBoardDescr, setIsOpenBoardDescr] = useState(false);
+  const { lang } = useAppSelector((state) => state.langStorage);
 
   const [updateBoard] = useUpdateBoardMutation();
 
@@ -67,7 +70,7 @@ const BoardsItem = ({ title, id, description, isActiveModal, getDeletedBoard }: 
         <>
           <input
             type="text"
-            placeholder="add a title"
+            placeholder={localizationObj[lang].signUp}
             onChange={handleBoardTitle}
             value={currentTitle}
             onClick={(event: MouseEvent<HTMLInputElement>) => event.preventDefault()}
@@ -96,7 +99,7 @@ const BoardsItem = ({ title, id, description, isActiveModal, getDeletedBoard }: 
             className="textarea"
             cols={3}
             rows={3}
-            placeholder="Your task"
+            placeholder={localizationObj[lang].yourTask}
             value={currentDescription}
             onChange={handleBoardDescription}
             onClick={(event: MouseEvent<HTMLTextAreaElement>) => event.preventDefault()}

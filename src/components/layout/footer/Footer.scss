@@ -1,7 +1,7 @@
 @import '../../../sass/Constants.scss';
 
 .footer {
-  padding: $base * 4 0;
+  padding: $base * 2 0;
   width: 100%;
   height: auto;
   background: $color-dark-02;
@@ -9,13 +9,17 @@
 
 .footer__wrapper {
   @include flexSpaceBetween;
+  column-gap: $base;
 }
 
 .footer__info {
-  display: flex;
-  row-gap: $base * 2;
-  column-gap: $base * 2;
-  align-items: center;
+  @include flexCenter;
+  gap: $base * 2;
+  flex-wrap: wrap;
+
+  @media (max-width: $breakpoint-xs-min) {
+    gap: $base;
+  }
 }
 
 .footer__link {
@@ -34,8 +38,7 @@
   background-image: url('../../../images/icons/rs_school_logo.svg');
   background-size: contain;
   background-repeat: no-repeat;
-  background-position: left center;
-  transform: scale(1);
+  background-position: center;
   transition: $transition;
 
   &:hover {
@@ -48,19 +51,24 @@
   @include flexEnd;
   flex-direction: column;
   align-items: flex-end;
-  column-gap: $base * 3;
-  row-gap: $base * 2;
+  row-gap: $base;
 }
 
 .footer__title {
   @include poppins;
   font-size: $fs-m;
   font-weight: $fw-medium;
+  text-align: end;
+  text-transform: uppercase;
 }
 
 .footer__contacts {
   @include flexCenter;
   column-gap: $base * 3;
+
+  @media (max-width: $breakpoint-xs-min) {
+    column-gap: $base * 2;
+  }
 }
 
 .footer__contact {
@@ -99,7 +107,11 @@
 
 .footer__year {
   @include poppins;
-  flex-basis: 20%;
-  font-size: $fs-m;
-  text-align: left;
+  @include disableSelection;
+  font-size: $fs-xxl;
+  font-weight: $fw-medium;
+
+  @media (max-width: $breakpoint-xs-min) {
+    font-size: $fs-l;
+  }
 }

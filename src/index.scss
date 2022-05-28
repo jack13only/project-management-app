@@ -53,10 +53,11 @@ body {
 .wrapper {
   display: flex;
   width: 80%;
+  max-width: $base * 288;
   margin: 0 auto;
 
-  @media screen and (max-width: $breakpoint-xs-min) {
-    width: 95%;
+  @media (max-width: $breakpoint-lg-min) {
+    width: 97%;
   }
 }
 
@@ -98,5 +99,9 @@ a {
 }
 
 .border-right {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding-right: $base;
   border-right: 1px solid $color-dark-03;
 }

@@ -5,11 +5,11 @@
   width: 30%;
   text-align: center;
 
-  @media (max-width: $breakpoint-sm-min) {
+  @media (max-width: $breakpoint-lg-min) {
     width: 45%;
   }
 
-  @media (max-width: $breakpoint-xxs-min) {
+  @media (max-width: $breakpoint-sm-min) {
     width: 80%;
   }
 }

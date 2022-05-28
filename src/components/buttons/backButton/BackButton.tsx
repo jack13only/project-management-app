@@ -3,14 +3,24 @@ import { FC } from 'react';
 import './BackButton.scss';
 
 interface BackButtonProps {
+  classNameWrapper: string;
+  className: string;
   type: 'button';
+  description: string;
+  onClick?: () => void;
 }
 
-const BackButton: FC<BackButtonProps> = ({ type }) => {
+const BackButton: FC<BackButtonProps> = ({
+  classNameWrapper,
+  className,
+  type,
+  description,
+  onClick,
+}) => {
   return (
-    <button className="btn-back__wrapper" type={type}>
-      <div className="btn-back" />
-      <div className="btn-back-description">Back</div>
+    <button className={classNameWrapper} type={type} onClick={onClick}>
+      <div className={className} />
+      <div className="btn-back-description">{description}</div>
     </button>
   );
 };

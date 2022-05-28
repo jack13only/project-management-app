@@ -8,10 +8,13 @@ import {
 
 import { TertiaryButton } from '../../components/buttons';
 import { Modal, PreloaderSuspense } from '../../components';
+import { Preloader } from '../../components/preloader/Preloader';
 
 import { BoardsTypes } from './typesBoards/TypesBoards';
 
 import './Boards.scss';
+import { useAppSelector } from '../../app/hooks';
+import { localizationObj } from '../../features/localization';
 
 // a mock title creator for created board,
 // will be deleted later, when we add a form for creating a new board;
@@ -22,6 +25,7 @@ const Boards: FC = () => {
   const [activeModal, setActiveModal] = useState<boolean>(false);
   const [deletedBoardTitle, setdeletedBoardTitle] = useState<string>('');
   const [deletedBoardId, setDeletedBoardId] = useState<string>('');
+  const { lang } = useAppSelector((state) => state.langStorage);
 
   const { data = [], error, isLoading } = useGetBoardsQuery('');
   const [postBoard] = usePostBoardMutation();
@@ -53,7 +57,7 @@ const Boards: FC = () => {
 
   return (
     <section className="boards">
-      <h2 className="h2">Your boards</h2>
+      <h2 className="h2">{localizationObj[lang].yourBoards}</h2>
       <div className="boards__container">
         {!isLoading ? (
           <PreloaderSuspense>
@@ -81,7 +85,7 @@ const Boards: FC = () => {
             })}
           </PreloaderSuspense>
         ) : (
-          <div>Loading...</div>
+          <Preloader />
         )}
       </div>
 
@@ -89,15 +93,13 @@ const Boards: FC = () => {
         <div className="modal__wrapper">
           <div className="modal__img" />
           <div className="modal__text">
-            <h2>Are you sure?</h2>
-            <h3>{`Do you want to delete board '${deletedBoardTitle}'`} ?</h3>
-            <p>If you press `Yes`, the board will be deleted</p>
-            <p>If you would like to cancel, press `Cancel`</p>
+            <h2>{localizationObj[lang].areYouSure}</h2>
+            <h3>{`${localizationObj[lang].doYouWantToDelete} '${deletedBoardTitle}'`} ?</h3>
             <button type="button" onClick={deleteBoardItem}>
-              Yes
+              {localizationObj[lang].submit}
             </button>
             <button type="button" onClick={cancelDeleteBoard}>
-              Cancel
+              {localizationObj[lang].cancel}
             </button>
           </div>
         </div>

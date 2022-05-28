@@ -4,11 +4,17 @@
   height: 100%;
   max-height: max-content;
   background-color: $color-purple-06;
+
+  .wrapper {
+    align-items: flex-start;
+    gap: $base;
+    height: 100%;
+    padding-top: $base * 2;
+  }
 }
 
 .board__wrapper {
   column-gap: $base * 2;
-  padding: $base * 7 0;
   height: inherit;
   overflow-x: auto;
   overflow-y: hidden;
@@ -18,7 +24,7 @@
   display: flex;
   align-items: flex-start;
   column-gap: $base * 3;
-  height: 80%;
+  height: 100%;
 }
 
 .board__column::-webkit-scrollbar,
@@ -41,14 +47,33 @@
 }
 
 .column__new-btn {
-  flex-basis: 10%;
   height: fit-content;
 }
 
 .board__title__wrapper {
   display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  flex-direction: column-reverse;
-  min-width: $base * 22;
+  align-items: flex-start;
+  flex-direction: column;
+  row-gap: $base * 2;
+  width: max-content;
+  text-align: center;
+
+  @media (max-width: $breakpoint-lg-min) {
+    align-items: center;
+  }
+}
+
+.board__title {
+  width: max-content;
+  text-align: left;
+
+  @media (max-width: $breakpoint-sm-min) {
+    width: fit-content;
+  }
+}
+
+.board__title-description {
+  @media (max-width: $breakpoint-lg-min) {
+    display: none;
+  }
 }
