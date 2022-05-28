@@ -44,11 +44,12 @@
 .form__nickname,
 .form__password {
   display: grid;
-  grid-template-rows: 1fr 1fr 0.5fr;
+  grid-template-rows: 1fr 1fr 0.55fr;
 }
 
 .signup__password,
 .signup__name {
+  @include poppins;
   width: 100%;
   padding: 0 $base * 2;
   font-size: $fs-xxxl;
@@ -73,6 +74,7 @@
 }
 
 .form__submit {
+  @include poppins;
   background-color: $color-white;
   border: 0.125rem solid $color-dark;
   border-radius: $base;
