@@ -64,8 +64,8 @@
 }
 
 .card__list-item {
-  width: $base * 8;
-  height: $base * 8;
+  width: $base * 12;
+  height: $base * 12;
   border-radius: 50%;
   background-color: $color-white;
   transition: $transition;
@@ -85,8 +85,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: $base * 8;
-  height: $base * 8;
+  width: $base * 12;
+  height: $base * 12;
   background-size: 60%;
   background-position: center;
   background-repeat: no-repeat;
