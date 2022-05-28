@@ -12,6 +12,7 @@
   row-gap: $base * 2;
   flex-basis: 26%;
   min-width: $base * 50;
+  overflow: auto;
   max-height: 72vh;
   margin-right: 1px;
   padding: $base * 2.2 0 $base * 2.2 $base * 2.2;
