@@ -89,7 +89,8 @@ const Board: FC = () => {
   const addTaskToAnotherColumn = async (
     columnId: string,
     taskTitle: string,
-    description: string
+    description: string,
+    userId: string
   ) => {
     return await postTask({
       columnId,
@@ -115,7 +116,8 @@ const Board: FC = () => {
     taskTitle: string,
     taskId: string,
     order: number,
-    description: string
+    description: string,
+    userId: string
   ) => {
     return await updateTask({
       columnId: columnId,
@@ -137,7 +139,14 @@ const Board: FC = () => {
     taskId: string
   ) => {
     const [movedTask] = tasksList.filter((task) => task.id === taskId);
-    await updateTaskHandler(columnId, movedTask.title, taskId, endIndex + 1, movedTask.description);
+    await updateTaskHandler(
+      columnId,
+      movedTask.title,
+      taskId,
+      endIndex + 1,
+      movedTask.description,
+      movedTask.userId
+    );
   };
 
   const onDragEndHandler = (result: DropResult) => {
@@ -167,7 +176,12 @@ const Board: FC = () => {
       task
         .then((res) =>
           Promise.all([
-            addTaskToAnotherColumn(destination.droppableId, res.data.title, res.data.description),
+            addTaskToAnotherColumn(
+              destination.droppableId,
+              res.data.title,
+              res.data.description,
+              res.data.userId
+            ),
             deleteTaskFromCurrentCol(source.droppableId, draggableId),
           ])
         )
