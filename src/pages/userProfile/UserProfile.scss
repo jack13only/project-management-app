@@ -1,26 +1,26 @@
 @import '../../sass/Constants.scss';
 
 .user-profile {
-  width: $base * 130;
-  margin: $base * 10 auto $base * 10;
-  border: 0.063rem solid $color-dark;
-  border-radius: $base;
-  padding: $base * 6;
   display: grid;
-  font-size: $fs-xxxl;
+  justify-items: center;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
-  justify-items: center;
-  gap: 30px;
+  gap: $base * 6;
+  width: $base * 130;
+  margin: $base * 10 auto $base * 10;
+  padding: $base * 6;
+  border: 0.063rem solid $color-dark;
+  border-radius: $base;
+  font-size: $fs-xxxl;
 
   .user-profile__button {
+    width: 50%;
+    margin: 0 auto;
+    font-size: $fs-xxl;
     background-color: $color-white;
     border: 0.125rem solid $color-dark;
     border-radius: $base;
-    font-size: $fs-xxl;
-    margin: 0 auto;
-    width: 50%;
-    transition: 0.3s linear;
+    transition: $transition linear;
 
     &:hover {
       border-radius: $base * 3;
