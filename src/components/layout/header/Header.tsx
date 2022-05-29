@@ -39,6 +39,8 @@ const Header: FC = () => {
     if (boardTitle.trim().length && boardDescription.trim().length) {
       await postBoard({ title: boardTitle, description: boardDescription });
       setActiveModal(false);
+      setBoardTitle('');
+      setBoardDescription('');
     }
   };
 
@@ -58,6 +60,13 @@ const Header: FC = () => {
     body.addEventListener('scroll', listenScrollEvent);
     return () => body.removeEventListener('scroll', listenScrollEvent);
   }, [scrolledPage]);
+
+  useEffect(() => {
+    if (!activeModal) {
+      setBoardTitle('');
+      setBoardDescription('');
+    }
+  }, [activeModal]);
 
   return (
     <>
@@ -140,6 +149,7 @@ const Header: FC = () => {
             <h2>Add Board Title</h2>
             <input
               type="text"
+              value={boardTitle}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                 setBoardTitle(event?.target.value)
               }
@@ -147,6 +157,7 @@ const Header: FC = () => {
             <h2>Add board description</h2>
             <input
               type="text"
+              value={boardDescription}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                 setBoardDescription(event?.target.value)
               }

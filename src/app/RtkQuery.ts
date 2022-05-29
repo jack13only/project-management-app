@@ -41,7 +41,16 @@ const baseQueryAuth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryErro
 
 export const apiUser = createApi({
   reducerPath: 'apiUser',
-  tagTypes: ['User', 'UserUpdate', 'Board', 'Column', 'Task'],
+  tagTypes: [
+    'User',
+    'UserUpdate',
+    'TaskUpdate',
+    'TaskDelete',
+    'TaskPost',
+    'Board',
+    'Column',
+    'Task',
+  ],
   baseQuery: baseQueryAuth,
   endpoints: (build) => ({
     //USERS
@@ -204,7 +213,7 @@ export const apiUser = createApi({
           url: `boards/${boardId}/columns/${columnId}/tasks`,
         };
       },
-      providesTags: ['Task'],
+      providesTags: ['Task', 'TaskDelete', 'TaskPost', 'TaskUpdate'],
     }),
     getTaskById: build.query({
       query: (data: { columnId: string; boardId: string; taskId: string }) => {
@@ -224,7 +233,7 @@ export const apiUser = createApi({
           body,
         };
       },
-      invalidatesTags: ['Task'],
+      invalidatesTags: ['TaskPost'],
     }),
     updateTask: build.mutation({
       query: (data: { columnId: string; boardId: string; taskId: string; task: TaskType }) => {
@@ -236,7 +245,7 @@ export const apiUser = createApi({
           body,
         };
       },
-      invalidatesTags: ['Task'],
+      invalidatesTags: ['TaskUpdate'],
     }),
     deleteTask: build.mutation({
       query(data: { columnId: string; boardId: string; taskId: string }) {
@@ -246,7 +255,7 @@ export const apiUser = createApi({
           method: 'DELETE',
         };
       },
-      invalidatesTags: ['Task'],
+      invalidatesTags: ['TaskDelete'],
     }),
 
     //FILE

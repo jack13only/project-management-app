@@ -1,7 +1,7 @@
 import React, { FC, RefObject, useEffect, useRef, useState } from 'react';
 
 import { DeleteButton, TertiaryButton } from '../buttons';
-import { BoardColumnTitle, CardList, Modal } from '..';
+import { BoardColumnTitle, CardContainer, CardList, Modal } from '..';
 
 import './BoardColumn.scss';
 
@@ -9,6 +9,7 @@ import { useDeleteColumnMutation, useGetTasksQuery, usePostTaskMutation } from '
 
 import './BoardColumn.scss';
 import { useAppSelector } from '../../app/hooks';
+import { ColumnType } from '../../pages/board/Board';
 import { Draggable } from 'react-beautiful-dnd';
 import { localizationObj } from '../../features/localization';
 
@@ -20,14 +21,30 @@ type BoardColumnProps = {
   index: number;
 };
 
+type CardsState = {
+  id: string;
+  cardTitle: string;
+  complete: boolean;
+};
+
+export type TasksList = {
+  order: number;
+  title: string;
+  id: string;
+  boardId: string;
+  columnId: string;
+  complete: boolean;
+};
+
 const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, order, index }) => {
   const columnRef = useRef() as RefObject<HTMLDivElement>;
   const [taskTitle, setTaskTitle] = useState<string>('');
   const [taskDescription, setTaskDescription] = useState<string>('');
   const [isOpenCard, setIsOpenCard] = useState<boolean>(false);
   const { userId } = useAppSelector((state) => state.userStorage);
+  const [tasks, setTasks] = useState<TasksList[]>([]);
   const { lang } = useAppSelector((state) => state.langStorage);
-  const { data = [], error, isLoading } = useGetTasksQuery({ columnId, boardId });
+  const { data, error, isLoading } = useGetTasksQuery({ columnId, boardId });
   const [deleteColumn] = useDeleteColumnMutation();
   const [activeModal, setActiveModal] = useState<boolean>(false);
   const [postTask] = usePostTaskMutation();
@@ -61,14 +78,25 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
     }
   };
 
+  // const handleCardTitle = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+  //   const VALUE = event.target.value;
+  //   setTaskTitle(VALUE);
+  // };
+
   useEffect(() => {
     columnRef.current ? (columnRef.current.scrollTop = columnRef.current.scrollHeight) : null;
-  }, [data.length, isOpenCard]);
+  }, [data?.length, isOpenCard]);
 
   useEffect(() => {
     setTaskTitle('');
     setIsOpenCard(false);
-  }, [data.length]);
+  }, [data?.length]);
+
+  useEffect(() => {
+    if (data) {
+      setTasks([...data].sort((a: ColumnType, b: ColumnType) => a.order - b.order));
+    }
+  }, [data]);
 
   useEffect(() => {
     if (!activeModal) {
@@ -111,7 +139,7 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
                   />
                 </div>
                 <div className="cards__list__container">
-                  <CardList tasks={data} />
+                  <CardList tasks={tasks} columnId={columnId} />
                 </div>
                 <div className="card__add">
                   <TertiaryButton
@@ -124,6 +152,13 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
                       setActiveModal(true);
                     }}
                   />
+                  {/* <CardContainer
+                    isOpenCard={isOpenCard}
+                    onClick={() => setIsOpenCard(false)}
+                    cardTitle={taskTitle}
+                    handleCardTitle={handleCardTitle}
+                    addCard={addTask}
+                  /> */}
                 </div>
               </div>
             </div>
