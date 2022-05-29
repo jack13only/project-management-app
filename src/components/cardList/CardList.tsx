@@ -6,9 +6,11 @@ interface CardsState {
   order: number;
   complete: boolean;
   title: string;
+  description: string;
   id: string;
   boardId: string;
   columnId: string;
+  userId: string;
 }
 
 interface CardListProps {
@@ -26,6 +28,7 @@ const CardList: FC<CardListProps> = ({ columnId, tasks }) => {
               <CardItem
                 {...task}
                 cardTitle={task.title}
+                cardDescription={task.description}
                 order={task.order}
                 index={index}
                 id={task.id}
