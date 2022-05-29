@@ -1,0 +1,32 @@
+@import '../../../sass/Constants.scss';
+
+.button-modal {
+  width: $base * 6;
+  height: $base * 6;
+  padding: $base $base * 2;
+  background-color: transparent;
+  background-size: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  border: none;
+  transition: $transition-01;
+  cursor: pointer;
+
+  &:hover {
+    filter: brightness(0.9);
+    transition: $transition-01;
+  }
+
+  &:active {
+    transform: translate(0.063rem, 0.063rem);
+    transition: $transition-01;
+  }
+}
+
+.button__submit {
+  background-image: url('../../../images/icons/submit.svg');
+}
+
+.button__cancel {
+  background-image: url('../../../images/icons/cancel.svg');
+}
