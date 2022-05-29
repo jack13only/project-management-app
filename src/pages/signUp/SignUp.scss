@@ -12,14 +12,14 @@
   box-shadow: 0.063rem 0.063rem 0.063rem $color-sale, 0 0 0.06em $color-dark, 0 0 0.06em $color-dark;
 
   @media (max-width: $breakpoint-lg-min) {
-    width: 65%;
+    width: 50%;
   }
 
   @media (max-width: $breakpoint-md-min) {
-    width: 75%;
+    width: 65%;
   }
 
-  @media (max-width: $breakpoint-sm-min) {
+  @media (max-width: $breakpoint-xs-min) {
     width: 95%;
   }
 }

@@ -1,31 +1,99 @@
 @import '../../sass/Constants.scss';
 
 .user-profile {
-  display: grid;
-  justify-items: center;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  gap: $base * 6;
-  width: $base * 130;
-  margin: $base * 10 auto $base * 10;
-  padding: $base * 6;
-  border: 0.063rem solid $color-dark;
-  border-radius: $base;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  row-gap: $base * 2;
+  width: 45%;
+  margin: $base * 2 auto;
+  padding: $base * 2;
   font-size: $fs-xxxl;
+  border-radius: $base * 3;
+  box-shadow: 0.063rem 0.063rem 0.063rem $color-sale, 0 0 0.06em $color-dark, 0 0 0.06em $color-dark;
 
-  .user-profile__button {
+  @media (max-width: $breakpoint-lg-min) {
     width: 50%;
-    margin: 0 auto;
-    font-size: $fs-xxl;
-    background-color: $color-white;
-    border: 0.125rem solid $color-dark;
-    border-radius: $base;
-    transition: $transition linear;
+  }
 
-    &:hover {
-      border-radius: $base * 3;
-      box-shadow: inset 0px 0px $base * 4 rgb(201, 255, 209);
-      cursor: pointer;
-    }
+  @media (max-width: $breakpoint-md-min) {
+    width: 65%;
+  }
+
+  @media (max-width: $breakpoint-xs-min) {
+    width: 95%;
+  }
+}
+
+.form__title {
+  @include disableSelection;
+  font-size: $fs-xxxxl;
+  font-weight: $fw-bold;
+  line-height: $base * 10;
+  text-align: center;
+  text-transform: uppercase;
+  text-shadow: 0.063rem 0.063rem 0.063rem $color-sale, 0 0 0.06em $color-blue-light,
+    0 0 0.06em $color-blue-light;
+  color: $color-purple;
+}
+
+.user-profile-name {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $base * 4;
+}
+
+.user-profile__field {
+  font-size: $fs-xxxl;
+  font-weight: $fw-semi-bold;
+  color: $color-dark;
+  text-shadow: 0.063rem 0.063rem 0.063rem $color-dark-02, 0 0 0.06em $color-dark-02,
+    0 0 0.06em $color-dark-02;
+
+  @media (max-width: $breakpoint-md-min) {
+    font-size: $fs-xxl;
+  }
+}
+
+.user-profile__value {
+  font-size: $fs-xxxl;
+  font-weight: $fw-semi-bold;
+  color: $color-dark;
+  text-shadow: 0.063rem 0.063rem 0.063rem $color-dark-02, 0 0 0.06em $color-dark-02,
+    0 0 0.06em $color-dark-02;
+  text-align: end;
+
+  @media (max-width: $breakpoint-md-min) {
+    font-size: $fs-xxl;
+  }
+}
+
+.user-profile__buttons {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  row-gap: $base * 2;
+}
+
+.user-profile__button {
+  @include poppins;
+  background-color: $color-white;
+  border: 0.125rem solid $color-dark;
+  border-radius: $base;
+  font-size: $fs-xxl;
+  width: 100%;
+  margin: 0 auto;
+  transition: $transition-01;
+
+  &:hover {
+    border-radius: $base * 3;
+    box-shadow: inset 0px 0px $base * 4 rgb(201, 255, 209);
+    cursor: pointer;
+  }
+
+  &:active {
+    transform: translate(0.063rem, 0.063rem);
+    transition: $transition-01;
   }
 }
