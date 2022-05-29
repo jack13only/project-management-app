@@ -6,6 +6,7 @@ import { useDeleteTaskMutation, useUpdateTaskMutation } from '../../app/RtkQuery
 
 import './CardItem.scss';
 import { useAppSelector } from '../../app/hooks';
+import { Draggable } from 'react-beautiful-dnd';
 import { localizationObj } from '../../features/localization';
 
 interface CardItemProps {
@@ -15,6 +16,7 @@ interface CardItemProps {
   columnId: string;
   boardId: string;
   order: number;
+  index: number;
   toggleCardComplete: (cardId: string) => void;
 }
 
@@ -26,6 +28,7 @@ const CardItem: FC<CardItemProps> = ({
   order,
   columnId,
   boardId,
+  index,
 }) => {
   const [isTitleOpenToChange, setIsTitleOpenToChange] = useState(false);
   const [taskTitle, setTaskTitle] = useState(cardTitle);
@@ -78,59 +81,66 @@ const CardItem: FC<CardItemProps> = ({
   };
 
   return (
-    <div className="board__task" style={{ order: order }}>
-      {isTitleOpenToChange ? (
-        <>
-          <li className="board__task-input">
-            <Textarea
-              className="textarea"
-              cols={3}
-              rows={3}
-              placeholder="Your task"
-              value={taskTitle}
-              onChange={handleTaskTitleInput}
-            />
-          </li>
-          <div className="board__task-btns">
-            <button onClick={submitTaskTitle}>Save</button>
-            <button type="button" onClick={cancelTaskTitle}>
-              Cancel
-            </button>
-          </div>
-        </>
-      ) : (
-        <>
-          <li key={id} className="task" style={{ order: order }}>
-            <InputCheckbox
-              className="task-checkbox"
-              type="checkbox"
-              complete={complete}
-              id={id}
-              toggleCardComplete={toggleCardComplete}
-            />
-            <span className="task-text" onClick={handleTaskTitle}>
-              {cardTitle}
-            </span>
-            <DeleteButton type="button" id={id} onClick={handlerModal} />
-          </li>
-
-          <Modal activeModal={activeModal} setActiveModal={setActiveModal}>
-            <div className="modal__wrapper">
-              <div className="modal__img" />
-              <div className="modal__text">
-                <h2>{`${localizationObj[lang].doYouWantToDelete} '${cardTitle}'`} ?</h2>
-                <button type="button" onClick={removeTask}>
-                  {localizationObj[lang].submit}
-                </button>
-                <button type="button" onClick={() => setActiveModal(false)}>
+    <Draggable draggableId={id} index={index}>
+      {(provided, snapshot) => (
+        <div
+          className="board__task"
+          ref={provided.innerRef}
+          {...provided.dragHandleProps}
+          {...provided.draggableProps}
+          style={{
+            boxShadow: snapshot.isDragging ? '0 10px 15px grey' : '',
+            background: snapshot.isDragging ? 'white' : '',
+            ...provided.draggableProps.style,
+          }}
+        >
+          {isTitleOpenToChange ? (
+            <>
+              <li className="board__task-input">
+                <Textarea
+                  className="textarea"
+                  cols={3}
+                  rows={3}
+                  placeholder="Your task"
+                  value={taskTitle}
+                  onChange={handleTaskTitleInput}
+                />
+              </li>
+              <div className="board__task-btns">
+                <button onClick={submitTaskTitle}>{localizationObj[lang].submit}</button>
+                <button type="button" onClick={cancelTaskTitle}>
                   {localizationObj[lang].cancel}
                 </button>
               </div>
-            </div>
-          </Modal>
-        </>
+            </>
+          ) : (
+            <>
+              <li key={id} className="task">
+                <span className="task-text" onClick={handleTaskTitle}>
+                  {cardTitle}
+                </span>
+                <DeleteButton type="button" id={id} onClick={handlerModal} />
+              </li>
+
+              <Modal activeModal={activeModal} setActiveModal={setActiveModal}>
+                <div className="modal__wrapper">
+                  <div className="modal__img" />
+                  <div className="modal__text">
+                    <h2>{`${localizationObj[lang].doYouWantToDelete} '${cardTitle}'`} ?</h2>
+                    <button type="button" onClick={removeTask}>
+                      {localizationObj[lang].submit}
+                    </button>
+                    <button type="button" onClick={() => setActiveModal(false)}>
+                      {localizationObj[lang].cancel}
+                    </button>
+                  </div>
+                </div>
+              </Modal>
+            </>
+          )}
+        </div>
       )}
-    </div>
+    </Draggable>
   );
 };
 

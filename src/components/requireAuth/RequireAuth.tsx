@@ -9,8 +9,12 @@ const RequireAuth = ({ children, needAuth }: { children: JSX.Element; needAuth: 
 
   const permission = needAuth ? !!userToken : !userToken;
 
-  if (!permission) {
+  if (!permission && needAuth) {
     return <Navigate to={PATHS.main} state={{ from: location }} replace />;
+  }
+
+  if (!permission && !needAuth) {
+    return <Navigate to={PATHS.boards} state={{ from: location }} replace />;
   }
 
   return children;
