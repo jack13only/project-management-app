@@ -78,7 +78,7 @@ export const localizationObj = {
     yourBoards: 'Your boards',
     board: 'Board',
     boards: 'Boards',
-    boardsHeader: 'Go to Main Page',
+    boardsHeader: 'Main Page',
     back: 'Back',
     submit: 'Submit',
     cancel: 'Cancel',
