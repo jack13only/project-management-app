@@ -1,20 +1,24 @@
 @import '../../../sass/Constants.scss';
 
-.button-modal {
-  width: $base * 6;
-  height: $base * 6;
-  padding: $base $base * 2;
+.button-modal__wrapper {
+  @include poppins;
+  display: flex;
+  align-items: center;
+  column-gap: $base;
+  padding: 0 $base;
   background-color: transparent;
-  background-size: 100%;
-  background-position: center;
-  background-repeat: no-repeat;
   border: none;
-  transition: $transition-01;
+  border-radius: $base;
+  box-shadow: 0.063rem 0.063rem 0.063rem $color-dark-05, 0 0 0.06em $color-dark-05,
+    0 0 0.06em $color-dark-05;
   cursor: pointer;
+  transition: $transition-01;
 
   &:hover {
-    filter: brightness(0.9);
-    transition: $transition-01;
+    .button-modal {
+      filter: brightness(0.8);
+      transition: $transition-01;
+    }
   }
 
   &:active {
@@ -23,10 +27,24 @@
   }
 }
 
+.button-modal {
+  width: $base * 6;
+  height: $base * 6;
+  background-size: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: $transition-01;
+}
+
 .button__submit {
   background-image: url('../../../images/icons/submit.svg');
 }
 
 .button__cancel {
   background-image: url('../../../images/icons/cancel.svg');
+}
+
+.button-modal__description {
+  font-size: $fs-m;
+  font-weight: $fw-semi-bold;
 }

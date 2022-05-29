@@ -10,8 +10,14 @@ interface ChangeTitleBtnsProps {
 const ChangeTitleBtns: FC<ChangeTitleBtnsProps> = ({ onClickSubmit, onClickCancel }) => {
   return (
     <div className="board__column-btns">
-      <button className="button-modal button__submit" type="submit" onClick={onClickSubmit} />
-      <button className="button-modal button__cancel" type="button" onClick={onClickCancel} />
+      <button className="button-modal__wrapper" type="submit" onClick={onClickSubmit}>
+        <div className="button-modal button__submit" />
+        <div className="button-modal__description">Submit</div>
+      </button>
+      <button className="button-modal__wrapper" type="button" onClick={onClickCancel}>
+        <div className="button-modal button__cancel" />
+        <div className="button-modal__description">Cancel</div>
+      </button>
     </div>
   );
 };
