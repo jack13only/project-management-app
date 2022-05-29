@@ -199,6 +199,10 @@ const Board: FC = () => {
   return (
     <DragDropContext onDragEnd={onDragEndHandler}>
       <div className="board">
+        <h2 className="board__title">
+          <span className="board__title-description">{localizationObj[lang].board} </span>
+          {currentBoardTitle}
+        </h2>
         <div className="wrapper">
           <div className="board__title__wrapper">
             <Link to="/boards">
@@ -209,10 +213,6 @@ const Board: FC = () => {
                 description={localizationObj[lang].back}
               />
             </Link>
-            <h2 className="board__title">
-              <span className="board__title-description">{localizationObj[lang].board} </span>
-              {currentBoardTitle}
-            </h2>
             <BackButton
               classNameWrapper="btn-back__wrapper"
               className="btn-back-common btn-new"

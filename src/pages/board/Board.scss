@@ -64,11 +64,25 @@
 }
 
 .board__title {
-  width: max-content;
+  width: 80%;
+  max-width: 90rem;
+  margin: 0 auto;
+  font-size: $fs-xxxl;
+  font-weight: $fw-semi-bold;
   text-align: left;
+  line-height: inherit;
+  word-break: break-word;
+  text-shadow: 0.063rem 0.063rem 0.063rem $color-sale, 0 0 0.06em $color-blue-light,
+    0 0 0.06em $color-blue-light;
+  color: $color-dark;
 
-  @media (max-width: $breakpoint-sm-min) {
-    width: fit-content;
+  @media (max-width: $breakpoint-lg-min) {
+    width: 97%;
+    font-size: $fs-xxl;
+  }
+
+  @media (max-width: $breakpoint-md-min) {
+    font-size: $fs-xl;
   }
 }
 
