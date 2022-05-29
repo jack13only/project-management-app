@@ -56,6 +56,7 @@ export const apiUser = createApi({
     //USERS
     getUsers: build.query({
       query: () => `users`,
+      providesTags: ['UserUpdate', 'TaskUpdate'],
     }),
     getUserById: build.query({
       query: (userId: string) => {
@@ -83,7 +84,7 @@ export const apiUser = createApi({
           method: 'DELETE',
         };
       },
-      invalidatesTags: ['User'],
+      invalidatesTags: ['User', 'UserUpdate'],
     }),
 
     //SIGN
@@ -95,7 +96,7 @@ export const apiUser = createApi({
           body,
         };
       },
-      invalidatesTags: ['User'],
+      invalidatesTags: ['User', 'UserUpdate'],
     }),
     signin: build.mutation({
       query(body: SigninType) {
