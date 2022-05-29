@@ -160,112 +160,100 @@ const CardItem: FC<CardItemProps> = ({
                   }}
                 />
               </span>
-
-              <Modal activeModal={activeModal} setActiveModal={setActiveModal}>
-                <>
-                  {isDeleteModal && (
-                    <div className="modal__wrapper">
-                      <div className="modal__img" />
-                      <div className="modal__text">
-                        <h2>{`${localizationObj[lang].doYouWantToDelete} '${cardTitle}' ?`}</h2>
-                        <div className="board__column-btns">
-                          <button
-                            className="button-modal__wrapper"
-                            type="button"
-                            onClick={removeTask}
-                          >
-                            <div className="button-modal button__submit" />
-                            <div className="button-modal__description">
-                              {localizationObj[lang].submit}
-                            </div>
-                          </button>
-                          <button
-                            className="button-modal__wrapper"
-                            type="button"
-                            onClick={() => setActiveModal(false)}
-                          >
-                            <div className="button-modal button__cancel" />
-                            <div className="button-modal__description">
-                              {localizationObj[lang].cancel}
-                            </div>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                  {isUserChangeModal && (
-                    <div className="modal__wrapper">
-                      <div className="modal__img" />
-                      <div className="modal__text">
-                        <h2>{`${localizationObj[lang].doYouWantToChangeUser}`}</h2>
-                        <ul className="users-list">
-                          {users.map((user: { id: string; name: string }) => (
-                            <li
-                              key={user.id}
-                              onClick={() => {
-                                changeUser(user.id);
-                              }}
-                            >
-                              {user.name}
-                            </li>
-                          ))}
-                        </ul>
-                        <button type="button" onClick={() => setActiveModal(false)}>
-                          {localizationObj[lang].cancel}
-                        </button>
-                      </div>
-                    </div>
-                  )}
-                  {isOpenTask && (
-                    <div className="modal__wrapper modal__tasks">
-                      <h2>
-                        {`${localizationObj[lang].user}: `}
-                        {userOwner}
-                      </h2>
-                      <div className="modal__text">
-                        <h1 className="modal__tasks-header">
-                          {`${localizationObj[lang].yourTask}: `}
-                          {cardTitle}
-                        </h1>
-                        <Textarea
-                          className="textarea modal__tasks-textarea"
-                          cols={2}
-                          rows={2}
-                          placeholder="Change the title"
-                          value={taskTitle}
-                          onChange={handleTaskTitleInput}
-                        />
-                        <h2>
-                          {`${localizationObj[lang].taskDescription}: `}
-                          {cardDescription}
-                        </h2>
-
-                        <Textarea
-                          className="textarea modal__tasks-textarea"
-                          cols={3}
-                          rows={3}
-                          placeholder="Change the description"
-                          value={taskDescription}
-                          onChange={handleTaskDescriptionInput}
-                        />
-
-                        <div className="board__task-btns">
-                          <button onClick={submitTaskContent}>
-                            {localizationObj[lang].submit}
-                          </button>
-                          <button type="button" onClick={cancelTaskContent}>
-                            {localizationObj[lang].cancel}
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </>
-              </Modal>
             </>
           </li>
         )}
       </Draggable>
+
+      <Modal activeModal={activeModal} setActiveModal={setActiveModal}>
+        <>
+          {isDeleteModal && (
+            <div className="modal__wrapper">
+              <div className="modal__img" />
+              <div className="modal__text">
+                <h2>{`${localizationObj[lang].doYouWantToDelete} '${cardTitle}' ?`}</h2>
+                <div className="board__column-btns">
+                  <button className="button-modal__wrapper" type="button" onClick={removeTask}>
+                    <div className="button-modal button__submit" />
+                    <div className="button-modal__description">{localizationObj[lang].submit}</div>
+                  </button>
+                  <button
+                    className="button-modal__wrapper"
+                    type="button"
+                    onClick={() => setActiveModal(false)}
+                  >
+                    <div className="button-modal button__cancel" />
+                    <div className="button-modal__description">{localizationObj[lang].cancel}</div>
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+          {isUserChangeModal && (
+            <div className="modal__wrapper">
+              <div className="modal__img" />
+              <div className="modal__text">
+                <h2>{`${localizationObj[lang].doYouWantToChangeUser}`}</h2>
+                <ul className="users-list">
+                  {users.map((user: { id: string; name: string }) => (
+                    <li
+                      key={user.id}
+                      onClick={() => {
+                        changeUser(user.id);
+                      }}
+                    >
+                      {user.name}
+                    </li>
+                  ))}
+                </ul>
+                <button type="button" onClick={() => setActiveModal(false)}>
+                  {localizationObj[lang].cancel}
+                </button>
+              </div>
+            </div>
+          )}
+          {isOpenTask && (
+            <div className="modal__wrapper modal__tasks">
+              <h2>
+                {`${localizationObj[lang].user}: `}
+                {userOwner}
+              </h2>
+              <div className="modal__text">
+                <h1 className="modal__tasks-header">
+                  {`${localizationObj[lang].yourTask}: `}
+                  {cardTitle}
+                </h1>
+                <Textarea
+                  className="textarea modal__tasks-textarea"
+                  cols={2}
+                  rows={2}
+                  placeholder="Change the title"
+                  value={taskTitle}
+                  onChange={handleTaskTitleInput}
+                />
+                <h2>{`${localizationObj[lang].taskDescription}: `}</h2>
+                <p>{cardDescription}</p>
+
+                <Textarea
+                  className="textarea modal__tasks-textarea"
+                  cols={3}
+                  rows={3}
+                  placeholder="Change the description"
+                  value={taskDescription}
+                  onChange={handleTaskDescriptionInput}
+                />
+
+                <div className="board__task-btns">
+                  <button onClick={submitTaskContent}>{localizationObj[lang].submit}</button>
+                  <button type="button" onClick={cancelTaskContent}>
+                    {localizationObj[lang].cancel}
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </>
+      </Modal>
     </>
   );
 };
