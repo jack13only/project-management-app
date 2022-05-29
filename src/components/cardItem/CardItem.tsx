@@ -15,18 +15,9 @@ interface CardItemProps {
   columnId: string;
   boardId: string;
   order: number;
-  toggleCardComplete: (cardId: string) => void;
 }
 
-const CardItem: FC<CardItemProps> = ({
-  id,
-  cardTitle,
-  complete,
-  toggleCardComplete,
-  order,
-  columnId,
-  boardId,
-}) => {
+const CardItem: FC<CardItemProps> = ({ id, cardTitle, order, columnId, boardId }) => {
   const [isTitleOpenToChange, setIsTitleOpenToChange] = useState(false);
   const [taskTitle, setTaskTitle] = useState(cardTitle);
   const [updateTask] = useUpdateTaskMutation();
@@ -101,13 +92,6 @@ const CardItem: FC<CardItemProps> = ({
       ) : (
         <>
           <li key={id} className="task" style={{ order: order }}>
-            <InputCheckbox
-              className="task-checkbox"
-              type="checkbox"
-              complete={complete}
-              id={id}
-              toggleCardComplete={toggleCardComplete}
-            />
             <span className="task-text" onClick={handleTaskTitle}>
               {cardTitle}
             </span>

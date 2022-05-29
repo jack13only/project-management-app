@@ -14,6 +14,7 @@ import { localizationObj } from '../../features/localization';
 import { Preloader } from '../../components/preloader/Preloader';
 
 import './Board.scss';
+import { Modal } from '../../components';
 
 const BoardColumn = lazy(() => import('../../components/boardColumn/BoardColumn'));
 
@@ -35,18 +36,24 @@ const Board: FC = () => {
   const { lang } = useAppSelector((state) => state.langStorage);
 
   const [columnsList, updateColumnsList] = useState<ColumnType[]>([]);
+  const [activeModal, setActiveModal] = useState<boolean>(false);
+  const [columnTitle, setColumnTitle] = useState('');
 
   if (error && 'status' in error) {
     console.log('error.data', error.status);
   }
 
   const addNewColumn = async () => {
-    await postColumn({
-      boardId: boardId,
-      body: {
-        title: 'new column',
-      },
-    });
+    if (columnTitle.trim().length) {
+      await postColumn({
+        boardId: boardId,
+        body: {
+          title: columnTitle,
+        },
+      });
+      setActiveModal(false);
+      setColumnTitle('');
+    }
   };
 
   const updateColumnHandler = async (id: string, title: string, order: number) => {
@@ -84,60 +91,83 @@ const Board: FC = () => {
   }, [data1]);
 
   return (
-    <DragDropContext onDragEnd={onDragEndHandler}>
-      <div className="board">
-        <div className="wrapper">
-          <div className="board__title__wrapper">
-            <Link to="/boards">
+    <>
+      <DragDropContext onDragEnd={onDragEndHandler}>
+        <div className="board">
+          <div className="wrapper">
+            <div className="board__title__wrapper">
+              <Link to="/boards">
+                <BackButton
+                  classNameWrapper="btn-back__wrapper"
+                  className="btn-back-common btn-back"
+                  type="button"
+                  description={localizationObj[lang].back}
+                />
+              </Link>
+              <h2 className="board__title">
+                <span className="board__title-description">{localizationObj[lang].board} </span>
+                {currentBoardTitle}
+              </h2>
               <BackButton
                 classNameWrapper="btn-back__wrapper"
-                className="btn-back-common btn-back"
+                className="btn-back-common btn-new"
                 type="button"
-                description={localizationObj[lang].back}
+                description={localizationObj[lang].createColumn}
+                onClick={() => setActiveModal(true)}
               />
-            </Link>
-            <h2 className="board__title">
-              <span className="board__title-description">{localizationObj[lang].board} </span>
-              {currentBoardTitle}
-            </h2>
-            <BackButton
-              classNameWrapper="btn-back__wrapper"
-              className="btn-back-common btn-new"
-              type="button"
-              description={localizationObj[lang].createColumn}
-              onClick={addNewColumn}
-            />
+            </div>
+            {!isLoading ? (
+              <Droppable droppableId={boardId} direction="horizontal">
+                {(provided) => (
+                  <div
+                    className="board__columns board__wrapper"
+                    ref={provided.innerRef}
+                    {...provided.droppableProps}
+                  >
+                    {columnsList.map(({ title, id, order }: ColumnType, index: number) => {
+                      return (
+                        <BoardColumn
+                          columnTitle={title}
+                          key={id}
+                          boardId={boardId}
+                          columnId={id}
+                          order={order}
+                          index={index}
+                        />
+                      );
+                    })}
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
+            ) : (
+              <Preloader />
+            )}
           </div>
-          {!isLoading ? (
-            <Droppable droppableId={boardId} direction="horizontal">
-              {(provided) => (
-                <div
-                  className="board__columns board__wrapper"
-                  ref={provided.innerRef}
-                  {...provided.droppableProps}
-                >
-                  {columnsList.map(({ title, id, order }: ColumnType, index: number) => {
-                    return (
-                      <BoardColumn
-                        columnTitle={title}
-                        key={id}
-                        boardId={boardId}
-                        columnId={id}
-                        order={order}
-                        index={index}
-                      />
-                    );
-                  })}
-                  {provided.placeholder}
-                </div>
-              )}
-            </Droppable>
-          ) : (
-            <Preloader />
-          )}
         </div>
-      </div>
-    </DragDropContext>
+      </DragDropContext>
+
+      <Modal activeModal={activeModal} setActiveModal={setActiveModal}>
+        <div className="modal__wrapper">
+          <div className="modal__text">
+            <h2>Add Column Title</h2>
+            <input
+              type="text"
+              value={columnTitle}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setColumnTitle(event?.target.value)
+              }
+            />
+            <button type="button" onClick={addNewColumn}>
+              Submit
+            </button>
+            <button type="button" onClick={() => setActiveModal(false)}>
+              Cancel
+            </button>
+          </div>
+        </div>
+      </Modal>
+    </>
   );
 };
 

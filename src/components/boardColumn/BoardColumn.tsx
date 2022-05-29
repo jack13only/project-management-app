@@ -1,7 +1,7 @@
-import React, { ChangeEvent, FC, RefObject, useEffect, useRef, useState } from 'react';
+import React, { FC, RefObject, useEffect, useRef, useState } from 'react';
 
 import { DeleteButton, TertiaryButton } from '../buttons';
-import { BoardColumnTitle, CardContainer, CardList, Modal } from '..';
+import { BoardColumnTitle, CardList, Modal } from '..';
 
 import './BoardColumn.scss';
 
@@ -20,16 +20,10 @@ type BoardColumnProps = {
   index: number;
 };
 
-type CardsState = {
-  id: string;
-  cardTitle: string;
-  complete: boolean;
-};
-
 const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, order, index }) => {
   const columnRef = useRef() as RefObject<HTMLDivElement>;
-  const [cards, setCards] = useState<CardsState[]>([]);
-  const [cardTitle, setCardTitle] = useState<string>('');
+  const [taskTitle, setTaskTitle] = useState<string>('');
+  const [taskDescription, setTaskDescription] = useState<string>('');
   const [isOpenCard, setIsOpenCard] = useState<boolean>(false);
   const { userId } = useAppSelector((state) => state.userStorage);
   const { lang } = useAppSelector((state) => state.langStorage);
@@ -37,6 +31,8 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
   const [deleteColumn] = useDeleteColumnMutation();
   const [activeModal, setActiveModal] = useState<boolean>(false);
   const [postTask] = usePostTaskMutation();
+  const [isTask, setIsTask] = useState(false);
+  const [isColumn, setIsColumn] = useState(false);
 
   if (error && 'status' in error) {
     console.log('error.data', error.status);
@@ -47,42 +43,22 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
     await deleteColumn({ boardId, columnId });
   };
 
-  const addCard = async () => {
-    if (cardTitle.trim().length) {
+  const addTask = async () => {
+    if (taskTitle.trim().length && taskDescription.trim().length) {
       await postTask({
         boardId,
         columnId,
         body: {
-          title: cardTitle,
-          description: cardTitle,
+          title: taskTitle,
+          description: taskDescription,
           userId: userId,
         },
       });
+
+      setActiveModal(false);
+      setTaskTitle('');
+      setTaskDescription('');
     }
-  };
-
-  const handleCardTitle = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    const VALUE = event.target.value;
-    setCardTitle(VALUE);
-  };
-
-  const toggleCardComplete = (cardId: string | undefined) => {
-    setCards(
-      data.map((task: CardsState) => {
-        if (task.id !== cardId) {
-          return task;
-        } else {
-          return {
-            ...task,
-            complete: !task.complete,
-          };
-        }
-      })
-    );
-  };
-
-  const addCardVisibility = () => {
-    setIsOpenCard(true);
   };
 
   useEffect(() => {
@@ -90,72 +66,123 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
   }, [data.length, isOpenCard]);
 
   useEffect(() => {
-    setCardTitle('');
+    setTaskTitle('');
     setIsOpenCard(false);
   }, [data.length]);
 
+  useEffect(() => {
+    if (!activeModal) {
+      setIsColumn(false);
+      setIsTask(false);
+      setTaskTitle('');
+      setTaskDescription('');
+    }
+  }, [activeModal]);
+
   return (
-    <Draggable draggableId={columnId} index={index}>
-      {(provided, snapshot) => (
-        <>
-          <div
-            className="board__column-container"
-            ref={provided.innerRef}
-            {...provided.dragHandleProps}
-            {...provided.draggableProps}
-            style={{
-              boxShadow: snapshot.draggingOver ? '0 10px 15px grey' : '',
-              ...provided.draggableProps.style,
-            }}
-          >
-            <div className="board__column" ref={columnRef}>
-              <div className="board__column-head">
-                <BoardColumnTitle
-                  columnTitle={columnTitle}
-                  columnId={columnId}
-                  boardId={boardId}
-                  order={order}
-                />
-                <DeleteButton type="button" onClick={() => setActiveModal(true)} />
-              </div>
-              <div className="cards__list__container">
-                <CardList tasks={data} toggleCardComplete={toggleCardComplete} />
-              </div>
-              <div className="card__add">
-                <TertiaryButton
-                  className="button__tertiary column__btn"
-                  type="button"
-                  description={'+ ' + localizationObj[lang].createTask}
-                  isOpenCard={isOpenCard}
-                  onClick={addCardVisibility}
-                />
-                <CardContainer
-                  isOpenCard={isOpenCard}
-                  onClick={() => setIsOpenCard(false)}
-                  cardTitle={cardTitle}
-                  handleCardTitle={handleCardTitle}
-                  addCard={addCard}
-                />
-              </div>
-            </div>
-          </div>
-          <Modal activeModal={activeModal} setActiveModal={setActiveModal}>
-            <div className="modal__wrapper">
-              <div className="modal__img" />
-              <div className="modal__text">
-                <h2>{`${localizationObj[lang].doYouWantToDelete} '${columnTitle}'`} ?</h2>
-                <button type="button" onClick={removeColumn}>
-                  {localizationObj[lang].submit}
-                </button>
-                <button type="button" onClick={() => setActiveModal(false)}>
-                  {localizationObj[lang].cancel}
-                </button>
+    <>
+      <Draggable draggableId={columnId} index={index}>
+        {(provided, snapshot) => (
+          <>
+            <div
+              className="board__column-container"
+              ref={provided.innerRef}
+              {...provided.dragHandleProps}
+              {...provided.draggableProps}
+              style={{
+                boxShadow: snapshot.draggingOver ? '0 10px 15px grey' : '',
+                ...provided.draggableProps.style,
+              }}
+            >
+              <div className="board__column" ref={columnRef}>
+                <div className="board__column-head">
+                  <BoardColumnTitle
+                    columnTitle={columnTitle}
+                    columnId={columnId}
+                    boardId={boardId}
+                    order={order}
+                  />
+                  <DeleteButton
+                    type="button"
+                    onClick={() => {
+                      setIsColumn(true);
+                      setActiveModal(true);
+                    }}
+                  />
+                </div>
+                <div className="cards__list__container">
+                  <CardList tasks={data} />
+                </div>
+                <div className="card__add">
+                  <TertiaryButton
+                    className="button__tertiary column__btn"
+                    type="button"
+                    description={'+ ' + localizationObj[lang].createTask}
+                    isOpenCard={isOpenCard}
+                    onClick={() => {
+                      setIsTask(true);
+                      setActiveModal(true);
+                    }}
+                  />
+                </div>
               </div>
             </div>
-          </Modal>
-        </>
-      )}
-    </Draggable>
+            <Modal activeModal={activeModal} setActiveModal={setActiveModal}>
+              <div className="modal__wrapper">
+                {isColumn && (
+                  <>
+                    <div className="modal__img" />
+                    <div className="modal__text">
+                      <h2>{`${localizationObj[lang].doYouWantToDelete} '${columnTitle}'`} ?</h2>
+                      <button type="button" onClick={removeColumn}>
+                        {localizationObj[lang].submit}
+                      </button>
+                      <button type="button" onClick={() => setActiveModal(false)}>
+                        {localizationObj[lang].cancel}
+                      </button>
+                    </div>
+                  </>
+                )}
+
+                {isTask && (
+                  <div className="modal__text">
+                    <h2>Add Task Title</h2>
+                    <input
+                      type="text"
+                      value={taskTitle}
+                      onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                        setTaskTitle(event?.target.value)
+                      }
+                    />
+                    <h2>Add task description</h2>
+                    <input
+                      type="text"
+                      value={taskDescription}
+                      onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                        setTaskDescription(event?.target.value)
+                      }
+                    />
+                    <button type="button" onClick={addTask}>
+                      Submit
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setActiveModal(false);
+                        setTaskTitle('');
+                        setTaskDescription('');
+                      }}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                )}
+              </div>
+            </Modal>
+          </>
+        )}
+      </Draggable>
+    </>
   );
 };
 

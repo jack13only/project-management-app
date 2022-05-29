@@ -6,7 +6,6 @@ import {
   usePostBoardMutation,
 } from '../../app/RtkQuery';
 
-import { TertiaryButton } from '../../components/buttons';
 import { Modal, PreloaderSuspense } from '../../components';
 import { Preloader } from '../../components/preloader/Preloader';
 
@@ -16,14 +15,11 @@ import './Boards.scss';
 import { useAppSelector } from '../../app/hooks';
 import { localizationObj } from '../../features/localization';
 
-// a mock title creator for created board,
-// will be deleted later, when we add a form for creating a new board;
-const getRandomTitleBoard = () => Math.floor(Math.random() * 100).toString();
 const BoardsItem = React.lazy(() => import('./BoardsItem'));
 
 const Boards: FC = () => {
   const [activeModal, setActiveModal] = useState<boolean>(false);
-  const [deletedBoardTitle, setdeletedBoardTitle] = useState<string>('');
+  const [deletedBoardTitle, setDeletedBoardTitle] = useState<string>('');
   const [deletedBoardId, setDeletedBoardId] = useState<string>('');
   const { lang } = useAppSelector((state) => state.langStorage);
 
@@ -40,7 +36,7 @@ const Boards: FC = () => {
   };
 
   const getDeletedBoard = (deletedBoardTitle: string, deletedBoardId: string) => {
-    setdeletedBoardTitle(deletedBoardTitle);
+    setDeletedBoardTitle(deletedBoardTitle);
     setDeletedBoardId(deletedBoardId);
   };
 
