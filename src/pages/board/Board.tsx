@@ -17,6 +17,7 @@ import { localizationObj } from '../../features/localization';
 import { Preloader } from '../../components/preloader/Preloader';
 
 import './Board.scss';
+import { Modal } from '../../components';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { TasksList } from '../../components/boardColumn/BoardColumn';
 const BoardColumn = React.lazy(() => import('../../components/boardColumn/BoardColumn'));
@@ -46,18 +47,24 @@ const Board: FC = () => {
   const moveRef = useRef(['', '']);
   const { lang } = useAppSelector((state) => state.langStorage);
   const [columnsList, updateColumnsList] = useState<ColumnType[]>([]);
+  const [activeModal, setActiveModal] = useState<boolean>(false);
+  const [columnTitle, setColumnTitle] = useState('');
 
   if (error && 'status' in error) {
     console.log('error.data', error.status);
   }
 
   const addNewColumn = async () => {
-    await postColumn({
-      boardId: boardId,
-      body: {
-        title: 'new column',
-      },
-    });
+    if (columnTitle.trim().length) {
+      await postColumn({
+        boardId: boardId,
+        body: {
+          title: columnTitle,
+        },
+      });
+      setActiveModal(false);
+      setColumnTitle('');
+    }
   };
 
   const updateColumnHandler = async (id: string, title: string, order: number) => {
@@ -79,13 +86,17 @@ const Board: FC = () => {
     return columns;
   };
 
-  const addTaskToAnotherColumn = async (columnId: string, taskTitle: string) => {
+  const addTaskToAnotherColumn = async (
+    columnId: string,
+    taskTitle: string,
+    description: string
+  ) => {
     return await postTask({
       columnId,
       boardId,
       body: {
         title: taskTitle,
-        description: taskTitle,
+        description: description,
         userId,
       },
     });
@@ -103,7 +114,8 @@ const Board: FC = () => {
     columnId: string,
     taskTitle: string,
     taskId: string,
-    order: number
+    order: number,
+    description: string
   ) => {
     return await updateTask({
       columnId: columnId,
@@ -112,7 +124,7 @@ const Board: FC = () => {
       task: {
         title: taskTitle,
         order,
-        description: taskTitle,
+        description: description,
         userId,
       },
     });
@@ -122,10 +134,11 @@ const Board: FC = () => {
     tasksList: TasksList[],
     endIndex: number,
     columnId: string,
-    taskId: string
+    taskId: string,
+    description: string
   ) => {
     const [movedTask] = tasksList.filter((task) => task.id === taskId);
-    await updateTaskHandler(columnId, movedTask.title, taskId, endIndex + 1);
+    await updateTaskHandler(columnId, movedTask.title, taskId, endIndex + 1, description);
   };
 
   const onDragEndHandler = (result: DropResult) => {
@@ -155,7 +168,7 @@ const Board: FC = () => {
       task
         .then((res) =>
           Promise.all([
-            addTaskToAnotherColumn(destination.droppableId, res.data.title),
+            addTaskToAnotherColumn(destination.droppableId, res.data.title, res.data.description),
             deleteTaskFromCurrentCol(source.droppableId, draggableId),
           ])
         )
@@ -177,7 +190,9 @@ const Board: FC = () => {
 
       tasks
         .then((res) => res.data)
-        .then((data) => reorderTasks(data, destination.index, source.droppableId, draggableId))
+        .then((data) =>
+          reorderTasks(data, destination.index, source.droppableId, draggableId, data.description)
+        )
         .catch((error) => console.log('error', error));
       tasks.unsubscribe();
       return;
@@ -197,60 +212,83 @@ const Board: FC = () => {
   }, [data1]);
 
   return (
-    <DragDropContext onDragEnd={onDragEndHandler}>
-      <div className="board">
-        <div className="wrapper">
-          <div className="board__title__wrapper">
-            <Link to="/boards">
+    <>
+      <DragDropContext onDragEnd={onDragEndHandler}>
+        <div className="board">
+          <div className="wrapper">
+            <div className="board__title__wrapper">
+              <Link to="/boards">
+                <BackButton
+                  classNameWrapper="btn-back__wrapper"
+                  className="btn-back-common btn-back"
+                  type="button"
+                  description={localizationObj[lang].back}
+                />
+              </Link>
+              <h2 className="board__title">
+                <span className="board__title-description">{localizationObj[lang].board} </span>
+                {currentBoardTitle}
+              </h2>
               <BackButton
                 classNameWrapper="btn-back__wrapper"
-                className="btn-back-common btn-back"
+                className="btn-back-common btn-new"
                 type="button"
-                description={localizationObj[lang].back}
+                description={localizationObj[lang].createColumn}
+                onClick={() => setActiveModal(true)}
               />
-            </Link>
-            <h2 className="board__title">
-              <span className="board__title-description">{localizationObj[lang].board} </span>
-              {currentBoardTitle}
-            </h2>
-            <BackButton
-              classNameWrapper="btn-back__wrapper"
-              className="btn-back-common btn-new"
-              type="button"
-              description={localizationObj[lang].createColumn}
-              onClick={addNewColumn}
-            />
+            </div>
+            {!isLoading ? (
+              <Droppable droppableId={boardId} direction="horizontal" type="columns">
+                {(provided) => (
+                  <div
+                    className="board__columns board__wrapper"
+                    ref={provided.innerRef}
+                    {...provided.droppableProps}
+                  >
+                    {columnsList.map(({ title, id, order }: ColumnType, index: number) => {
+                      return (
+                        <BoardColumn
+                          columnTitle={title}
+                          key={id}
+                          boardId={boardId}
+                          columnId={id}
+                          order={order}
+                          index={index}
+                        />
+                      );
+                    })}
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
+            ) : (
+              <Preloader />
+            )}
           </div>
-          {!isLoading ? (
-            <Droppable droppableId={boardId} direction="horizontal" type="columns">
-              {(provided) => (
-                <div
-                  className="board__columns board__wrapper"
-                  ref={provided.innerRef}
-                  {...provided.droppableProps}
-                >
-                  {columnsList.map(({ title, id, order }: ColumnType, index: number) => {
-                    return (
-                      <BoardColumn
-                        columnTitle={title}
-                        key={id}
-                        boardId={boardId}
-                        columnId={id}
-                        order={order}
-                        index={index}
-                      />
-                    );
-                  })}
-                  {provided.placeholder}
-                </div>
-              )}
-            </Droppable>
-          ) : (
-            <Preloader />
-          )}
         </div>
-      </div>
-    </DragDropContext>
+      </DragDropContext>
+
+      <Modal activeModal={activeModal} setActiveModal={setActiveModal}>
+        <div className="modal__wrapper">
+          <div className="modal__text">
+            <h2>{`${localizationObj[lang].addATitle}`}</h2>
+            <input
+              type="text"
+              value={columnTitle}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setColumnTitle(event?.target.value)
+              }
+            />
+            <button type="button" onClick={addNewColumn}>
+              {localizationObj[lang].submit}
+            </button>
+            <button type="button" onClick={() => setActiveModal(false)}>
+              {localizationObj[lang].cancel}
+            </button>
+          </div>
+        </div>
+      </Modal>
+    </>
   );
 };
 

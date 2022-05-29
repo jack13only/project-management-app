@@ -12,24 +12,13 @@ import { localizationObj } from '../../features/localization';
 interface CardItemProps {
   id: string;
   cardTitle: string;
-  complete: boolean;
   columnId: string;
   boardId: string;
   order: number;
   index: number;
-  toggleCardComplete: (cardId: string) => void;
 }
 
-const CardItem: FC<CardItemProps> = ({
-  id,
-  cardTitle,
-  complete,
-  toggleCardComplete,
-  order,
-  columnId,
-  boardId,
-  index,
-}) => {
+const CardItem: FC<CardItemProps> = ({ id, cardTitle, order, columnId, boardId, index }) => {
   const [isTitleOpenToChange, setIsTitleOpenToChange] = useState(false);
   const [taskTitle, setTaskTitle] = useState(cardTitle);
   const [updateTask] = useUpdateTaskMutation();
