@@ -1,6 +1,9 @@
 @import '../../sass/Constants.scss';
 
 .board {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
   height: 100%;
   max-height: max-content;
   background-color: $color-purple-06;
