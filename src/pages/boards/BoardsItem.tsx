@@ -67,7 +67,6 @@ const BoardsItem = ({ title, id, description, isActiveModal, getDeletedBoard }: 
   const cancelBoardDescr = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     setCurrentDescription(description);
-    setIsOpenBoardTitle(false);
     setIsOpenBoardDescr(false);
   };
 
@@ -75,7 +74,6 @@ const BoardsItem = ({ title, id, description, isActiveModal, getDeletedBoard }: 
     event.preventDefault();
     setCurrentTitle(title);
     setIsOpenBoardTitle(false);
-    setIsOpenBoardDescr(false);
   };
 
   return (
