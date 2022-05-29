@@ -66,6 +66,10 @@
   }
 
   .modal__text {
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+    row-gap: $base * 3;
     padding: $base * 10 $base * 4 $base * 4;
     flex-basis: 40%;
     text-align: end;
