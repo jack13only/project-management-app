@@ -146,7 +146,7 @@ const Header: FC = () => {
       <Modal activeModal={activeModal} setActiveModal={setActiveModal}>
         <div className="modal__wrapper">
           <div className="modal__text">
-            <h2>Add Board Title</h2>
+            <h2>{`${localizationObj[lang].addATitle}`}</h2>
             <input
               type="text"
               value={boardTitle}
@@ -154,7 +154,7 @@ const Header: FC = () => {
                 setBoardTitle(event?.target.value)
               }
             />
-            <h2>Add board description</h2>
+            <h2>{`${localizationObj[lang].addADescription}`}</h2>
             <input
               type="text"
               value={boardDescription}

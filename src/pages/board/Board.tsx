@@ -271,7 +271,7 @@ const Board: FC = () => {
       <Modal activeModal={activeModal} setActiveModal={setActiveModal}>
         <div className="modal__wrapper">
           <div className="modal__text">
-            <h2>Add Column Title</h2>
+            <h2>{`${localizationObj[lang].addATitle}`}</h2>
             <input
               type="text"
               value={columnTitle}

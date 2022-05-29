@@ -169,7 +169,7 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
 
                 {isTask && (
                   <div className="modal__text">
-                    <h2>Add Task Title</h2>
+                    <h2>{`${localizationObj[lang].addATitle}`}</h2>
                     <input
                       type="text"
                       value={taskTitle}
@@ -177,7 +177,7 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
                         setTaskTitle(event?.target.value)
                       }
                     />
-                    <h2>Add task description</h2>
+                    <h2>{`${localizationObj[lang].addADescription}`}</h2>
                     <input
                       type="text"
                       value={taskDescription}
