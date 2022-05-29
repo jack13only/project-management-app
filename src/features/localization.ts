@@ -50,6 +50,7 @@ export const localizationObj = {
     shatau: 'Евгений Шатов',
     kochieva: 'Виктория Кочиева',
     karakulka: 'Дмитрий Каракулько',
+    doYouWantToChangeUser: 'Выберите нового исполнителя',
   },
   [enLang]: {
     signIn: 'Sign In',
@@ -99,5 +100,6 @@ export const localizationObj = {
     shatau: 'Yauheni Shatau',
     kochieva: 'Victoria Kochieva',
     karakulka: 'Dzmitry Karakulka',
+    doYouWantToChangeUser: 'Choose new task owner',
   },
 };

@@ -30,9 +30,11 @@ type CardsState = {
 export type TasksList = {
   order: number;
   title: string;
+  description: string;
   id: string;
   boardId: string;
   columnId: string;
+  userId: string;
   complete: boolean;
 };
 

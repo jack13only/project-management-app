@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import {
   useDeleteBoardMutation,
   useGetBoardsQuery,
+  useGetUsersQuery,
   usePostBoardMutation,
 } from '../../app/RtkQuery';
 
@@ -24,6 +25,7 @@ const Boards: FC = () => {
   const { lang } = useAppSelector((state) => state.langStorage);
 
   const { data = [], error, isLoading } = useGetBoardsQuery('');
+  const { data: users = [] } = useGetUsersQuery('');
   const [postBoard] = usePostBoardMutation();
   const [deleteBoard] = useDeleteBoardMutation();
 
