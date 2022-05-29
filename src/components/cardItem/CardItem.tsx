@@ -30,8 +30,8 @@ const CardItem: FC<CardItemProps> = ({
   userId: userOwnerId,
   index,
 }) => {
-  const [isTitleOpenToChange, setIsTitleOpenToChange] = useState(false);
   const [taskTitle, setTaskTitle] = useState(cardTitle);
+  const [taskDescription, setTaskDescription] = useState(cardDescription);
   const [updateTask] = useUpdateTaskMutation();
   const [deleteTask] = useDeleteTaskMutation();
   const [activeModal, setActiveModal] = useState<boolean>(false);
@@ -41,22 +41,20 @@ const CardItem: FC<CardItemProps> = ({
   const { lang } = useAppSelector((state) => state.langStorage);
   const { data: users = [] } = useGetUsersQuery('');
   const [userOwner, setUserOwner] = useState<string>('');
-
-  const handleTaskTitle = () => {
-    setIsTitleOpenToChange(true);
-  };
+  const [isOpenTask, setIsOpenTask] = useState(false);
 
   const handleTaskTitleInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTaskTitle(event.target.value);
   };
 
-  const cancelTaskTitle = () => {
-    setIsTitleOpenToChange(false);
+  const handleTaskDescriptionInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setTaskDescription(event.target.value);
   };
 
-  const submitTaskTitle = async () => {
-    if (taskTitle.trim().length) {
-      setIsTitleOpenToChange(false);
+  const submitTaskContent = async () => {
+    if (taskTitle.trim().length && taskDescription.trim().length) {
+      setIsOpenTask(false);
+      setActiveModal(false);
 
       await updateTask({
         columnId,
@@ -65,11 +63,16 @@ const CardItem: FC<CardItemProps> = ({
         task: {
           title: taskTitle,
           order,
-          description: cardDescription,
-          userId,
+          description: taskDescription,
+          userId: userOwnerId,
         },
       });
     }
+  };
+
+  const cancelTaskContent = () => {
+    setIsOpenTask(false);
+    setActiveModal(false);
   };
 
   const removeTask = async () => {
@@ -97,10 +100,18 @@ const CardItem: FC<CardItemProps> = ({
     setActiveModal(false);
   };
 
+  const openTaskHandler = () => {
+    setIsOpenTask(true);
+    setActiveModal(true);
+    setTaskTitle('');
+    setTaskDescription('');
+  };
+
   useEffect(() => {
     if (!activeModal) {
       setIsDeleteModal(false);
       setIsUserChangeModal(false);
+      setIsOpenTask(false);
     }
   }, [activeModal]);
 
@@ -112,42 +123,23 @@ const CardItem: FC<CardItemProps> = ({
   }, [users, userOwnerId]);
 
   return (
-    <Draggable draggableId={id} index={index}>
-      {(provided, snapshot) => (
-        <div
-          className="board__task"
-          ref={provided.innerRef}
-          {...provided.dragHandleProps}
-          {...provided.draggableProps}
-          style={{
-            boxShadow: snapshot.isDragging ? '0 10px 15px grey' : '',
-            background: snapshot.isDragging ? 'white' : '',
-            ...provided.draggableProps.style,
-          }}
-        >
-          {isTitleOpenToChange ? (
+    <>
+      <Draggable draggableId={id} index={index}>
+        {(provided, snapshot) => (
+          <li
+            className="board__task"
+            ref={provided.innerRef}
+            {...provided.dragHandleProps}
+            {...provided.draggableProps}
+            style={{
+              boxShadow: snapshot.isDragging ? '0 10px 15px grey' : '',
+              background: snapshot.isDragging ? 'white' : '',
+              ...provided.draggableProps.style,
+            }}
+          >
             <>
-              <li className="board__task-input">
-                <Textarea
-                  className="textarea"
-                  cols={3}
-                  rows={3}
-                  placeholder="Your task"
-                  value={taskTitle}
-                  onChange={handleTaskTitleInput}
-                />
-              </li>
-              <div className="board__task-btns">
-                <button onClick={submitTaskTitle}>{localizationObj[lang].submit}</button>
-                <button type="button" onClick={cancelTaskTitle}>
-                  {localizationObj[lang].cancel}
-                </button>
-              </div>
-            </>
-          ) : (
-            <>
-              <li key={id} className="task">
-                <span className="task-text" onClick={handleTaskTitle}>
+              <span key={id} className="task">
+                <span className="task-text" onClick={openTaskHandler}>
                   {cardTitle}
                 </span>
                 <span
@@ -167,10 +159,10 @@ const CardItem: FC<CardItemProps> = ({
                     setIsDeleteModal(true);
                   }}
                 />
-              </li>
+              </span>
 
               <Modal activeModal={activeModal} setActiveModal={setActiveModal}>
-                <div>
+                <>
                   {isDeleteModal && (
                     <div className="modal__wrapper">
                       <div className="modal__img" />
@@ -224,13 +216,57 @@ const CardItem: FC<CardItemProps> = ({
                       </div>
                     </div>
                   )}
-                </div>
+                  {isOpenTask && (
+                    <div className="modal__wrapper modal__tasks">
+                      <h2>
+                        {`${localizationObj[lang].user}: `}
+                        {userOwner}
+                      </h2>
+                      <div className="modal__text">
+                        <h1 className="modal__tasks-header">
+                          {`${localizationObj[lang].yourTask}: `}
+                          {cardTitle}
+                        </h1>
+                        <Textarea
+                          className="textarea modal__tasks-textarea"
+                          cols={2}
+                          rows={2}
+                          placeholder="Change the title"
+                          value={taskTitle}
+                          onChange={handleTaskTitleInput}
+                        />
+                        <h2>
+                          {`${localizationObj[lang].taskDescription}: `}
+                          {cardDescription}
+                        </h2>
+
+                        <Textarea
+                          className="textarea modal__tasks-textarea"
+                          cols={3}
+                          rows={3}
+                          placeholder="Change the description"
+                          value={taskDescription}
+                          onChange={handleTaskDescriptionInput}
+                        />
+
+                        <div className="board__task-btns">
+                          <button onClick={submitTaskContent}>
+                            {localizationObj[lang].submit}
+                          </button>
+                          <button type="button" onClick={cancelTaskContent}>
+                            {localizationObj[lang].cancel}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </>
               </Modal>
             </>
-          )}
-        </div>
-      )}
-    </Draggable>
+          </li>
+        )}
+      </Draggable>
+    </>
   );
 };
 

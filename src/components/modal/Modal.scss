@@ -91,4 +91,35 @@
       transform: scale(0.8);
     }
   }
+
+  .modal__tasks {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .modal__tasks > .modal__text {
+    flex-basis: 100%;
+    align-items: flex-start;
+    padding: 0;
+    width: 100%;
+  }
+  
+  .modal__tasks-textarea {
+    width: 100%;
+  }
+
+  .modal__tasks-btns {
+    position: absolute;
+    bottom: $base * 3;
+  }
+
+  .modal__tasks-header {
+    text-overflow: ellipsis;
+    max-width: 84%;
+    text-align: initial;
+    overflow: hidden;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-height: 1.3em;
+  }
 }
