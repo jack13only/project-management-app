@@ -45,6 +45,38 @@
   transition: $transition;
 }
 
+.boards__item-input__wrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: $base;
+  margin-bottom: $base;
+
+  .textarea {
+    @include poppins;
+    width: 100%;
+    padding: 0 $base * 2;
+    font-size: $fs-l;
+    color: $color-dark;
+    background-color: $color-white;
+    border: 0.063rem solid $color-dark;
+  }
+}
+
+.boards__item-input {
+  @include poppins;
+  width: 100%;
+  padding: 0 $base * 2;
+  font-size: $fs-l;
+  color: $color-dark;
+  background-color: $color-white;
+  border: 0.063rem solid $color-dark;
+  border-radius: $base;
+
+  @media (max-width: $breakpoint-md-min) {
+    font-size: $fs-m;
+  }
+}
+
 .boards-item__link {
   flex-basis: 32.4%;
   min-height: $base * 35;

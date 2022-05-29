@@ -67,8 +67,9 @@ const BoardsItem = ({ title, id, description, isActiveModal, getDeletedBoard }: 
           {title}
         </h2>
       ) : (
-        <>
+        <div className="boards__item-input__wrapper">
           <input
+            className="boards__item-input"
             type="text"
             placeholder={localizationObj[lang].signUp}
             onChange={handleBoardTitle}
@@ -80,7 +81,7 @@ const BoardsItem = ({ title, id, description, isActiveModal, getDeletedBoard }: 
             onClickSubmit={submitBoardTitleAndDescr}
             onClickCancel={cancelBoardTitleAndDescr}
           />
-        </>
+        </div>
       )}
 
       {!isOpenBoardDescr ? (
@@ -94,7 +95,7 @@ const BoardsItem = ({ title, id, description, isActiveModal, getDeletedBoard }: 
           {description}
         </p>
       ) : (
-        <>
+        <div className="boards__item-input__wrapper">
           <Textarea
             className="textarea"
             cols={3}
@@ -109,7 +110,7 @@ const BoardsItem = ({ title, id, description, isActiveModal, getDeletedBoard }: 
             onClickSubmit={submitBoardTitleAndDescr}
             onClickCancel={cancelBoardTitleAndDescr}
           />
-        </>
+        </div>
       )}
       <DeleteButton type="button" onClick={handlerActiveModal} />
     </div>
