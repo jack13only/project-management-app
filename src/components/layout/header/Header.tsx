@@ -82,7 +82,9 @@ const Header: FC = () => {
                 >
                   <div className="boards-logo__wrapper">
                     <div className="boards-logo" />
-                    <div className="boards-logo-description">{localizationObj[lang].boards}</div>
+                    <div className="boards-logo-description">
+                      {localizationObj[lang].boardsHeader}
+                    </div>
                   </div>
                 </Link>
                 {location.pathname === `${PATHS.boards}` && (
