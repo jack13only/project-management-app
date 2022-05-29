@@ -78,11 +78,6 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
     }
   };
 
-  // const handleCardTitle = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-  //   const VALUE = event.target.value;
-  //   setTaskTitle(VALUE);
-  // };
-
   useEffect(() => {
     columnRef.current ? (columnRef.current.scrollTop = columnRef.current.scrollHeight) : null;
   }, [data?.length, isOpenCard]);
@@ -152,13 +147,6 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
                       setActiveModal(true);
                     }}
                   />
-                  {/* <CardContainer
-                    isOpenCard={isOpenCard}
-                    onClick={() => setIsOpenCard(false)}
-                    cardTitle={taskTitle}
-                    handleCardTitle={handleCardTitle}
-                    addCard={addTask}
-                  /> */}
                 </div>
               </div>
             </div>
