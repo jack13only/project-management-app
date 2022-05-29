@@ -5,6 +5,7 @@
   flex-direction: column;
   row-gap: $base * 2;
   width: 97%;
+  border-radius: $base;
 }
 
 .board__task-input {
@@ -12,7 +13,7 @@
   align-items: flex-start;
   flex-direction: column;
   row-gap: $base * 2;
-  border: 1px solid $color-dark-04;
+  border: 0.063rem solid $color-dark-04;
   border-radius: $base;
 }
 

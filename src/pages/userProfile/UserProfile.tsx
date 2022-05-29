@@ -128,37 +128,44 @@ const UserProfile: FC = () => {
     <>
       {!isEditing && (
         <div className="user-profile">
-          <div className="user-profile__field">{localizationObj[lang].name}:</div>
-          <div className="user-profile__value">{userName}</div>
-          <div className="user-profile__field">{localizationObj[lang].login}: </div>
-          <div className="user-profile__value">{userLogin}</div>
-          <button
-            className="user-profile__button"
-            onClick={() => {
-              setIsEditing(true);
-              setIsPassChanging(false);
-            }}
-          >
-            {localizationObj[lang].editUser}
-          </button>
-          <button
-            className="user-profile__button"
-            onClick={() => {
-              setIsEditing(true);
-              setIsPassChanging(true);
-            }}
-          >
-            {localizationObj[lang].changePassword}
-          </button>
-          <button
-            className="user-profile__button"
-            onClick={() => {
-              setActiveModal(true);
-              setDeleteMsg(true);
-            }}
-          >
-            {localizationObj[lang].deleteUser}
-          </button>
+          <div className="form__title">{localizationObj[lang].profile}</div>
+          <div className="user-profile-name">
+            <div className="user-profile__field">{localizationObj[lang].name}:</div>
+            <div className="user-profile__value">{userName}</div>
+          </div>
+          <div className="user-profile-name">
+            <div className="user-profile__field">{localizationObj[lang].login}: </div>
+            <div className="user-profile__value">{userLogin}</div>
+          </div>
+          <div className="user-profile__buttons">
+            <button
+              className="user-profile__button"
+              onClick={() => {
+                setIsEditing(true);
+                setIsPassChanging(false);
+              }}
+            >
+              {localizationObj[lang].editUser}
+            </button>
+            <button
+              className="user-profile__button"
+              onClick={() => {
+                setIsEditing(true);
+                setIsPassChanging(true);
+              }}
+            >
+              {localizationObj[lang].changePassword}
+            </button>
+            <button
+              className="user-profile__button"
+              onClick={() => {
+                setActiveModal(true);
+                setDeleteMsg(true);
+              }}
+            >
+              {localizationObj[lang].deleteUser}
+            </button>
+          </div>
         </div>
       )}
 
@@ -272,7 +279,7 @@ const UserProfile: FC = () => {
           )}
           {!!deleteMsg && (
             <div className="modal__text">
-              <h2>{`${localizationObj[lang].doYouWantToDelete} '${userName}'`} ?</h2>
+              <h2>{`${localizationObj[lang].doYouWantToDelete} '${userName}' ?`}</h2>
               <div>{localizationObj[lang].afterDeleteRedirect}</div>
               <button type="button" onClick={deleteHandler}>
                 {localizationObj[lang].submit}

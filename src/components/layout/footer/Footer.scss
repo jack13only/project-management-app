@@ -56,8 +56,9 @@
 
 .footer__title {
   @include poppins;
+  @include disableSelection;
   font-size: $fs-m;
-  font-weight: $fw-medium;
+  font-weight: $fw-semi-bold;
   text-align: end;
   text-transform: uppercase;
 }
@@ -109,7 +110,7 @@
   @include poppins;
   @include disableSelection;
   font-size: $fs-xxl;
-  font-weight: $fw-medium;
+  font-weight: $fw-semi-bold;
 
   @media (max-width: $breakpoint-xs-min) {
     font-size: $fs-l;

@@ -85,7 +85,12 @@
 
 .boards-logo-description {
   color: $color-dark;
-  font-weight: $fw-medium;
+  font-weight: $fw-semi-bold;
+
+  @media (max-width: $breakpoint-md-min) {
+    width: max-content;
+    font-size: $fs-xs;
+  }
 
   @media (max-width: $breakpoint-xs-min) {
     display: none;

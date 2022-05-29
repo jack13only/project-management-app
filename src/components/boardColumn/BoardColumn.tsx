@@ -158,12 +158,26 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
                   <>
                     <div className="modal__img" />
                     <div className="modal__text">
-                      <h2>{`${localizationObj[lang].doYouWantToDelete} '${columnTitle}'`} ?</h2>
-                      <button type="button" onClick={removeColumn}>
-                        {localizationObj[lang].submit}
+                      <h2>{`${localizationObj[lang].doYouWantToDelete} '${columnTitle}' ?`}</h2>
+                      <button
+                        className="button-modal__wrapper"
+                        type="button"
+                        onClick={removeColumn}
+                      >
+                        <div className="button-modal button__submit" />
+                        <div className="button-modal__description">
+                          {localizationObj[lang].submit}
+                        </div>
                       </button>
-                      <button type="button" onClick={() => setActiveModal(false)}>
-                        {localizationObj[lang].cancel}
+                      <button
+                        className="button-modal__wrapper"
+                        type="button"
+                        onClick={() => setActiveModal(false)}
+                      >
+                        <div className="button-modal button__cancel" />
+                        <div className="button-modal__description">
+                          {localizationObj[lang].cancel}
+                        </div>
                       </button>
                     </div>
                   </>

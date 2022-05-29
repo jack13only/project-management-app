@@ -4,7 +4,7 @@
   @include poppins;
   width: $base * 17;
   height: $base * 7;
-  border: 1px solid $color-yellow;
+  border: 0.063rem solid $color-yellow;
   background-color: $color-white;
   color: $color-white;
   border-radius: $base * 4;
@@ -12,12 +12,12 @@
   transition: $transition;
 
   &:hover {
-    border: 1px solid $color-yellow;
+    border: 0.063rem solid $color-yellow;
     transition: $transition;
   }
 
   &:active {
-    border: 2px solid $color-orange;
+    border: 0.125rem solid $color-orange;
     transition: $transition;
   }
 

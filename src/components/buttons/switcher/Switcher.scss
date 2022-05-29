@@ -1,7 +1,7 @@
 @import '../../../sass/Constants.scss';
 
 .form__container {
-  font-weight: $fw-medium;
+  font-weight: $fw-semi-bold;
 }
 
 .switcher__container {
@@ -52,7 +52,7 @@ input:checked + .slider {
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px $color-blue-light;
+  box-shadow: 0 0 0.063rem $color-blue-light;
 }
 
 input:checked + .slider:before {

@@ -1,0 +1,50 @@
+@import '../../../sass/Constants.scss';
+
+.button-modal__wrapper {
+  @include poppins;
+  display: flex;
+  align-items: center;
+  column-gap: 0.125rem;
+  padding: 0 $base;
+  background-color: transparent;
+  border: none;
+  border-radius: $base;
+  box-shadow: 0.063rem 0.063rem 0.063rem $color-dark-05, 0 0 0.06em $color-dark-05,
+    0 0 0.06em $color-dark-05;
+  cursor: pointer;
+  transition: $transition-01;
+
+  &:hover {
+    .button-modal {
+      filter: brightness(0.8);
+      transition: $transition-01;
+    }
+  }
+
+  &:active {
+    transform: translate(0.063rem, 0.063rem);
+    transition: $transition-01;
+  }
+}
+
+.button-modal {
+  width: $base * 6;
+  height: $base * 6;
+  background-size: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: $transition-01;
+}
+
+.button__submit {
+  background-image: url('../../../images/icons/submit.svg');
+}
+
+.button__cancel {
+  background-image: url('../../../images/icons/cancel.svg');
+}
+
+.button-modal__description {
+  font-size: $fs-m;
+  font-weight: $fw-semi-bold;
+}

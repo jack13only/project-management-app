@@ -67,7 +67,7 @@ body {
   padding: 0;
   font-size: $fs-xxl;
   font-weight: $fw-semi-bold;
-  letter-spacing: 2px;
+  letter-spacing: 0.125rem;
   text-align: center;
   text-transform: uppercase;
 }
@@ -103,5 +103,5 @@ a {
   align-items: center;
   height: 100%;
   padding-right: $base;
-  border-right: 1px solid $color-dark-03;
+  border-right: 0.063rem solid $color-dark-03;
 }

@@ -99,7 +99,7 @@ const SignUp = (): JSX.Element => {
         </label>
 
         <label className="form__nickname" title={localizationObj[lang].onlyNumbersLetters}>
-          <span className="form__label-tittle">{localizationObj[lang].login}</span>
+          <span className="form__label-tittle">{localizationObj[lang].login}:</span>
           <input
             className="signup__name"
             {...register('login', {

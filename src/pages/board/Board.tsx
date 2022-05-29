@@ -89,7 +89,8 @@ const Board: FC = () => {
   const addTaskToAnotherColumn = async (
     columnId: string,
     taskTitle: string,
-    description: string
+    description: string,
+    userId: string
   ) => {
     return await postTask({
       columnId,
@@ -115,7 +116,8 @@ const Board: FC = () => {
     taskTitle: string,
     taskId: string,
     order: number,
-    description: string
+    description: string,
+    userId: string
   ) => {
     return await updateTask({
       columnId: columnId,
@@ -134,11 +136,17 @@ const Board: FC = () => {
     tasksList: TasksList[],
     endIndex: number,
     columnId: string,
-    taskId: string,
-    description: string
+    taskId: string
   ) => {
     const [movedTask] = tasksList.filter((task) => task.id === taskId);
-    await updateTaskHandler(columnId, movedTask.title, taskId, endIndex + 1, description);
+    await updateTaskHandler(
+      columnId,
+      movedTask.title,
+      taskId,
+      endIndex + 1,
+      movedTask.description,
+      movedTask.userId
+    );
   };
 
   const onDragEndHandler = (result: DropResult) => {
@@ -168,7 +176,12 @@ const Board: FC = () => {
       task
         .then((res) =>
           Promise.all([
-            addTaskToAnotherColumn(destination.droppableId, res.data.title, res.data.description),
+            addTaskToAnotherColumn(
+              destination.droppableId,
+              res.data.title,
+              res.data.description,
+              res.data.userId
+            ),
             deleteTaskFromCurrentCol(source.droppableId, draggableId),
           ])
         )
@@ -190,9 +203,7 @@ const Board: FC = () => {
 
       tasks
         .then((res) => res.data)
-        .then((data) =>
-          reorderTasks(data, destination.index, source.droppableId, draggableId, data.description)
-        )
+        .then((data) => reorderTasks(data, destination.index, source.droppableId, draggableId))
         .catch((error) => console.log('error', error));
       tasks.unsubscribe();
       return;
@@ -215,6 +226,10 @@ const Board: FC = () => {
     <>
       <DragDropContext onDragEnd={onDragEndHandler}>
         <div className="board">
+          <h2 className="board__title">
+            <span className="board__title-description">{localizationObj[lang].board} </span>
+            {currentBoardTitle}
+          </h2>
           <div className="wrapper">
             <div className="board__title__wrapper">
               <Link to="/boards">
@@ -225,10 +240,7 @@ const Board: FC = () => {
                   description={localizationObj[lang].back}
                 />
               </Link>
-              <h2 className="board__title">
-                <span className="board__title-description">{localizationObj[lang].board} </span>
-                {currentBoardTitle}
-              </h2>
+
               <BackButton
                 classNameWrapper="btn-back__wrapper"
                 className="btn-back-common btn-new"
