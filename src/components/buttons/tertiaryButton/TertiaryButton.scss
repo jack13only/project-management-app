@@ -20,4 +20,15 @@
     filter: brightness(0.8);
     transition: $transition;
   }
+
+  @media (max-width: $breakpoint-md-min) {
+    padding: $base $base;
+  }
+}
+
+.button__tertiary-description {
+  @media (max-width: $breakpoint-md-min) {
+    width: max-content;
+    font-size: $fs-xs;
+  }
 }
