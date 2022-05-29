@@ -54,7 +54,7 @@
 }
 
 .task {
-  @include flexStart;
+  @include flexSpaceBetween;
   gap: $base * 2;
   padding: $base * 4 $base;
   border: 0.063rem solid $color-dark-04;
@@ -73,8 +73,6 @@
 
 .task-text {
   position: relative;
-  max-width: $base * 70;
-  flex-basis: 85%;
   font-size: $fs-xl;
   overflow: hidden;
   overflow-wrap: break-word;
