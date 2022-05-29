@@ -280,10 +280,10 @@ const Board: FC = () => {
               }
             />
             <button type="button" onClick={addNewColumn}>
-              Submit
+              {localizationObj[lang].submit}
             </button>
             <button type="button" onClick={() => setActiveModal(false)}>
-              Cancel
+              {localizationObj[lang].cancel}
             </button>
           </div>
         </div>

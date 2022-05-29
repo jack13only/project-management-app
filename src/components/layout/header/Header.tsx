@@ -165,10 +165,10 @@ const Header: FC = () => {
               }
             />
             <button type="button" onClick={addNewBoard}>
-              Submit
+              {localizationObj[lang].submit}
             </button>
             <button type="button" onClick={() => setActiveModal(false)}>
-              Cancel
+              {localizationObj[lang].cancel}
             </button>
           </div>
         </div>

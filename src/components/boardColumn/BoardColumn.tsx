@@ -186,7 +186,7 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
                       }
                     />
                     <button type="button" onClick={addTask}>
-                      Submit
+                      {localizationObj[lang].submit}
                     </button>
                     <button
                       type="button"
@@ -196,7 +196,7 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
                         setTaskDescription('');
                       }}
                     >
-                      Cancel
+                      {localizationObj[lang].cancel}
                     </button>
                   </div>
                 )}
