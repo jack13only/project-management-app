@@ -9,7 +9,7 @@ import { useAppSelector } from '../../app/hooks';
 const BoardsItem = ({ title, id, description, isActiveModal, getDeletedBoard }: BoardsTypes) => {
   const [activeModal, setActiveModal] = useState<boolean>(false);
   const [currentTitle, setCurrentTitle] = useState(title);
-  const [currentDescription, setCurrentTDescription] = useState(description);
+  const [currentDescription, setCurrentDescription] = useState(description);
   const [isOpenBoardTitle, setIsOpenBoardTitle] = useState(false);
   const [isOpenBoardDescr, setIsOpenBoardDescr] = useState(false);
   const { lang } = useAppSelector((state) => state.langStorage);
@@ -31,25 +31,49 @@ const BoardsItem = ({ title, id, description, isActiveModal, getDeletedBoard }: 
 
   const handleBoardDescription = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const VALUE = event.target.value;
-    setCurrentTDescription(VALUE);
+    setCurrentDescription(VALUE);
   };
 
-  const submitBoardTitleAndDescr = async (event: React.MouseEvent<HTMLButtonElement>) => {
+  const submitBoardTitle = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
 
     if (currentTitle.trim().length) {
       setIsOpenBoardTitle(false);
       setIsOpenBoardDescr(false);
+      setCurrentDescription(description);
 
       await updateBoard({
         boardId: id,
-        body: { title: currentTitle, description: currentDescription },
+        body: { title: currentTitle, description },
       });
     }
   };
 
-  const cancelBoardTitleAndDescr = async (event: React.MouseEvent<HTMLButtonElement>) => {
+  const submitBoardDescr = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
+
+    if (currentDescription.trim().length) {
+      setIsOpenBoardTitle(false);
+      setIsOpenBoardDescr(false);
+      setCurrentTitle(title);
+
+      await updateBoard({
+        boardId: id,
+        body: { title, description: currentDescription },
+      });
+    }
+  };
+
+  const cancelBoardDescr = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    setCurrentDescription(description);
+    setIsOpenBoardTitle(false);
+    setIsOpenBoardDescr(false);
+  };
+
+  const cancelBoardTitle = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    setCurrentTitle(title);
     setIsOpenBoardTitle(false);
     setIsOpenBoardDescr(false);
   };
@@ -77,10 +101,7 @@ const BoardsItem = ({ title, id, description, isActiveModal, getDeletedBoard }: 
             onClick={(event: MouseEvent<HTMLInputElement>) => event.preventDefault()}
           />
 
-          <ChangeTitleBtns
-            onClickSubmit={submitBoardTitleAndDescr}
-            onClickCancel={cancelBoardTitleAndDescr}
-          />
+          <ChangeTitleBtns onClickSubmit={submitBoardTitle} onClickCancel={cancelBoardTitle} />
         </div>
       )}
 
@@ -106,10 +127,7 @@ const BoardsItem = ({ title, id, description, isActiveModal, getDeletedBoard }: 
             onClick={(event: MouseEvent<HTMLTextAreaElement>) => event.preventDefault()}
           />
 
-          <ChangeTitleBtns
-            onClickSubmit={submitBoardTitleAndDescr}
-            onClickCancel={cancelBoardTitleAndDescr}
-          />
+          <ChangeTitleBtns onClickSubmit={submitBoardDescr} onClickCancel={cancelBoardDescr} />
         </div>
       )}
       <DeleteButton type="button" onClick={handlerActiveModal} />

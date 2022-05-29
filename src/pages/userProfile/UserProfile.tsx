@@ -279,7 +279,7 @@ const UserProfile: FC = () => {
           )}
           {!!deleteMsg && (
             <div className="modal__text">
-              <h2>{`${localizationObj[lang].doYouWantToDelete} '${userName}'`} ?</h2>
+              <h2>{`${localizationObj[lang].doYouWantToDelete} '${userName}' ?`}</h2>
               <div>{localizationObj[lang].afterDeleteRedirect}</div>
               <button type="button" onClick={deleteHandler}>
                 {localizationObj[lang].submit}

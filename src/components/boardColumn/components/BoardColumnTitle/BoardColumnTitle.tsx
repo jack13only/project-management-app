@@ -36,6 +36,7 @@ const BoardColumnTitle: FC<BoardColumnTitleTypes> = ({ columnId, columnTitle, bo
 
   const cancelColumnTitle = () => {
     setIsOpenColumnTitle(false);
+    setColumnTitle(columnTitle);
   };
 
   const handleColumnTitleValue = (event: React.ChangeEvent<HTMLInputElement>) => {

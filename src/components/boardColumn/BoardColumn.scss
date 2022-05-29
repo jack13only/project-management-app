@@ -45,6 +45,7 @@
 .cards__list__container {
   @include scroll;
   overflow: auto;
+  overflow-x: hidden;
 }
 
 .cards__list {
