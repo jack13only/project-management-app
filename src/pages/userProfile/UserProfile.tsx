@@ -255,17 +255,23 @@ const UserProfile: FC = () => {
               )}
             </label>
           )}
-
-          <input type="submit" value={localizationObj[lang].update} className="form__submit" />
-          <input
-            type="button"
-            value={localizationObj[lang].cancel}
-            className="form__submit"
-            onClick={() => {
-              setIsEditing(false);
-              reset();
-            }}
-          />
+          <div className="board__column-btns space">
+            <button className="button-modal__wrapper button-modal-width" type="submit">
+              <div className="button-modal button__submit" />
+              <div className="button-modal__description">{localizationObj[lang].update}</div>
+            </button>
+            <button
+              className="button-modal__wrapper button-modal-width"
+              type="button"
+              onClick={() => {
+                setIsEditing(false);
+                reset();
+              }}
+            >
+              <div className="button-modal button__cancel" />
+              <div className="button-modal__description">{localizationObj[lang].cancel}</div>
+            </button>
+          </div>
         </form>
       )}
 
