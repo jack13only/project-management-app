@@ -168,7 +168,9 @@ const CardItem: FC<CardItemProps> = ({
           >
             <>
               <span key={id} className="task">
-                <span className="task-text">{cardTitle}</span>
+                <span className="task-text" onClick={openTaskHandler}>
+                  {cardTitle}
+                </span>
                 <span
                   className="task-owner"
                   onClick={() => {
