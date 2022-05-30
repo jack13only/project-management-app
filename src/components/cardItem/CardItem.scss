@@ -38,3 +38,35 @@
 .task-owner-user {
   font-weight: $fw-regular;
 }
+
+.users-list__item {
+  position: relative;
+  margin-left: auto;
+  cursor: grab;
+  width: fit-content;
+
+  &::after {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    content: '';
+    width: 0%;
+    height: 0.125rem;
+    background-color: $color-purple;
+    transition: $transition-01;
+  }
+
+  &:hover {
+    color: $color-orange;
+    transition: $transition-01;
+    overflow: hidden;
+
+    &::after {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: $breakpoint-sm-min) {
+    margin: auto;
+  }
+}

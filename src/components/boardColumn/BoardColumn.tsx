@@ -1,6 +1,6 @@
 import React, { FC, RefObject, useEffect, useRef, useState } from 'react';
 
-import { DeleteButton, TertiaryButton } from '../buttons';
+import { ChangeTitleBtns, DeleteButton, TertiaryButton } from '../buttons';
 import { BoardColumnTitle, CardContainer, CardList, Modal } from '..';
 
 import './BoardColumn.scss';
@@ -12,7 +12,6 @@ import { useAppSelector } from '../../app/hooks';
 import { ColumnType } from '../../pages/board/Board';
 import { Draggable } from 'react-beautiful-dnd';
 import { localizationObj } from '../../features/localization';
-import { ChangeTitleBtns } from '../buttons';
 
 type BoardColumnProps = {
   columnTitle: string;
@@ -53,10 +52,6 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
   const [postTask] = usePostTaskMutation();
   const [isTask, setIsTask] = useState(false);
   const [isColumn, setIsColumn] = useState(false);
-
-  if (error && 'status' in error) {
-    console.log('error.data', error.status);
-  }
 
   const removeColumn = async () => {
     setActiveModal(false);
@@ -157,7 +152,7 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
               <div className="modal__wrapper">
                 {isColumn && (
                   <>
-                    <div className="modal__img" />
+                    <div className="modal__img modal__img-delete" />
                     <div className="modal__text">
                       <h2>{`${localizationObj[lang].doYouWantToDelete} '${columnTitle}' ?`}</h2>
                       <ChangeTitleBtns
@@ -169,32 +164,36 @@ const BoardColumn: FC<BoardColumnProps> = ({ columnTitle, boardId, columnId, ord
                 )}
 
                 {isTask && (
-                  <div className="modal__text">
-                    <h2>{`${localizationObj[lang].addATitle}`}</h2>
-                    <input
-                      type="text"
-                      value={taskTitle}
-                      onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                        setTaskTitle(event?.target.value)
-                      }
-                    />
-                    <h2>{`${localizationObj[lang].addADescription}`}</h2>
-                    <input
-                      type="text"
-                      value={taskDescription}
-                      onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                        setTaskDescription(event?.target.value)
-                      }
-                    />
-                    <ChangeTitleBtns
-                      onClickSubmit={addTask}
-                      onClickCancel={() => {
-                        setActiveModal(false);
-                        setTaskTitle('');
-                        setTaskDescription('');
-                      }}
-                    />
-                  </div>
+                  <>
+                    <div className="modal__img modal__img-add" />
+                    <div className="modal__text">
+                      <h2>{`${localizationObj[lang].addATitle}`}</h2>
+                      <input
+                        type="text"
+                        value={taskTitle}
+                        onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                          setTaskTitle(event?.target.value)
+                        }
+                      />
+                      <h2>{`${localizationObj[lang].addADescription}`}</h2>
+                      <input
+                        type="text"
+                        value={taskDescription}
+                        onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                          setTaskDescription(event?.target.value)
+                        }
+                      />
+
+                      <ChangeTitleBtns
+                        onClickSubmit={addTask}
+                        onClickCancel={() => {
+                          setActiveModal(false);
+                          setTaskTitle('');
+                          setTaskDescription('');
+                        }}
+                      />
+                    </div>
+                  </>
                 )}
               </div>
             </Modal>

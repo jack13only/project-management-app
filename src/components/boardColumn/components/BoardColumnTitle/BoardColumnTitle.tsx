@@ -58,7 +58,7 @@ const BoardColumnTitle: FC<BoardColumnTitleTypes> = ({ columnId, columnTitle, bo
           <ChangeTitleBtns onClickSubmit={submitColumnTitle} onClickCancel={cancelColumnTitle} />
         </div>
       ) : (
-        <h4 className="h4" onClick={changeTitle}>
+        <h4 className="h4 board__column-title" onClick={changeTitle}>
           {columnTitle}
         </h4>
       )}

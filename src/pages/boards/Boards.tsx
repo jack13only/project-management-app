@@ -81,7 +81,7 @@ const Boards: FC = () => {
 
       <Modal activeModal={activeModal} setActiveModal={setActiveModal}>
         <div className="modal__wrapper">
-          <div className="modal__img" />
+          <div className="modal__img modal__img-delete" />
           <div className="modal__text">
             <h2>{localizationObj[lang].areYouSure}</h2>
             <h3>{`${localizationObj[lang].doYouWantToDelete} '${deletedBoardTitle}' ?`}</h3>

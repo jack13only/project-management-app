@@ -7,7 +7,7 @@ import { logoutUser } from '../../../reducers/auth';
 import decodeUserId from '../../../features/decodeUserId';
 import { useGetUserByIdQuery, usePostBoardMutation } from '../../../app/RtkQuery';
 import { setEmptyUser, setUserData } from '../../../reducers/userReducer';
-import { PrimaryButton, TertiaryButton } from '../../buttons';
+import { ChangeTitleBtns, PrimaryButton, TertiaryButton } from '../../buttons';
 
 import './Header.scss';
 import { localizationObj } from '../../../features/localization';
@@ -147,6 +147,7 @@ const Header: FC = () => {
 
       <Modal activeModal={activeModal} setActiveModal={setActiveModal}>
         <div className="modal__wrapper">
+          <div className="modal__img modal__img-add" />
           <div className="modal__text">
             <h2>{`${localizationObj[lang].addATitle}`}</h2>
             <input
@@ -164,12 +165,11 @@ const Header: FC = () => {
                 setBoardDescription(event?.target.value)
               }
             />
-            <button type="button" onClick={addNewBoard}>
-              {localizationObj[lang].submit}
-            </button>
-            <button type="button" onClick={() => setActiveModal(false)}>
-              {localizationObj[lang].cancel}
-            </button>
+
+            <ChangeTitleBtns
+              onClickSubmit={addNewBoard}
+              onClickCancel={() => setActiveModal(false)}
+            />
           </div>
         </div>
       </Modal>
