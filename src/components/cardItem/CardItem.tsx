@@ -239,7 +239,7 @@ const CardItem: FC<CardItemProps> = ({
                     onChange={handleTaskTitleInput}
                   />
                   <h2>{`${localizationObj[lang].taskDescription}: `}</h2>
-                  <p>{cardDescription}</p>
+                  <p className="modal__tasks-descr">{cardDescription}</p>
 
                   <Textarea
                     className="textarea modal__tasks-textarea"
