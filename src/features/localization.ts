@@ -55,6 +55,10 @@ export const localizationObj = {
     kochieva: 'Виктория Кочиева',
     karakulka: 'Дмитрий Каракулько',
     doYouWantToChangeUser: 'Выберите нового пользователя',
+    welcome: 'Добро пожаловать',
+    app: 'Ваша система управлениями проектами',
+    aboutProject:
+      'Приложение для управления проектами — это приложение, которое назначает задачи отдельным участникам проекта или группы. Это визуальный инструмент, который позволяет вашей команде управлять любым типом проекта, рабочим процессом или отслеживанием задач. Добавьте файлы, контрольные списки или даже автоматизацию: настройте все так, чтобы ваша команда работала лучше всего. Просто зарегистрируйтесь, создайте доску, и вперед!',
   },
   [enLang]: {
     signIn: 'Sign In',
@@ -109,5 +113,9 @@ export const localizationObj = {
     kochieva: 'Victoria Kochieva',
     karakulka: 'Dzmitry Karakulka',
     doYouWantToChangeUser: 'Choose new task user',
+    welcome: 'Welcome',
+    app: "It's Your Project Management App",
+    aboutProject:
+      "Project management app is an application that assigns tasks to individual participants in a project or group. It is the visual tool that empowers your team to manage any type of project, workflow, or task tracking. Add files, checklists, or even automation: Customize it all for how your team works best. Just sign up, create a board, and you're off!",
   },
 };
