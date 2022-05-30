@@ -1,0 +1,124 @@
+@import '../../sass/Constants.scss';
+
+.boards {
+  padding: 0 0 $base * 5 0;
+  width: 80%;
+  margin: 0 auto;
+
+  @media (max-width: $breakpoint-lg-min) {
+    width: 97%;
+  }
+
+  .h2 {
+    @include disableSelection;
+    margin-top: $base * 2;
+    font-size: $fs-xxxxl;
+    text-shadow: 0.063rem 0.063rem 0.063rem $color-purple, 0 0 0.06em $color-purple,
+      0 0 0.06em $color-purple;
+
+    @media (max-width: $breakpoint-lg-min) {
+      font-size: $fs-xxxl;
+    }
+
+    @media (max-width: $breakpoint-md-min) {
+      font-size: $fs-xxl;
+    }
+  }
+}
+
+.boards__container {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  column-gap: $base * 2;
+  row-gap: $base * 4;
+  padding: $base * 5 0;
+}
+
+.board__new-btn {
+  flex-basis: 30%;
+  height: $base * 10;
+}
+
+.boards__item-title {
+  font-size: $fs-xl;
+  font-weight: $fw-bold;
+  color: $color-dark;
+  transition: $transition-02;
+  cursor: pointer;
+}
+
+.boards__item-descr {
+  font-size: $fs-m;
+  font-weight: $fw-semi-bold;
+  color: $color-purple;
+  cursor: pointer;
+  transition: $transition-01;
+
+  &:hover {
+    color: $color-blue-09;
+    transition: $transition-01;
+  }
+}
+
+.boards__item-input__wrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: $base;
+  margin-bottom: $base;
+
+  .textarea {
+    @include poppins;
+    width: 100%;
+    padding: 0 $base * 2;
+    font-size: $fs-l;
+    color: $color-dark;
+    background-color: $color-white;
+    border: 0.063rem solid $color-dark;
+  }
+}
+
+.boards__item-input {
+  @include poppins;
+  width: 100%;
+  padding: 0 $base * 2;
+  font-size: $fs-l;
+  color: $color-dark;
+  background-color: $color-white;
+  border: 0.063rem solid $color-dark;
+  border-radius: $base;
+
+  @media (max-width: $breakpoint-md-min) {
+    font-size: $fs-m;
+  }
+}
+
+.boards-item__link {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  flex-basis: 32.4%;
+  height: 100%;
+  min-height: $base * 35;
+  padding: $base * 2;
+  word-break: break-word;
+  border: 0.063rem solid $color-dark-03;
+  box-shadow: 0.063rem 0.063rem 0.063rem $color-dark-05, 0 0 0.06em $color-dark,
+    0 0 0.06em $color-dark;
+  border-radius: $base * 3;
+
+  &:hover {
+    .boards__item-title {
+      color: $color-yellow;
+      transition: $transition-02;
+    }
+  }
+
+  @media (max-width: $breakpoint-md-min) {
+    flex-basis: 48%;
+  }
+
+  @media (max-width: $breakpoint-xs-min) {
+    flex-basis: 100%;
+  }
+}

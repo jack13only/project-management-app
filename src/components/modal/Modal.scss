@@ -1,0 +1,218 @@
+@import '../../sass/Constants.scss';
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  transition: $transition;
+  pointer-events: none;
+  z-index: 50;
+
+  &.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .modal__content {
+    border-radius: $base * 3;
+    background-color: rgb(255, 255, 255);
+    transform: scale(0.5);
+    width: 60%;
+    height: 60vh;
+    transition: $transition all;
+
+    @media (max-width: $breakpoint-xl-min) {
+      width: 76vw;
+    }
+
+    @media (max-width: $breakpoint-md-min) {
+      width: 90vw;
+    }
+
+    &.active {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      opacity: 1;
+      pointer-events: all;
+      transform: scale(1);
+    }
+  }
+
+  .modal__wrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+  }
+
+  .modal__img {
+    flex-basis: 50%;
+    height: auto;
+    background-size: cover;
+    background-color: rgb(255, 255, 255);
+    background-position: center;
+    border-radius: $base * 3 0 0 $base * 3;
+  
+    @media (max-width: $breakpoint-md-min) {
+      flex-basis: 55%;
+    }
+
+    @media (max-width: $breakpoint-sm-min) {
+      flex-basis: 0%;
+    }
+  }
+
+  .modal__img-delete {
+    background-image: url('../../images/confirmation.jpg');
+    background-repeat: no-repeat;
+
+    @media (max-width: $breakpoint-sm-min) {
+      background: rgb(255, 255, 255);
+    }
+  }
+
+  .modal__img-add {
+    background-image: url('../../images/modal/create.jpg');
+    background-repeat: no-repeat;
+
+    @media (max-width: $breakpoint-sm-min) {
+      background: rgb(255, 255, 255);
+    }
+  }
+
+  .modal__img-user-change {
+    background-image: url('../../images/modal/changeUser.jpg');
+    background-repeat: no-repeat;
+
+    @media (max-width: $breakpoint-sm-min) {
+      background: rgb(255, 255, 255);
+    }
+  }
+
+  .modal__text {
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+    row-gap: $base * 3;
+    padding: $base * 19 $base * 4 $base * 4;
+    flex-basis: 45%;
+    text-align: end;
+    word-break: break-word;
+
+    h2 {
+      overflow: hidden;
+      line-height: 2rem;
+      -webkit-box-orient: vertical;
+      display: -webkit-box;
+      text-overflow: ellipsis;
+      -webkit-line-clamp: 5;
+    }
+
+    input {
+      padding: $base * 2;
+      width: 90%;
+      height: $base * 6;
+      border-radius: $base * 2;
+      border: $base * 0.2 solid $color-purple;
+    }
+
+    @media (max-width: $breakpoint-sm-min) {
+      flex-basis: 100%;
+      align-items: center;
+      text-align: center;
+    }
+  }
+
+  .modal__btns {
+    display: flex;
+    column-gap: $base * 3;
+  }
+
+  .modal__close {
+    position: absolute;
+    top: $base;
+    right: $base * 2;
+    font-size: $base * 6;
+    transition: $transition linear;
+    cursor: pointer;
+
+    &:hover {
+      transform: rotate(90deg);
+    }
+
+    &:active {
+      transform: scale(0.8);
+    }
+  }
+
+  .modal__tasks {
+    padding: $base * 2 $base * 5 $base * 4;
+    flex-direction: column;
+    align-items: flex-start;
+    overflow-y: auto;
+    @include scroll;
+  }
+
+  .modal__tasks > .modal__text {
+    flex-basis: 100%;
+    align-items: flex-start;
+    padding: 0;
+    width: 100%;
+    text-align: initial;
+  }
+
+  .modal__tasks > .modal__tasks-text {
+    border: $base * 0.2 solid $color-purple;
+    border-radius: $base;
+    margin: $base * 10 0;
+    padding: $base * 2;
+  }
+
+  .modal__text-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: $base * 3;
+    width: 100%;
+  }
+
+  .modal__text > .boards__item-input {
+    width: 98%;
+  }
+  
+  .modal__tasks-textarea {
+    width: 98%;
+  }
+
+  .modal__tasks-btns {
+    position: absolute;
+    bottom: $base * 3;
+  }
+
+  .modal__tasks-header {
+    text-overflow: ellipsis;
+    max-width: 84%;
+    text-align: initial;
+    overflow: hidden;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-height: 1.3em;
+  }
+
+  .modal__tasks-descr {
+    word-break: break-word;
+    max-width: 96%;
+  }
+}
+
+.modal__text-question {
+  display: flex;
+}

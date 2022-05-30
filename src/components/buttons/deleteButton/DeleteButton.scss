@@ -1,0 +1,21 @@
+@import '../../../sass/Constants.scss';
+
+.btn-delete {
+  min-width: $base * 5;
+  min-height: $base * 5;
+  background-color: transparent;
+  background-image: url('../../../images/icons/delete.svg');
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    filter: brightness(0.7);
+  }
+}
+
+.btn-edit {
+  background-image: url('../../../images/icons/edit.svg');
+}

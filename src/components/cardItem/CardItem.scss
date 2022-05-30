@@ -1,0 +1,72 @@
+@import '../../sass/Constants.scss';
+
+.board__task {
+  display: flex;
+  flex-direction: column;
+  row-gap: $base * 2;
+  width: 97%;
+  border-radius: $base;
+}
+
+.board__task-input {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  row-gap: $base * 2;
+  border: 0.063rem solid $color-dark-04;
+  border-radius: $base;
+}
+
+.board__task-btns {
+  display: flex;
+  column-gap: $base * 2;
+}
+
+.task__btns {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.task-owner {
+  font-size: $fs-xs;
+  font-weight: $fw-semi-bold;
+  cursor: pointer;
+}
+
+.task-owner-user {
+  font-weight: $fw-regular;
+}
+
+.users-list__item {
+  position: relative;
+  margin-left: auto;
+  cursor: grab;
+  width: fit-content;
+
+  &::after {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    content: '';
+    width: 0%;
+    height: 0.125rem;
+    background-color: $color-purple;
+    transition: $transition-01;
+  }
+
+  &:hover {
+    color: $color-orange;
+    transition: $transition-01;
+    overflow: hidden;
+
+    &::after {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: $breakpoint-sm-min) {
+    margin: auto;
+  }
+}

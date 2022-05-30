@@ -1,0 +1,70 @@
+@import '../../../sass/Constants.scss';
+
+.form__container {
+  font-weight: $fw-semi-bold;
+}
+
+.switcher__container {
+  display: flex;
+  align-items: center;
+  gap: $base;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: $base * 8;
+  height: $base * 5;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: $color-yellow;
+  -webkit-transition: $transition;
+  transition: $transition;
+}
+
+.slider:before {
+  position: absolute;
+  content: '';
+  height: $base * 3;
+  width: $base * 3;
+  left: $base;
+  bottom: $base;
+  background-color: $color-white;
+  -webkit-transition: $transition;
+  transition: $transition;
+}
+
+input:checked + .slider {
+  background-color: $color-blue-light;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 0.063rem $color-blue-light;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX($base * 3);
+  -ms-transform: translateX($base * 3);
+  transform: translateX($base * 3);
+}
+
+.slider.round {
+  border-radius: $base * 7;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}

@@ -1,0 +1,96 @@
+@import '../../sass/Constants.scss';
+
+.signup {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 45%;
+  margin: $base * 2 auto;
+  padding: $base * 2;
+  font-size: $fs-xxxl;
+  border-radius: $base * 3;
+  box-shadow: 0.063rem 0.063rem 0.063rem $color-sale, 0 0 0.06em $color-dark, 0 0 0.06em $color-dark;
+
+  @media (max-width: $breakpoint-lg-min) {
+    width: 50%;
+  }
+
+  @media (max-width: $breakpoint-md-min) {
+    width: 65%;
+  }
+
+  @media (max-width: $breakpoint-xs-min) {
+    width: 95%;
+  }
+}
+
+.form__error {
+  font-size: $fs-l;
+  color: $color-error;
+}
+
+.form__title {
+  @include disableSelection;
+  font-size: $fs-xxxxl;
+  font-weight: $fw-bold;
+  line-height: $base * 10;
+  text-align: center;
+  text-transform: uppercase;
+  text-shadow: 0.063rem 0.063rem 0.063rem $color-sale, 0 0 0.06em $color-blue-light,
+    0 0 0.06em $color-blue-light;
+  color: $color-purple;
+}
+
+.form__nickname,
+.form__password {
+  display: grid;
+  grid-template-rows: 1fr 1fr 0.55fr;
+}
+
+.signup__password,
+.signup__name {
+  @include poppins;
+  width: 100%;
+  padding: 0 $base * 2;
+  font-size: $fs-xxxl;
+  background-color: $color-white;
+  border: 0.063rem solid $color-dark;
+
+  @media (max-width: $breakpoint-md-min) {
+    font-size: $fs-xxl;
+  }
+}
+
+.form__label-tittle {
+  font-size: $fs-xxxl;
+  font-weight: $fw-semi-bold;
+  color: $color-dark;
+  text-shadow: 0.063rem 0.063rem 0.063rem $color-dark-02, 0 0 0.06em $color-dark-02,
+    0 0 0.06em $color-dark-02;
+
+  @media (max-width: $breakpoint-md-min) {
+    font-size: $fs-xxl;
+  }
+}
+
+.form__submit {
+  @include poppins;
+  background-color: $color-white;
+  border: 0.125rem solid $color-dark;
+  border-radius: $base;
+  font-size: $fs-xxl;
+  width: 50%;
+  margin: 0 auto;
+  transition: $transition-01;
+
+  &:hover {
+    border-radius: $base * 3;
+    box-shadow: inset 0px 0px $base * 4 rgb(201, 255, 209);
+    cursor: pointer;
+  }
+
+  &:active {
+    transform: translate(0.063rem, 0.063rem);
+    transition: $transition-01;
+  }
+}

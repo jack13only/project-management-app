@@ -1,0 +1,119 @@
+@import '../../sass/Constants.scss';
+
+.main {
+  background-color: $color-grey-white;
+}
+
+.welcome-page {
+  .h2 {
+    @include disableSelection;
+    margin-top: $base * 10;
+    margin-bottom: $base * 10;
+    font-size: $fs-xxxxl;
+    text-shadow: 0.063rem 0.063rem 0.063rem $color-purple, 0 0 0.06em $color-purple,
+      0 0 0.06em $color-purple;
+
+    @media (max-width: $breakpoint-lg-min) {
+      margin-top: 0;
+      font-size: $fs-xxxl;
+    }
+
+    @media (max-width: $breakpoint-md-min) {
+      font-size: $fs-xxl;
+    }
+  }
+
+  .welcome-page__title {
+    font-size: $base * 11;
+    line-height: $base * 15;
+    margin-bottom: $base * 3;
+  }
+
+  .welcome-page__subtitle {
+    margin-bottom: $base * 3;
+  }
+  
+  .welcome-page__content {
+    padding: $base * 25 0;
+    width: 50%;
+    margin-right: auto;
+    color: white;
+
+    @media (max-width: $breakpoint-md-min) {
+      padding-bottom: $base * 10;
+    }
+
+    @media (max-width: $breakpoint-sm-min) {
+      width: 90%;
+      margin: auto;
+      text-align: center;
+    }
+  }
+
+  .welcome-page__promo {
+    background: #0a1e3f;
+    background-image: url('../../images/YFNLt5hMncNXRFTyJMBGis_ri01GarCduTNi4PLDKgcMxFbphXYXLyaWJDNkFmu.jpg');
+    background-repeat: no-repeat;
+    background-position: 100% center;
+    background-size: contain;
+    box-shadow: 0px -24px 74px 115px rgb(10 30 63);
+
+    @media (max-width: $breakpoint-lg-min) {
+      background-position: 10rem center;
+    }
+
+    @media (max-width: $breakpoint-sm-min) {
+      background: #0a1e3f;
+    }
+  }
+
+  .team {
+    @include flexCenter;
+    flex-direction: column;
+    gap: $base * 3;
+    width: 80%;
+    margin: 0 auto $base * 3 auto;
+  
+    @media (max-width: $breakpoint-lg-min) {
+      width: 97%;
+    }
+  }
+  
+  .welcome__container {
+    @include flexSpaceBetween;
+    flex-wrap: wrap;
+    gap: $base * 4;
+    width: 100%;
+    margin-bottom: $base * 4;
+  
+    @media (max-width: $breakpoint-lg-min) {
+      justify-content: center;
+    }
+  }
+  
+  .about {
+    padding: $base * 15 0;
+    -webkit-box-shadow: 0px -67px 34px 37px rgba(10, 30, 63, 0.1);
+    -moz-box-shadow: 0px -67px 34px 37px rgba(10, 30, 63, 0.1);
+    box-shadow: 0px -67px 34px 37px rgba(10, 30, 63, 0.1);
+    background: rgba(10, 30, 63, 0.1);
+  }
+
+  .about__title {
+    margin: auto;
+    margin-bottom: $base * 7;
+    font-size: $fs-xxxxl;
+  }
+
+  .about__wrapper {
+    flex-direction: column;
+  }
+
+  .about__content {
+    text-align: center;
+
+    @media (max-width: $breakpoint-lg-min) {
+      padding: $base * 3;
+    }
+  }
+}

@@ -1,0 +1,22 @@
+@import '../../../../sass/Constants.scss';
+
+.error-modal {
+  @include flexCenter;
+  flex-direction: column;
+  gap: $base * 6;
+  width: 100%;
+  height: 100%;
+
+  .error-modal__title {
+    color: $color-error;
+    font-size: $fs-xxxl;
+  }
+
+  .error-modal__title.green {
+    color: $color-green;
+  }
+}
+
+.error-content {
+  margin: auto;
+}

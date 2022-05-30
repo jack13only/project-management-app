@@ -1,0 +1,25 @@
+@import '../../../../sass/Constants.scss';
+
+.board__column-input {
+  display: flex;
+  flex-direction: column;
+  row-gap: $base * 2;
+  padding: $base * 2 0;
+}
+
+.board__column-btns {
+  display: flex;
+  column-gap: $base;
+}
+
+.board__column-title {
+  overflow: hidden;
+  flex-basis: 85%;
+  -webkit-box-orient: vertical;
+  display: block;
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  word-break: break-word;
+}

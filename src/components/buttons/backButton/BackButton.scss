@@ -1,0 +1,70 @@
+@import '../../../sass/Constants.scss';
+
+.btn-back__wrapper {
+  @include flexCenter;
+  gap: $base;
+  width: $base * 20;
+  padding: $base;
+  background-color: $color-white;
+  border: none;
+  border-radius: $base;
+  box-shadow: 0.063rem 0.063rem 0.063rem $color-dark-05, 0 0 0.06em $color-dark-05,
+    0 0 0.06em $color-dark-05;
+  transition: $transition-01;
+  cursor: pointer;
+
+  &:active {
+    transform: translate(0.063rem, 0.063rem);
+    transition: $transition-01;
+  }
+
+  @media (max-width: $breakpoint-lg-min) {
+    width: auto;
+    height: auto;
+  }
+
+  &:hover {
+    .btn-back {
+      filter: brightness(0.7);
+    }
+
+    .btn-new {
+      filter: brightness(0.7);
+    }
+  }
+}
+
+.btn-back-common {
+  width: $base * 5;
+  height: $base * 5;
+  background-color: transparent;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: none;
+
+  @media (max-width: $breakpoint-lg-min) {
+    width: $base * 7;
+    height: $base * 7;
+    background-size: 100%;
+  }
+}
+
+.btn-back {
+  background-image: url('../../../images/icons/back.svg');
+}
+
+.btn-new {
+  background-image: url('../../../images/icons/plus.svg');
+}
+
+.btn-back-description {
+  @include poppins;
+  width: min-content;
+  font-weight: $fw-semi-bold;
+  text-decoration: none;
+
+  @media (max-width: $breakpoint-lg-min) {
+    display: none;
+  }
+}

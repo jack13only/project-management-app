@@ -1,0 +1,113 @@
+@import '../../../../sass/Constants.scss';
+
+.welcome__card {
+  position: relative;
+  width: 30%;
+  text-align: center;
+
+  @media (max-width: $breakpoint-lg-min) {
+    width: 45%;
+  }
+
+  @media (max-width: $breakpoint-sm-min) {
+    width: 80%;
+  }
+}
+
+.card-img {
+  @include disableSelection;
+  position: relative;
+  width: 90%;
+  height: auto;
+  border-radius: 50%;
+  border: 0.063rem solid $color-dark-03;
+  box-shadow: rgba(136, 165, 191, 0.6) $base 0.125rem $base * 3 0px,
+    rgba(255, 255, 255, 0.8) -0.313rem -0.125rem $base * 3 0px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.welcome-card__container {
+  margin: -40% auto 0 auto;
+  padding: 40% 0 0 0;
+  background-color: $color-white;
+  border-top-right-radius: $base * 4;
+  border-top-left-radius: $base * 4;
+  border-bottom-right-radius: $base * 2;
+  border-bottom-left-radius: $base * 2;
+  box-shadow: $color-dark-03 0px $base $base * 3;
+
+  .h3 {
+    font-size: $fs-xl;
+    font-weight: $fw-bold;
+    letter-spacing: 0.06em;
+    color: $color-dark;
+  }
+
+  .h4 {
+    font-size: $fs-l;
+    font-weight: $fw-semi-bold;
+  }
+}
+
+.card-info {
+  text-align: center;
+}
+
+.card__list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $base * 3;
+  padding: $base 0;
+  background-color: $color-purple-09;
+  border-bottom-right-radius: $base * 2;
+  border-bottom-left-radius: $base * 2;
+}
+
+.card__list-item {
+  width: $base * 12;
+  height: $base * 12;
+  border-radius: 50%;
+  background-color: $color-white;
+  transition: $transition;
+
+  &:hover {
+    background-color: $color-grey-07;
+    transition: $transition;
+  }
+
+  @media (max-width: $breakpoint-xs-min) {
+    width: $base * 6;
+    height: $base * 6;
+  }
+}
+
+.card-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: $base * 12;
+  height: $base * 12;
+  background-size: 60%;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 50%;
+
+  @media (max-width: $breakpoint-xs-min) {
+    width: $base * 6;
+    height: $base * 6;
+  }
+}
+
+.github {
+  background-image: url('../../../../images/icons/github.svg');
+}
+
+.linkedin {
+  background-image: url('../../../../images/icons/linkedin.svg');
+}
+
+.instagram {
+  background-image: url('../../../../images/icons/instagram.svg');
+}

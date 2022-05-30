@@ -1,0 +1,51 @@
+@import '../../../sass/Constants.scss';
+
+.btn {
+  @include poppins;
+  width: $base * 17;
+  height: $base * 7;
+  border: 0.063rem solid $color-yellow;
+  background-color: $color-white;
+  color: $color-white;
+  border-radius: $base * 4;
+  cursor: pointer;
+  transition: $transition;
+
+  &:hover {
+    border: 0.063rem solid $color-yellow;
+    transition: $transition;
+  }
+
+  &:active {
+    border: 0.125rem solid $color-orange;
+    transition: $transition;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 0.3rem $color-yellow-dark;
+    background-color: $color-yellow;
+    color: $color-white;
+    transition: $transition;
+  }
+}
+
+.btn-colored {
+  background-color: $color-yellow;
+  transition: $transition;
+
+  &:hover {
+    background-color: $color-orange;
+    transition: $transition;
+  }
+}
+
+.btn-bordered {
+  color: $color-yellow;
+  transition: $transition;
+
+  &:hover {
+    background-color: $color-yellow;
+    color: $color-white;
+    transition: $transition;
+  }
+}

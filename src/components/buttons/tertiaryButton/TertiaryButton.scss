@@ -1,0 +1,34 @@
+@import '../../../sass/Constants.scss';
+
+.button__tertiary {
+  @include poppins;
+  width: auto;
+  height: fit-content;
+  padding: $base $base * 2;
+  color: $color-dark-09;
+  background-color: $color-grey-07;
+  border-width: 0.063rem;
+  border-style: solid;
+  border-color: $color-dark-09;
+  border-radius: $base;
+  cursor: pointer;
+  transition: $transition;
+
+  &:hover {
+    color: $color-dark;
+    border-color: $color-dark;
+    filter: brightness(0.8);
+    transition: $transition;
+  }
+
+  @media (max-width: $breakpoint-md-min) {
+    padding: $base $base;
+  }
+}
+
+.button__tertiary-description {
+  @media (max-width: $breakpoint-md-min) {
+    width: max-content;
+    font-size: $fs-xs;
+  }
+}

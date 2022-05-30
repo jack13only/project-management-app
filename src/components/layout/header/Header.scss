@@ -1,0 +1,135 @@
+@import '../../../sass/Constants.scss';
+
+.header {
+  position: sticky;
+  padding: $base * 2 0;
+  top: 0;
+  width: 100%;
+  height: auto;
+  backdrop-filter: blur($base * 2);
+  background: $color-grey-white;
+  transition: $transition;
+  z-index: 3;
+}
+
+.header__wrapper {
+  justify-content: space-between;
+}
+
+.header__logo__wrapper {
+  display: flex;
+  align-items: center;
+  gap: $base;
+
+  .button__tertiary {
+    @media (max-width: $breakpoint-sm-min) {
+      width: $base * 7;
+      height: $base * 7;
+      background-color: transparent;
+      background-image: url('../../../images/icons/plus.svg');
+      background-size: 100%;
+      background-position: center;
+      background-repeat: no-repeat;
+      border: none;
+    }
+  }
+
+  .button__tertiary-description {
+    @media (max-width: $breakpoint-sm-min) {
+      display: none;
+    }
+  }
+}
+
+.boards-logo__wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  cursor: pointer;
+
+  &:hover {
+    .boards-logo {
+      filter: brightness(0.9);
+      transition: $transition;
+    }
+
+    .user-logo {
+      filter: brightness(0.8);
+      transition: $transition;
+    }
+  }
+}
+
+.boards-logo {
+  width: $base * 5;
+  height: $base * 5;
+  background-color: transparent;
+  background-image: url('../../../images/icons/boards.svg');
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: none;
+  transition: $transition;
+
+  @media (max-width: $breakpoint-xs-min) {
+    width: $base * 7;
+    height: $base * 7;
+    background-size: 100%;
+  }
+}
+
+.user-logo {
+  background-image: url('../../../images/icons/user.svg');
+}
+
+.boards-logo-description {
+  color: $color-dark;
+  font-weight: $fw-semi-bold;
+
+  @media (max-width: $breakpoint-md-min) {
+    width: max-content;
+    font-size: $fs-xs;
+  }
+
+  @media (max-width: $breakpoint-xs-min) {
+    display: none;
+  }
+}
+
+.header-scrolled {
+  padding: $base 0;
+  background: $color-grey-07;
+  box-shadow: 0 $base * 0.1 $base * 3 $color-dark-02;
+}
+
+.header__logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: $base * 20;
+  height: 100%;
+  background-image: url('../../../images/icons/logo.svg');
+  background-size: 90%;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  transition: $transition;
+
+  @media (max-width: $breakpoint-sm-min) {
+    width: $base * 10;
+    background-image: url('../../../images/icons/logo-small.png');
+    background-size: 70%;
+    transition: $transition;
+  }
+}
+
+.header__buttons {
+  display: flex;
+  align-items: center;
+  column-gap: $base * 2;
+
+  @media (max-width: $breakpoint-lg-min) {
+    column-gap: $base;
+  }
+}

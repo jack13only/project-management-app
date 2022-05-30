@@ -1,0 +1,95 @@
+@import '../../sass/Constants.scss';
+
+.board {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  height: 100%;
+  max-height: max-content;
+  background-color: $color-purple-06;
+
+  .wrapper {
+    align-items: flex-start;
+    gap: $base;
+    height: 100%;
+  }
+}
+
+.board__wrapper {
+  column-gap: $base * 2;
+  height: inherit;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.board__columns {
+  display: flex;
+  align-items: flex-start;
+  column-gap: $base * 3;
+  height: 100%;
+}
+
+.board__column::-webkit-scrollbar,
+.board__wrapper::-webkit-scrollbar {
+  width: $base;
+}
+
+.board__column::-webkit-scrollbar-thumb,
+.board__wrapper::-webkit-scrollbar-thumb {
+  background-color: $color-dark-02;
+  border-radius: $base;
+}
+
+.board__column::-webkit-scrollbar-track,
+.board__wrapper::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 $base grey;
+  border-radius: $base * 2;
+  height: $base * 2;
+  background-color: $color-grey-white;
+}
+
+.column__new-btn {
+  height: fit-content;
+}
+
+.board__title__wrapper {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  row-gap: $base * 2;
+  width: max-content;
+  text-align: center;
+
+  @media (max-width: $breakpoint-lg-min) {
+    align-items: center;
+  }
+}
+
+.board__title {
+  width: 80%;
+  max-width: 90rem;
+  margin: 0 auto;
+  font-size: $fs-xxxl;
+  font-weight: $fw-semi-bold;
+  text-align: left;
+  line-height: inherit;
+  word-break: break-word;
+  text-shadow: 0.063rem 0.063rem 0.063rem $color-sale, 0 0 0.06em $color-blue-light,
+    0 0 0.06em $color-blue-light;
+  color: $color-dark;
+
+  @media (max-width: $breakpoint-lg-min) {
+    width: 97%;
+    font-size: $fs-xxl;
+  }
+
+  @media (max-width: $breakpoint-md-min) {
+    font-size: $fs-xl;
+  }
+}
+
+.board__title-description {
+  @media (max-width: $breakpoint-lg-min) {
+    display: none;
+  }
+}
