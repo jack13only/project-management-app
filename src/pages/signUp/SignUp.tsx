@@ -51,16 +51,11 @@ const SignUp = (): JSX.Element => {
     };
     signupUser(user)
       .unwrap()
-      .then((data) => console.log(data))
       .then(() => {
-        console.log('Registration ok');
-        console.log({ login, password });
         return signinUser({ login, password }).unwrap();
       })
       .then(({ token }) => {
-        console.log('Token to redux ok');
         dispatch(loginUser(token));
-        console.log('Save to ls ok');
         saveTokenToLS(token);
       })
       .then(() => {
