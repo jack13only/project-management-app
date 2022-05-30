@@ -15,6 +15,7 @@ import { BoardsTypes } from './typesBoards/TypesBoards';
 import './Boards.scss';
 import { useAppSelector } from '../../app/hooks';
 import { localizationObj } from '../../features/localization';
+import { ChangeTitleBtns } from '../../components/buttons';
 
 const BoardsItem = React.lazy(() => import('./BoardsItem'));
 
@@ -93,16 +94,7 @@ const Boards: FC = () => {
           <div className="modal__text">
             <h2>{localizationObj[lang].areYouSure}</h2>
             <h3>{`${localizationObj[lang].doYouWantToDelete} '${deletedBoardTitle}' ?`}</h3>
-            <div className="board__column-btns">
-              <button className="button-modal__wrapper" type="button" onClick={deleteBoardItem}>
-                <div className="button-modal button__submit" />
-                <div className="button-modal__description">{localizationObj[lang].submit}</div>
-              </button>
-              <button className="button-modal__wrapper" type="button" onClick={cancelDeleteBoard}>
-                <div className="button-modal button__cancel" />
-                <div className="button-modal__description">{localizationObj[lang].cancel}</div>
-              </button>
-            </div>
+            <ChangeTitleBtns onClickSubmit={deleteBoardItem} onClickCancel={cancelDeleteBoard} />
           </div>
         </div>
       </Modal>

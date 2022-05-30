@@ -12,6 +12,7 @@ import { localizationObj } from '../../features/localization';
 import { saveTokenToLS } from '../../features/ls-load-save';
 import { loginUser, logoutUser } from '../../reducers/auth';
 import { setEmptyUser } from '../../reducers/userReducer';
+import { ChangeTitleBtns } from '../../components/buttons';
 import './UserProfile.scss';
 
 export type UserEditValues = {
@@ -281,18 +282,13 @@ const UserProfile: FC = () => {
             <div className="modal__text">
               <h2>{`${localizationObj[lang].doYouWantToDelete} '${userName}' ?`}</h2>
               <div>{localizationObj[lang].afterDeleteRedirect}</div>
-              <button type="button" onClick={deleteHandler}>
-                {localizationObj[lang].submit}
-              </button>
-              <button
-                type="button"
-                onClick={() => {
+              <ChangeTitleBtns
+                onClickSubmit={deleteHandler}
+                onClickCancel={() => {
                   setActiveModal(false);
                   setDeleteMsg(false);
                 }}
-              >
-                {localizationObj[lang].cancel}
-              </button>
+              />
             </div>
           )}
         </>

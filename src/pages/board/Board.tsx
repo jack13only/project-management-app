@@ -20,6 +20,7 @@ import './Board.scss';
 import { Modal } from '../../components';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { TasksList } from '../../components/boardColumn/BoardColumn';
+import { ChangeTitleBtns } from '../../components/buttons';
 const BoardColumn = React.lazy(() => import('../../components/boardColumn/BoardColumn'));
 
 export interface ColumnType {
@@ -291,12 +292,10 @@ const Board: FC = () => {
                 setColumnTitle(event?.target.value)
               }
             />
-            <button type="button" onClick={addNewColumn}>
-              {localizationObj[lang].submit}
-            </button>
-            <button type="button" onClick={() => setActiveModal(false)}>
-              {localizationObj[lang].cancel}
-            </button>
+            <ChangeTitleBtns
+              onClickSubmit={addNewColumn}
+              onClickCancel={() => setActiveModal(false)}
+            />
           </div>
         </div>
       </Modal>

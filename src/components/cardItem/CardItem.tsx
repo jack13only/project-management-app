@@ -8,6 +8,7 @@ import './CardItem.scss';
 import { useAppSelector } from '../../app/hooks';
 import { Draggable } from 'react-beautiful-dnd';
 import { localizationObj } from '../../features/localization';
+import { ChangeTitleBtns } from '../buttons';
 
 interface CardItemProps {
   id: string;
@@ -176,28 +177,10 @@ const CardItem: FC<CardItemProps> = ({
                       <div className="modal__img" />
                       <div className="modal__text">
                         <h2>{`${localizationObj[lang].doYouWantToDelete} '${cardTitle}' ?`}</h2>
-                        <div className="board__column-btns">
-                          <button
-                            className="button-modal__wrapper"
-                            type="button"
-                            onClick={removeTask}
-                          >
-                            <div className="button-modal button__submit" />
-                            <div className="button-modal__description">
-                              {localizationObj[lang].submit}
-                            </div>
-                          </button>
-                          <button
-                            className="button-modal__wrapper"
-                            type="button"
-                            onClick={() => setActiveModal(false)}
-                          >
-                            <div className="button-modal button__cancel" />
-                            <div className="button-modal__description">
-                              {localizationObj[lang].cancel}
-                            </div>
-                          </button>
-                        </div>
+                        <ChangeTitleBtns
+                          onClickSubmit={removeTask}
+                          onClickCancel={() => setActiveModal(false)}
+                        />
                       </div>
                     </div>
                   )}
@@ -218,8 +201,15 @@ const CardItem: FC<CardItemProps> = ({
                             </li>
                           ))}
                         </ul>
-                        <button type="button" onClick={() => setActiveModal(false)}>
-                          {localizationObj[lang].cancel}
+                        <button
+                          className="button-modal__wrapper"
+                          type="button"
+                          onClick={() => setActiveModal(false)}
+                        >
+                          <div className="button-modal button__cancel" />
+                          <div className="button-modal__description">
+                            {localizationObj[lang].cancel}
+                          </div>
                         </button>
                       </div>
                     </div>

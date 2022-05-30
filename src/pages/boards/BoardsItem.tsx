@@ -98,7 +98,6 @@ const BoardsItem = ({ title, id, description, isActiveModal, getDeletedBoard }: 
             value={currentTitle}
             onClick={(event: MouseEvent<HTMLInputElement>) => event.preventDefault()}
           />
-
           <ChangeTitleBtns onClickSubmit={submitBoardTitle} onClickCancel={cancelBoardTitle} />
         </div>
       )}
@@ -124,7 +123,6 @@ const BoardsItem = ({ title, id, description, isActiveModal, getDeletedBoard }: 
             onChange={handleBoardDescription}
             onClick={(event: MouseEvent<HTMLTextAreaElement>) => event.preventDefault()}
           />
-
           <ChangeTitleBtns onClickSubmit={submitBoardDescr} onClickCancel={cancelBoardDescr} />
         </div>
       )}
