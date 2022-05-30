@@ -55,6 +55,13 @@ export const localizationObj = {
     kochieva: 'Виктория Кочиева',
     karakulka: 'Дмитрий Каракулько',
     doYouWantToChangeUser: 'Выберите нового пользователя',
+    welcome: 'Добро пожаловать',
+    app: 'Ваша система управлениями проектами',
+    aboutProject:
+      'Приложение для управления проектами — это приложение, которое назначает задачи отдельным участникам проекта или группы. Это визуальный инструмент, который позволяет вашей команде управлять любым типом проекта, рабочим процессом или отслеживанием задач. Добавьте файлы, контрольные списки или даже автоматизацию: настройте все так, чтобы ваша команда работала лучше всего. Просто зарегистрируйтесь, создайте доску, и вперед!',
+    course:
+      'RS School — это бесплатная образовательная программа, проводимая сообществом разработчиков The Rolling Scopes с 2013 года. Учиться в RS School может каждый, независимо от возраста, профессиональной занятости и места жительства. Наставники и тренеры нашей школы — фронтенд- и javascript-разработчики из разных компаний и стран. В RS School работает принцип «Плати вперед». Мы бесплатно делимся с учащимися своими знаниями в настоящее время, надеясь, что в будущем они вернутся к нам в качестве наставников и точно так же передадут свои знания последующему поколению студентов.',
+    courseAbout: 'О курсе',
   },
   [enLang]: {
     signIn: 'Sign In',
@@ -109,5 +116,12 @@ export const localizationObj = {
     kochieva: 'Victoria Kochieva',
     karakulka: 'Dzmitry Karakulka',
     doYouWantToChangeUser: 'Choose new task user',
+    welcome: 'Welcome',
+    app: "It's Your Project Management App",
+    aboutProject:
+      "Project management app is an application that assigns tasks to individual participants in a project or group. It is the visual tool that empowers your team to manage any type of project, workflow, or task tracking. Add files, checklists, or even automation: Customize it all for how your team works best. Just sign up, create a board, and you're off!",
+    course:
+      'RS School is free-of-charge and community-based education program conducted by The Rolling Scopes developer community since 2013. Everyone can study at RS School, regardless of age, professional employment, or place of residence. The mentors and trainers of our school are front-end and javascript developers from different companies and countries. RS School operates "Pay it forward" principle. We share our knowledge with students for free at the present time, hoping that in the future they will return to us as mentors and pass on their knowledge to the next generation of students in the same way.',
+    courseAbout: 'About the course',
   },
 };
