@@ -6,9 +6,7 @@ const decodeUserId = (userToken: string) => {
       const decoded: { userId: string } = jwt_decode(userToken);
       return decoded.userId;
     }
-  } catch (e) {
-    console.log('Something go wrong with decoding token', e);
-  }
+  } catch (e) {}
   return '';
 };
 

@@ -77,7 +77,6 @@ const UserProfile: FC = () => {
         saveTokenToLS(token);
       })
       .then(() => {
-        console.log(userName);
         reset({
           name: name,
           login: login,

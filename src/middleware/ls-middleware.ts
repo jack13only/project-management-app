@@ -7,9 +7,7 @@ export const localStorageMiddleware =
     if (setLang.match(action)) {
       try {
         saveLangToLS(action.payload);
-      } catch {
-        console.log('Something go wrong with localStorage');
-      }
+      } catch {}
     }
     return next(action);
   };

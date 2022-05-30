@@ -51,10 +51,6 @@ const Board: FC = () => {
   const [activeModal, setActiveModal] = useState<boolean>(false);
   const [columnTitle, setColumnTitle] = useState('');
 
-  if (error && 'status' in error) {
-    console.log('error.data', error.status);
-  }
-
   const addNewColumn = async () => {
     if (columnTitle.trim().length) {
       await postColumn({
@@ -186,9 +182,7 @@ const Board: FC = () => {
             deleteTaskFromCurrentCol(source.droppableId, draggableId),
           ])
         )
-        .catch((error) => {
-          console.log('error', error);
-        });
+        .catch(() => {});
       task.unsubscribe();
       return;
     }
@@ -205,7 +199,7 @@ const Board: FC = () => {
       tasks
         .then((res) => res.data)
         .then((data) => reorderTasks(data, destination.index, source.droppableId, draggableId))
-        .catch((error) => console.log('error', error));
+        .catch(() => {});
       tasks.unsubscribe();
       return;
     }

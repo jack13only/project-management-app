@@ -33,7 +33,6 @@ const SignIn = (): JSX.Element => {
   });
 
   const onSubmit = async (user: SigninType) => {
-    console.log(user);
     signinUser(user)
       .unwrap()
       .then(({ token }) => {

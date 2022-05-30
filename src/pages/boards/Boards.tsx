@@ -30,10 +30,6 @@ const Boards: FC = () => {
   const [postBoard] = usePostBoardMutation();
   const [deleteBoard] = useDeleteBoardMutation();
 
-  if (error && 'status' in error) {
-    console.log('error.data', error.status);
-  }
-
   const handlerModal = (isActiveModal: boolean) => {
     setActiveModal(isActiveModal);
   };
