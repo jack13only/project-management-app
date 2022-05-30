@@ -12,6 +12,7 @@ import { localizationObj } from '../../features/localization';
 import { saveTokenToLS } from '../../features/ls-load-save';
 import { loginUser, logoutUser } from '../../reducers/auth';
 import { setEmptyUser } from '../../reducers/userReducer';
+import { ChangeTitleBtns } from '../../components/buttons';
 import './UserProfile.scss';
 
 export type UserEditValues = {
@@ -254,17 +255,23 @@ const UserProfile: FC = () => {
               )}
             </label>
           )}
-
-          <input type="submit" value={localizationObj[lang].update} className="form__submit" />
-          <input
-            type="button"
-            value={localizationObj[lang].cancel}
-            className="form__submit"
-            onClick={() => {
-              setIsEditing(false);
-              reset();
-            }}
-          />
+          <div className="board__column-btns space">
+            <button className="button-modal__wrapper button-modal-width" type="submit">
+              <div className="button-modal button__submit" />
+              <div className="button-modal__description">{localizationObj[lang].update}</div>
+            </button>
+            <button
+              className="button-modal__wrapper button-modal-width"
+              type="button"
+              onClick={() => {
+                setIsEditing(false);
+                reset();
+              }}
+            >
+              <div className="button-modal button__cancel" />
+              <div className="button-modal__description">{localizationObj[lang].cancel}</div>
+            </button>
+          </div>
         </form>
       )}
 
@@ -281,18 +288,13 @@ const UserProfile: FC = () => {
             <div className="modal__text">
               <h2>{`${localizationObj[lang].doYouWantToDelete} '${userName}' ?`}</h2>
               <div>{localizationObj[lang].afterDeleteRedirect}</div>
-              <button type="button" onClick={deleteHandler}>
-                {localizationObj[lang].submit}
-              </button>
-              <button
-                type="button"
-                onClick={() => {
+              <ChangeTitleBtns
+                onClickSubmit={deleteHandler}
+                onClickCancel={() => {
                   setActiveModal(false);
                   setDeleteMsg(false);
                 }}
-              >
-                {localizationObj[lang].cancel}
-              </button>
+              />
             </div>
           )}
         </>

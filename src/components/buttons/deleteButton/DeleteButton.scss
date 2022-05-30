@@ -1,8 +1,8 @@
 @import '../../../sass/Constants.scss';
 
 .btn-delete {
-  width: $base * 5;
-  height: $base * 5;
+  min-width: $base * 5;
+  min-height: $base * 5;
   background-color: transparent;
   background-image: url('../../../images/icons/delete.svg');
   background-size: 100%;

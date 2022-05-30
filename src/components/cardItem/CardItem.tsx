@@ -178,16 +178,20 @@ const CardItem: FC<CardItemProps> = ({
                     setActiveModal(true);
                   }}
                 >
-                  {userOwner}
+                  {`${localizationObj[lang].author}: `}
+                  <span className="task-owner-user">{userOwner}</span>
                 </span>
-                <DeleteButton
-                  type="button"
-                  id={id}
-                  onClick={() => {
-                    setActiveModal(true);
-                    setIsDeleteModal(true);
-                  }}
-                />
+                <div className="task__btns">
+                  <DeleteButton className="btn-edit" type="button" onClick={openTaskHandler} />
+                  <DeleteButton
+                    type="button"
+                    id={id}
+                    onClick={() => {
+                      setActiveModal(true);
+                      setIsDeleteModal(true);
+                    }}
+                  />
+                </div>
               </span>
             </>
           </li>
@@ -202,24 +206,10 @@ const CardItem: FC<CardItemProps> = ({
                 <div className="modal__img" />
                 <div className="modal__text">
                   <h2>{`${localizationObj[lang].doYouWantToDelete} '${cardTitle}' ?`}</h2>
-                  <div className="board__column-btns">
-                    <button className="button-modal__wrapper" type="button" onClick={removeTask}>
-                      <div className="button-modal button__submit" />
-                      <div className="button-modal__description">
-                        {localizationObj[lang].submit}
-                      </div>
-                    </button>
-                    <button
-                      className="button-modal__wrapper"
-                      type="button"
-                      onClick={() => setActiveModal(false)}
-                    >
-                      <div className="button-modal button__cancel" />
-                      <div className="button-modal__description">
-                        {localizationObj[lang].cancel}
-                      </div>
-                    </button>
-                  </div>
+                  <ChangeTitleBtns
+                    onClickSubmit={removeTask}
+                    onClickCancel={() => setActiveModal(false)}
+                  />
                 </div>
               </div>
             )}
@@ -240,8 +230,13 @@ const CardItem: FC<CardItemProps> = ({
                       </li>
                     ))}
                   </ul>
-                  <button type="button" onClick={() => setActiveModal(false)}>
-                    {localizationObj[lang].cancel}
+                  <button
+                    className="button-modal__wrapper"
+                    type="button"
+                    onClick={() => setActiveModal(false)}
+                  >
+                    <div className="button-modal button__cancel" />
+                    <div className="button-modal__description">{localizationObj[lang].cancel}</div>
                   </button>
                 </div>
               </div>
@@ -293,7 +288,6 @@ const CardItem: FC<CardItemProps> = ({
                       <p className="modal__tasks-descr">{cardDescription}</p>
                     </>
                   )}
-
                   {isDisplayedDescrTextarea && (
                     <>
                       <Textarea

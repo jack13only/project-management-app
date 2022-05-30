@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, MouseEvent, lazy } from 'react';
 import { Link } from 'react-router-dom';
 import {
   useDeleteBoardMutation,
@@ -15,8 +15,9 @@ import { BoardsTypes } from './typesBoards/TypesBoards';
 import './Boards.scss';
 import { useAppSelector } from '../../app/hooks';
 import { localizationObj } from '../../features/localization';
+import { ChangeTitleBtns } from '../../components/buttons';
 
-const BoardsItem = React.lazy(() => import('./BoardsItem'));
+const BoardsItem = lazy(() => import('./BoardsItem'));
 
 const Boards: FC = () => {
   const [activeModal, setActiveModal] = useState<boolean>(false);
@@ -42,12 +43,12 @@ const Boards: FC = () => {
     setDeletedBoardId(deletedBoardId);
   };
 
-  const cancelDeleteBoard = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const cancelDeleteBoard = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     setActiveModal(false);
   };
 
-  const deleteBoardItem = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const deleteBoardItem = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     setActiveModal(false);
     deleteBoard(deletedBoardId);
@@ -61,24 +62,15 @@ const Boards: FC = () => {
           <PreloaderSuspense>
             {data?.map(({ id, title, description }: BoardsTypes) => {
               return (
-                <Link
-                  to={`/boards/${id}`}
+                <BoardsItem
                   key={id}
-                  className="boards-item__link"
-                  onClick={
-                    activeModal
-                      ? (e: React.MouseEvent<HTMLAnchorElement>) => e.preventDefault()
-                      : undefined
-                  }
-                >
-                  <BoardsItem
-                    title={title}
-                    id={id}
-                    isActiveModal={handlerModal}
-                    getDeletedBoard={getDeletedBoard}
-                    description={description}
-                  />
-                </Link>
+                  title={title}
+                  id={id}
+                  isActiveModal={handlerModal}
+                  getDeletedBoard={getDeletedBoard}
+                  description={description}
+                  activeModalProps={activeModal}
+                />
               );
             })}
           </PreloaderSuspense>
@@ -93,16 +85,7 @@ const Boards: FC = () => {
           <div className="modal__text">
             <h2>{localizationObj[lang].areYouSure}</h2>
             <h3>{`${localizationObj[lang].doYouWantToDelete} '${deletedBoardTitle}' ?`}</h3>
-            <div className="board__column-btns">
-              <button className="button-modal__wrapper" type="button" onClick={deleteBoardItem}>
-                <div className="button-modal button__submit" />
-                <div className="button-modal__description">{localizationObj[lang].submit}</div>
-              </button>
-              <button className="button-modal__wrapper" type="button" onClick={cancelDeleteBoard}>
-                <div className="button-modal button__cancel" />
-                <div className="button-modal__description">{localizationObj[lang].cancel}</div>
-              </button>
-            </div>
+            <ChangeTitleBtns onClickSubmit={deleteBoardItem} onClickCancel={cancelDeleteBoard} />
           </div>
         </div>
       </Modal>

@@ -36,6 +36,14 @@
   transition: $transition-01;
 }
 
+.space {
+  justify-content: space-between;
+}
+
+.button-modal-width {
+  flex-basis: 48%;
+}
+
 .button__submit {
   background-image: url('../../../images/icons/submit.svg');
 }

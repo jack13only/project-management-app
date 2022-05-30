@@ -14,7 +14,6 @@
   overflow: auto;
   max-height: 72vh;
   margin-right: 0.063rem;
-  // margin-bottom: $base * 4;
   padding: $base * 2.2 0 $base * 2.2 $base * 2.2;
   border-top: 0.5rem solid $color-purple-09;
   border-radius: $base * 2;
@@ -56,11 +55,14 @@
 }
 
 .task {
-  @include flexSpaceBetween;
-  gap: $base * 2;
-  padding: $base * 4 $base;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  padding: $base;
   border: 0.063rem solid $color-dark-04;
   border-radius: $base;
+  box-shadow: 0.063rem 0.063rem 0.063rem $color-dark-05, 0 0 0.06em $color-dark-05,
+    0 0 0.06em $color-dark-05;
   min-width: 100%;
   max-width: fit-content;
 }
@@ -75,7 +77,8 @@
 
 .task-text {
   position: relative;
-  font-size: $fs-xl;
+  font-size: $fs-l;
+  font-weight: $fw-semi-bold;
   overflow: hidden;
   overflow-wrap: break-word;
   word-break: break-word;
