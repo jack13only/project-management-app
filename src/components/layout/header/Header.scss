@@ -1,7 +1,7 @@
 @import '../../../sass/Constants.scss';
 
 .header {
-  position: fixed;
+  position: sticky;
   padding: $base * 2 0;
   top: 0;
   width: 100%;
