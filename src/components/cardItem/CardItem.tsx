@@ -203,7 +203,7 @@ const CardItem: FC<CardItemProps> = ({
           <>
             {isDeleteModal && (
               <div className="modal__wrapper">
-                <div className="modal__img" />
+                <div className="modal__img modal__img-delete" />
                 <div className="modal__text">
                   <h2>{`${localizationObj[lang].doYouWantToDelete} '${cardTitle}' ?`}</h2>
                   <ChangeTitleBtns
@@ -215,12 +215,13 @@ const CardItem: FC<CardItemProps> = ({
             )}
             {isUserChangeModal && (
               <div className="modal__wrapper">
-                <div className="modal__img" />
+                <div className="modal__img modal__img-user-change" />
                 <div className="modal__text">
                   <h2>{`${localizationObj[lang].doYouWantToChangeUser}`}</h2>
                   <ul className="users-list">
                     {users.map((user: { id: string; name: string }) => (
                       <li
+                        className="users-list__item"
                         key={user.id}
                         onClick={() => {
                           changeUser(user.id);
@@ -243,11 +244,11 @@ const CardItem: FC<CardItemProps> = ({
             )}
             {isOpenTask && (
               <div className="modal__wrapper modal__tasks">
-                <h3>
+                <h3 className="modal__tasks-user">
                   {`${localizationObj[lang].user}: `}
                   {userOwner}
                 </h3>
-                <div className="modal__text">
+                <div className="modal__text modal__tasks-text">
                   {!isDisplayedTitleTextarea && (
                     <>
                       <div className="modal__text-wrapper">

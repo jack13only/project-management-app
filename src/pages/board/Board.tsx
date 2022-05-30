@@ -283,6 +283,7 @@ const Board: FC = () => {
 
       <Modal activeModal={activeModal} setActiveModal={setActiveModal}>
         <div className="modal__wrapper">
+          <div className="modal__img modal__img-add" />
           <div className="modal__text">
             <h2>{`${localizationObj[lang].addATitle}`}</h2>
             <input

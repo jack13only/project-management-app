@@ -21,7 +21,6 @@
   }
 
   .modal__content {
-    padding: $base * 10 $base * 4 $base * 4;
     border-radius: $base * 3;
     background-color: rgb(255, 255, 255);
     transform: scale(0.5);
@@ -30,7 +29,7 @@
     transition: $transition all;
 
     @media (max-width: $breakpoint-xl-min) {
-      width: 70vw;
+      width: 76vw;
     }
 
     @media (max-width: $breakpoint-md-min) {
@@ -55,14 +54,47 @@
   }
 
   .modal__img {
-    flex-basis: 44%;
+    flex-basis: 50%;
     height: auto;
-    background: url('../../images/confirmation.jpg');
-    background-repeat: no-repeat;
     background-size: cover;
     background-color: rgb(255, 255, 255);
     background-position: center;
     border-radius: $base * 3 0 0 $base * 3;
+  
+    @media (max-width: $breakpoint-md-min) {
+      flex-basis: 55%;
+    }
+
+    @media (max-width: $breakpoint-sm-min) {
+      flex-basis: 0%;
+    }
+  }
+
+  .modal__img-delete {
+    background-image: url('../../images/confirmation.jpg');
+    background-repeat: no-repeat;
+
+    @media (max-width: $breakpoint-sm-min) {
+      background: rgb(255, 255, 255);
+    }
+  }
+
+  .modal__img-add {
+    background-image: url('../../images/modal/create.jpg');
+    background-repeat: no-repeat;
+
+    @media (max-width: $breakpoint-sm-min) {
+      background: rgb(255, 255, 255);
+    }
+  }
+
+  .modal__img-user-change {
+    background-image: url('../../images/modal/changeUser.jpg');
+    background-repeat: no-repeat;
+
+    @media (max-width: $breakpoint-sm-min) {
+      background: rgb(255, 255, 255);
+    }
   }
 
   .modal__text {
@@ -70,9 +102,30 @@
     align-items: flex-end;
     flex-direction: column;
     row-gap: $base * 3;
-    padding: $base * 10 $base * 4 $base * 4;
+    padding: $base * 19 $base * 4 $base * 4;
     flex-basis: 40%;
     text-align: end;
+    word-break: break-word;
+
+    h2 {
+      overflow: hidden;
+      line-height: 2rem;
+      -webkit-box-orient: vertical;
+      display: -webkit-box;
+      text-overflow: ellipsis;
+      -webkit-line-clamp: 5;
+    }
+
+    @media (max-width: $breakpoint-sm-min) {
+      flex-basis: 100%;
+      align-items: center;
+      text-align: center;
+    }
+  }
+
+  .modal__btns {
+    display: flex;
+    column-gap: $base * 3;
   }
 
   .modal__close {
@@ -93,6 +146,7 @@
   }
 
   .modal__tasks {
+    padding: $base * 2 $base * 5 $base * 4;
     flex-direction: column;
     align-items: flex-start;
     overflow-y: auto;
@@ -105,6 +159,13 @@
     padding: 0;
     width: 100%;
     text-align: initial;
+  }
+
+  .modal__tasks > .modal__tasks-text {
+    border: $base * 0.2 solid $color-purple;
+    border-radius: $base;
+    margin: $base * 10 0;
+    padding: $base * 2;
   }
 
   .modal__text-wrapper {
@@ -142,4 +203,8 @@
     word-break: break-word;
     max-width: 96%;
   }
+}
+
+.modal__text-question {
+  display: flex;
 }

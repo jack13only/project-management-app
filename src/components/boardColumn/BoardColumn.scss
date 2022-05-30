@@ -12,7 +12,7 @@
   flex-basis: 26%;
   min-width: $base * 50;
   overflow: auto;
-  max-height: 72vh;
+  max-height: 65vh;
   margin-right: 0.063rem;
   padding: $base * 2.2 0 $base * 2.2 $base * 2.2;
   border-top: 0.5rem solid $color-purple-09;
@@ -31,14 +31,6 @@
   border-bottom: 0.063rem solid $color-dark-02;
   min-width: 100%;
   max-width: fit-content;
-
-  .h4 {
-    word-break: break-word;
-    flex-basis: 85%;
-    text-overflow: ellipsis;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-  }
 }
 
 .cards__list__container {
@@ -84,6 +76,12 @@
   word-break: break-word;
   cursor: pointer;
   transition: $transition-01;
+  overflow: hidden;
+  max-height: 3rem;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
 
   &::after {
     position: absolute;
