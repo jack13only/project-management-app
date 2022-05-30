@@ -114,6 +114,10 @@
     column-gap: $base * 3;
     width: 100%;
   }
+
+  .modal__text > .boards__item-input {
+    width: 98%;
+  }
   
   .modal__tasks-textarea {
     width: 98%;

@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import { Modal, Textarea } from '..';
-import { ChangeTitleBtns, DeleteButton } from '../buttons';
+import { ChangeTitleBtns, DeleteButton, TertiaryButton } from '../buttons';
 
 import { useDeleteTaskMutation, useGetUsersQuery, useUpdateTaskMutation } from '../../app/RtkQuery';
 
@@ -47,7 +47,7 @@ const CardItem: FC<CardItemProps> = ({
   const [isDisplayedTitleTextarea, setIsDisplayedTitleTextarea] = useState(false);
   const [isDisplayedDescrTextarea, setIsDisplayedDescrTextarea] = useState(false);
 
-  const handleTaskTitleInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleTaskTitleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTaskTitle(event.target.value);
   };
 
@@ -264,10 +264,8 @@ const CardItem: FC<CardItemProps> = ({
                   </div>
                   {isDisplayedTitleTextarea && (
                     <>
-                      <Textarea
-                        className="textarea modal__tasks-textarea"
-                        cols={2}
-                        rows={2}
+                      <input
+                        className="textarea boards__item-input"
                         placeholder="Change the title"
                         value={taskTitle}
                         onChange={handleTaskTitleInput}
@@ -301,7 +299,12 @@ const CardItem: FC<CardItemProps> = ({
 
                   <p className="modal__tasks-descr">{cardDescription}</p>
 
-                  <ChangeTitleBtns onClickSubmit={closeModal} onClickCancel={closeModal} />
+                  <TertiaryButton
+                    className="button__tertiary column__btn"
+                    type="button"
+                    description="Ok"
+                    onClick={closeModal}
+                  />
                 </div>
               </div>
             )}
