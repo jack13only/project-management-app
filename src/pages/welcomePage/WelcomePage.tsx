@@ -12,7 +12,7 @@ const WelcomePage: FC = () => {
 
   return (
     <div data-testid="welcomepage" className="welcome-page">
-      <div className="welcome-page__promo">
+      <section className="welcome-page__promo">
         <div className="wrapper">
           <div className="welcome-page__content">
             <h1 className="welcome-page__title">{localizationObj[lang].welcome}</h1>
@@ -20,8 +20,9 @@ const WelcomePage: FC = () => {
             <p>{localizationObj[lang].aboutProject}</p>
           </div>
         </div>
-      </div>
-      <div className="team">
+      </section>
+
+      <section className="team">
         <h2 className="h2">{localizationObj[lang].meetOurTeam}</h2>
         <div className="welcome__container">
           <WelcomeCard
@@ -46,7 +47,16 @@ const WelcomePage: FC = () => {
             linkedin="https://www.linkedin.com/in/dzmitry-karakulka/"
           />
         </div>
-      </div>
+      </section>
+
+      <section className="about">
+        <div className="wrapper about__wrapper">
+          <h2 className="about__title">{localizationObj[lang].courseAbout}</h2>
+          <div className="about__content">
+            <p>{localizationObj[lang].course}</p>
+          </div>
+        </div>
+      </section>
     </div>
   );
 };
