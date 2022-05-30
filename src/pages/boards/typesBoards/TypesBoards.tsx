@@ -5,4 +5,5 @@ export interface BoardsTypes {
   description: string;
   isActiveModal: (shouldShowModal: boolean) => void;
   getDeletedBoard: (boardTitle: string, boardId: string) => void;
+  activeModalProps: boolean;
 }

@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, MouseEvent, lazy } from 'react';
 import { Link } from 'react-router-dom';
 import {
   useDeleteBoardMutation,
@@ -17,7 +17,7 @@ import { useAppSelector } from '../../app/hooks';
 import { localizationObj } from '../../features/localization';
 import { ChangeTitleBtns } from '../../components/buttons';
 
-const BoardsItem = React.lazy(() => import('./BoardsItem'));
+const BoardsItem = lazy(() => import('./BoardsItem'));
 
 const Boards: FC = () => {
   const [activeModal, setActiveModal] = useState<boolean>(false);
@@ -43,12 +43,12 @@ const Boards: FC = () => {
     setDeletedBoardId(deletedBoardId);
   };
 
-  const cancelDeleteBoard = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const cancelDeleteBoard = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     setActiveModal(false);
   };
 
-  const deleteBoardItem = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const deleteBoardItem = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     setActiveModal(false);
     deleteBoard(deletedBoardId);
@@ -62,24 +62,15 @@ const Boards: FC = () => {
           <PreloaderSuspense>
             {data?.map(({ id, title, description }: BoardsTypes) => {
               return (
-                <Link
-                  to={`/boards/${id}`}
+                <BoardsItem
                   key={id}
-                  className="boards-item__link"
-                  onClick={
-                    activeModal
-                      ? (e: React.MouseEvent<HTMLAnchorElement>) => e.preventDefault()
-                      : undefined
-                  }
-                >
-                  <BoardsItem
-                    title={title}
-                    id={id}
-                    isActiveModal={handlerModal}
-                    getDeletedBoard={getDeletedBoard}
-                    description={description}
-                  />
-                </Link>
+                  title={title}
+                  id={id}
+                  isActiveModal={handlerModal}
+                  getDeletedBoard={getDeletedBoard}
+                  description={description}
+                  activeModalProps={activeModal}
+                />
               );
             })}
           </PreloaderSuspense>
