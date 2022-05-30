@@ -41,8 +41,24 @@
 }
 
 .boards__item-title {
+  font-size: $fs-xl;
+  font-weight: $fw-bold;
   color: $color-dark;
-  transition: $transition;
+  transition: $transition-02;
+  cursor: pointer;
+}
+
+.boards__item-descr {
+  font-size: $fs-m;
+  font-weight: $fw-semi-bold;
+  color: $color-purple;
+  cursor: pointer;
+  transition: $transition-01;
+
+  &:hover {
+    color: $color-blue-09;
+    transition: $transition-01;
+  }
 }
 
 .boards__item-input__wrapper {
@@ -90,12 +106,11 @@
   box-shadow: 0.063rem 0.063rem 0.063rem $color-dark-05, 0 0 0.06em $color-dark,
     0 0 0.06em $color-dark;
   border-radius: $base * 3;
-  cursor: pointer;
 
   &:hover {
     .boards__item-title {
       color: $color-yellow;
-      transition: $transition;
+      transition: $transition-02;
     }
   }
 
