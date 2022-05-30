@@ -158,16 +158,20 @@ const CardItem: FC<CardItemProps> = ({
                     setActiveModal(true);
                   }}
                 >
-                  {userOwner}
+                  {`${localizationObj[lang].author}: `}
+                  <span className="task-owner-user">{userOwner}</span>
                 </span>
-                <DeleteButton
-                  type="button"
-                  id={id}
-                  onClick={() => {
-                    setActiveModal(true);
-                    setIsDeleteModal(true);
-                  }}
-                />
+                <div className="task__btns">
+                  <DeleteButton className="btn-edit" type="button" />
+                  <DeleteButton
+                    type="button"
+                    id={id}
+                    onClick={() => {
+                      setActiveModal(true);
+                      setIsDeleteModal(true);
+                    }}
+                  />
+                </div>
               </li>
 
               <Modal activeModal={activeModal} setActiveModal={setActiveModal}>

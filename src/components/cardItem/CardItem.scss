@@ -21,3 +21,20 @@
   display: flex;
   column-gap: $base * 2;
 }
+
+.task__btns {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.task-owner {
+  font-size: $fs-xs;
+  font-weight: $fw-semi-bold;
+  cursor: pointer;
+}
+
+.task-owner-user {
+  font-weight: $fw-regular;
+}
