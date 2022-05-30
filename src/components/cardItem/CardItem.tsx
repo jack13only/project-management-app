@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import { Modal, Textarea } from '..';
-import { DeleteButton } from '../buttons';
+import { ChangeTitleBtns, DeleteButton } from '../buttons';
 
 import { useDeleteTaskMutation, useGetUsersQuery, useUpdateTaskMutation } from '../../app/RtkQuery';
 
@@ -44,6 +44,8 @@ const CardItem: FC<CardItemProps> = ({
   const [userOwner, setUserOwner] = useState<string>('');
   const [isOpenTask, setIsOpenTask] = useState(false);
   const container = document.getElementById('root')!;
+  const [isDisplayedTitleTextarea, setIsDisplayedTitleTextarea] = useState(false);
+  const [isDisplayedDescrTextarea, setIsDisplayedDescrTextarea] = useState(false);
 
   const handleTaskTitleInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTaskTitle(event.target.value);
@@ -53,26 +55,49 @@ const CardItem: FC<CardItemProps> = ({
     setTaskDescription(event.target.value);
   };
 
-  const submitTaskContent = async () => {
-    if (taskTitle.trim().length && taskDescription.trim().length) {
-      setIsOpenTask(false);
-      setActiveModal(false);
+  const submitTitle = async () => {
+    setIsDisplayedTitleTextarea(false);
 
-      await updateTask({
-        columnId,
-        boardId,
-        taskId: id,
-        task: {
-          title: taskTitle,
-          order,
-          description: taskDescription,
-          userId: userOwnerId,
-        },
-      });
-    }
+    await updateTask({
+      columnId,
+      boardId,
+      taskId: id,
+      task: {
+        title: taskTitle,
+        order,
+        description: taskDescription,
+        userId: userOwnerId,
+      },
+    });
   };
 
-  const cancelTaskContent = () => {
+  const submitDescr = async () => {
+    setIsDisplayedDescrTextarea(false);
+
+    await updateTask({
+      columnId,
+      boardId,
+      taskId: id,
+      task: {
+        title: taskTitle,
+        order,
+        description: taskDescription,
+        userId: userOwnerId,
+      },
+    });
+  };
+
+  const cancelTitle = () => {
+    setIsDisplayedTitleTextarea(false);
+    setTaskTitle(cardTitle);
+  };
+
+  const cancelDescr = () => {
+    setIsDisplayedDescrTextarea(false);
+    setTaskDescription(cardDescription);
+  };
+
+  const closeModal = () => {
     setIsOpenTask(false);
     setActiveModal(false);
   };
@@ -105,8 +130,6 @@ const CardItem: FC<CardItemProps> = ({
   const openTaskHandler = () => {
     setIsOpenTask(true);
     setActiveModal(true);
-    setTaskTitle('');
-    setTaskDescription('');
   };
 
   useEffect(() => {
@@ -114,6 +137,8 @@ const CardItem: FC<CardItemProps> = ({
       setIsDeleteModal(false);
       setIsUserChangeModal(false);
       setIsOpenTask(false);
+      setIsDisplayedTitleTextarea(false);
+      setIsDisplayedDescrTextarea(false);
     }
   }, [activeModal]);
 
@@ -226,36 +251,57 @@ const CardItem: FC<CardItemProps> = ({
                   {userOwner}
                 </h2>
                 <div className="modal__text">
-                  <h1 className="modal__tasks-header">
-                    {`${localizationObj[lang].yourTask}: `}
-                    {cardTitle}
-                  </h1>
-                  <Textarea
-                    className="textarea modal__tasks-textarea"
-                    cols={2}
-                    rows={2}
-                    placeholder="Change the title"
-                    value={taskTitle}
-                    onChange={handleTaskTitleInput}
-                  />
-                  <h2>{`${localizationObj[lang].taskDescription}: `}</h2>
+                  <div className="modal__text-wrapper">
+                    <DeleteButton
+                      className="btn-edit"
+                      type="button"
+                      onClick={() => setIsDisplayedTitleTextarea(true)}
+                    />
+                    <h1 className="modal__tasks-header">
+                      {`${localizationObj[lang].yourTask}: `}
+                      {cardTitle}
+                    </h1>
+                  </div>
+                  {isDisplayedTitleTextarea && (
+                    <>
+                      <Textarea
+                        className="textarea modal__tasks-textarea"
+                        cols={2}
+                        rows={2}
+                        placeholder="Change the title"
+                        value={taskTitle}
+                        onChange={handleTaskTitleInput}
+                      />
+
+                      <ChangeTitleBtns onClickSubmit={submitTitle} onClickCancel={cancelTitle} />
+                    </>
+                  )}
+                  <div className="modal__text-wrapper">
+                    <DeleteButton
+                      className="btn-edit"
+                      type="button"
+                      onClick={() => setIsDisplayedDescrTextarea(true)}
+                    />
+                    <h2>{`${localizationObj[lang].taskDescription}: `}</h2>
+                  </div>
+
+                  {isDisplayedDescrTextarea && (
+                    <>
+                      <Textarea
+                        className="textarea modal__tasks-textarea"
+                        cols={4}
+                        rows={4}
+                        placeholder="Change the description"
+                        value={taskDescription}
+                        onChange={handleTaskDescriptionInput}
+                      />
+                      <ChangeTitleBtns onClickSubmit={submitDescr} onClickCancel={cancelDescr} />
+                    </>
+                  )}
+
                   <p className="modal__tasks-descr">{cardDescription}</p>
 
-                  <Textarea
-                    className="textarea modal__tasks-textarea"
-                    cols={3}
-                    rows={3}
-                    placeholder="Change the description"
-                    value={taskDescription}
-                    onChange={handleTaskDescriptionInput}
-                  />
-
-                  <div className="board__task-btns">
-                    <button onClick={submitTaskContent}>{localizationObj[lang].submit}</button>
-                    <button type="button" onClick={cancelTaskContent}>
-                      {localizationObj[lang].cancel}
-                    </button>
-                  </div>
+                  <ChangeTitleBtns onClickSubmit={closeModal} onClickCancel={closeModal} />
                 </div>
               </div>
             )}

@@ -106,6 +106,14 @@
     width: 100%;
     text-align: initial;
   }
+
+  .modal__text-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: $base * 3;
+    width: 100%;
+  }
   
   .modal__tasks-textarea {
     width: 98%;
