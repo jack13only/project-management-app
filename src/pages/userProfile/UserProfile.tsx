@@ -284,16 +284,19 @@ const UserProfile: FC = () => {
             </div>
           )}
           {!!deleteMsg && (
-            <div className="modal__text">
-              <h2>{`${localizationObj[lang].doYouWantToDelete} '${userName}' ?`}</h2>
-              <div>{localizationObj[lang].afterDeleteRedirect}</div>
-              <ChangeTitleBtns
-                onClickSubmit={deleteHandler}
-                onClickCancel={() => {
-                  setActiveModal(false);
-                  setDeleteMsg(false);
-                }}
-              />
+            <div className="modal__wrapper">
+              <div className="modal__img modal__img-delete" />
+              <div className="modal__text">
+                <h2>{`${localizationObj[lang].doYouWantToDelete} '${userName}' ?`}</h2>
+                <div>{localizationObj[lang].afterDeleteRedirect}</div>
+                <ChangeTitleBtns
+                  onClickSubmit={deleteHandler}
+                  onClickCancel={() => {
+                    setActiveModal(false);
+                    setDeleteMsg(false);
+                  }}
+                />
+              </div>
             </div>
           )}
         </>
