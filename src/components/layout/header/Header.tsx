@@ -136,7 +136,6 @@ const Header: FC = () => {
                     dispatch(logoutUser());
                     dispatch(setEmptyUser());
                     saveTokenToLS('');
-                    console.log('logout');
                   }}
                 />
               </>

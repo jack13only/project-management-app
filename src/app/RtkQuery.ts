@@ -31,7 +31,6 @@ const baseQueryAuth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryErro
 ) => {
   const result = await baseQuery(args, api, extraOptions);
   if (result.error && result.error.status === 401) {
-    console.log('401 error, token expired, auto logout');
     api.dispatch(logoutUser());
     api.dispatch(setEmptyUser());
     saveTokenToLS('');
@@ -100,7 +99,6 @@ export const apiUser = createApi({
     }),
     signin: build.mutation({
       query(body: SigninType) {
-        console.log('body', body);
         return {
           url: `signin`,
           method: 'POST',

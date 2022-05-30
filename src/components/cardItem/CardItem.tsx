@@ -122,7 +122,7 @@ const CardItem: FC<CardItemProps> = ({
       task: {
         title: cardTitle,
         order,
-        description: '2222',
+        description: cardDescription,
         userId: newUserId,
       },
     });
