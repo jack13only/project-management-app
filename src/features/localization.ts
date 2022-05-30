@@ -48,7 +48,7 @@ export const localizationObj = {
     loading: 'Загрузка...',
     addATitle: 'Добавить заголовок',
     addADescription: 'Добавить описание',
-    author: 'Владелец',
+    author: 'Исполнитель',
     yourTask: 'Задача',
     taskDescription: 'Описание',
     shatau: 'Евгений Шатов',
