@@ -100,6 +100,8 @@ const CardItem: FC<CardItemProps> = ({
   const closeModal = () => {
     setIsOpenTask(false);
     setActiveModal(false);
+    setTaskDescription(cardDescription);
+    setTaskTitle(cardTitle);
   };
 
   const removeTask = async () => {
@@ -246,22 +248,26 @@ const CardItem: FC<CardItemProps> = ({
             )}
             {isOpenTask && (
               <div className="modal__wrapper modal__tasks">
-                <h2>
+                <h3>
                   {`${localizationObj[lang].user}: `}
                   {userOwner}
-                </h2>
+                </h3>
                 <div className="modal__text">
-                  <div className="modal__text-wrapper">
-                    <DeleteButton
-                      className="btn-edit"
-                      type="button"
-                      onClick={() => setIsDisplayedTitleTextarea(true)}
-                    />
-                    <h1 className="modal__tasks-header">
-                      {`${localizationObj[lang].yourTask}: `}
-                      {cardTitle}
-                    </h1>
-                  </div>
+                  {!isDisplayedTitleTextarea && (
+                    <>
+                      <div className="modal__text-wrapper">
+                        <DeleteButton
+                          className="btn-edit"
+                          type="button"
+                          onClick={() => setIsDisplayedTitleTextarea(true)}
+                        />
+                        <h1 className="modal__tasks-header">
+                          {`${localizationObj[lang].yourTask}: `}
+                        </h1>
+                      </div>
+                      <h2>{cardTitle}</h2>
+                    </>
+                  )}
                   {isDisplayedTitleTextarea && (
                     <>
                       <input
@@ -274,21 +280,26 @@ const CardItem: FC<CardItemProps> = ({
                       <ChangeTitleBtns onClickSubmit={submitTitle} onClickCancel={cancelTitle} />
                     </>
                   )}
-                  <div className="modal__text-wrapper">
-                    <DeleteButton
-                      className="btn-edit"
-                      type="button"
-                      onClick={() => setIsDisplayedDescrTextarea(true)}
-                    />
-                    <h2>{`${localizationObj[lang].taskDescription}: `}</h2>
-                  </div>
+                  {!isDisplayedDescrTextarea && (
+                    <>
+                      <div className="modal__text-wrapper">
+                        <DeleteButton
+                          className="btn-edit"
+                          type="button"
+                          onClick={() => setIsDisplayedDescrTextarea(true)}
+                        />
+                        <h2>{`${localizationObj[lang].taskDescription}: `}</h2>
+                      </div>
+                      <p className="modal__tasks-descr">{cardDescription}</p>
+                    </>
+                  )}
 
                   {isDisplayedDescrTextarea && (
                     <>
                       <Textarea
                         className="textarea modal__tasks-textarea"
                         cols={4}
-                        rows={4}
+                        rows={5}
                         placeholder="Change the description"
                         value={taskDescription}
                         onChange={handleTaskDescriptionInput}
@@ -296,16 +307,13 @@ const CardItem: FC<CardItemProps> = ({
                       <ChangeTitleBtns onClickSubmit={submitDescr} onClickCancel={cancelDescr} />
                     </>
                   )}
-
-                  <p className="modal__tasks-descr">{cardDescription}</p>
-
-                  <TertiaryButton
-                    className="button__tertiary column__btn"
-                    type="button"
-                    description="Ok"
-                    onClick={closeModal}
-                  />
                 </div>
+                <TertiaryButton
+                  className="button__tertiary column__btn"
+                  type="button"
+                  description="Ok"
+                  onClick={closeModal}
+                />
               </div>
             )}
           </>
