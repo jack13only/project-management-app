@@ -161,4 +161,9 @@ $breakpoint-xl-max: $breakpoint-xxl-min - 1px;
 
 $calcWidth: 100%;
 
+$total-lines: 4;
+$left-offset: $base * 6;
+$clip-height: $base * 10;
+$line-height: $clip-height - $base;
+
 // === / VARIABLES ===
